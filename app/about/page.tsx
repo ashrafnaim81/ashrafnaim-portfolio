@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import Link from 'next/link';
 import { Metadata } from 'next';
 import {
   Award,
@@ -61,7 +62,9 @@ export default function AboutPage() {
                     </div>
                     <div className="flex items-center gap-2">
                       <Mail className="h-4 w-4" />
-                      <span>ashrafnaim81@gmail.com</span>
+                      <Link href="/contact" className="text-primary hover:underline">
+                        Hubungi melalui Contact Form
+                      </Link>
                     </div>
                     <div className="flex items-center gap-2">
                       <Calendar className="h-4 w-4" />

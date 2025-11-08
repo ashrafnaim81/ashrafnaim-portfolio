@@ -51,12 +51,9 @@ export default function ContactPage() {
                 <Mail className="h-5 w-5 text-primary mt-0.5" />
                 <div>
                   <p className="font-medium">Email</p>
-                  <a
-                    href="mailto:ashrafnaim81@gmail.com"
-                    className="text-sm text-muted-foreground hover:text-primary transition-colors"
-                  >
-                    ashrafnaim81@gmail.com
-                  </a>
+                  <p className="text-sm text-muted-foreground">
+                    Sila gunakan borang di sebelah untuk hubungi saya
+                  </p>
                 </div>
               </div>
 

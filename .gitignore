@@ -46,3 +46,5 @@ Thumbs.db
 # Deployment files
 *.tar.gz
 DEPLOYMENT_GUIDE.md
+
+/lib/generated/prisma

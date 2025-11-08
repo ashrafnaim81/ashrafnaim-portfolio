@@ -1,0 +1,179 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+
+  // For production on Lightsail, change to:
+  // provider = "postgresql"
+}
+
+// User model for admin authentication
+model User {
+  id            String    @id @default(cuid())
+  name          String?
+  email         String    @unique
+  emailVerified DateTime?
+  image         String?
+  password      String?
+  role          String    @default("user")
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  accounts      Account[]
+  sessions      Session[]
+  blogPosts     BlogPost[]
+  portfolioProjects PortfolioProject[]
+}
+
+// NextAuth models
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String?
+  access_token      String?
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String?
+  session_state     String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+}
+
+// Blog Post model
+model BlogPost {
+  id          String   @id @default(cuid())
+  title       String
+  slug        String   @unique
+  excerpt     String?
+  content     String
+  coverImage  String?
+  published   Boolean  @default(false)
+  views       Int      @default(0)
+  authorId    String
+  author      User     @relation(fields: [authorId], references: [id])
+  categoryId  String?
+  category    Category? @relation(fields: [categoryId], references: [id])
+  tags        Tag[]
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  publishedAt DateTime?
+
+  @@index([slug])
+  @@index([published])
+}
+
+// Portfolio Project model
+model PortfolioProject {
+  id          String   @id @default(cuid())
+  title       String
+  slug        String   @unique
+  description String
+  category    String
+  tags        String   // JSON string of array
+  icon        String?
+  color       String?
+  link        String?
+  impact      String?
+  images      String   // JSON string of array
+  featured    Boolean  @default(false)
+  published   Boolean  @default(true)
+  order       Int      @default(0)
+  authorId    String
+  author      User     @relation(fields: [authorId], references: [id])
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([slug])
+  @@index([category])
+  @@index([published])
+}
+
+// Contact form submissions
+model Contact {
+  id           String   @id @default(cuid())
+  name         String
+  email        String
+  phone        String?
+  organization String?
+  subject      String
+  message      String
+  read         Boolean  @default(false)
+  replied      Boolean  @default(false)
+  createdAt    DateTime @default(now())
+
+  @@index([read])
+  @@index([createdAt])
+}
+
+// Talks & Workshops
+model Talk {
+  id          String   @id @default(cuid())
+  title       String
+  description String
+  type        String   // workshop, ceramah, webinar, etc
+  venue       String?
+  location    String?
+  date        DateTime
+  endDate     DateTime?
+  audience    String?
+  participants Int?
+  status      String   @default("upcoming") // upcoming, completed, cancelled
+  slides      String?
+  recording   String?
+  images      String   // JSON string of array
+  published   Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([date])
+  @@index([status])
+  @@index([published])
+}
+
+// Category for blog posts
+model Category {
+  id          String     @id @default(cuid())
+  name        String     @unique
+  slug        String     @unique
+  description String?
+  blogPosts   BlogPost[]
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+}
+
+// Tags for blog posts
+model Tag {
+  id        String     @id @default(cuid())
+  name      String     @unique
+  slug      String     @unique
+  blogPosts BlogPost[]
+  createdAt DateTime   @default(now())
+}

@@ -203,17 +203,9 @@ export default function TalksPage() {
               Berminat untuk menganjurkan bengkel atau ceramah di sekolah/organisasi anda?
               Saya sedia untuk berkongsi ilmu dan pengalaman.
             </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <div className="flex justify-center">
               <Button asChild variant="secondary" size="lg">
                 <Link href="/contact">Hubungi Saya</Link>
-              </Button>
-              <Button
-                asChild
-                variant="outline"
-                size="lg"
-                className="bg-transparent border-primary-foreground text-primary-foreground hover:bg-primary-foreground hover:text-primary"
-              >
-                <Link href="mailto:ashrafnaim81@gmail.com">Email Terus</Link>
               </Button>
             </div>
           </CardContent>

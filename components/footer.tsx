@@ -14,10 +14,13 @@ export default function Footer() {
               Teknologis Profesional dalam bidang Pendidikan & Teknologi Maklumat.
               Berpengalaman dalam AI, EdTech, dan transformasi digital dalam pendidikan.
             </p>
-            <div className="flex items-center gap-2 text-sm text-muted-foreground">
+            <Link
+              href="/contact"
+              className="inline-flex items-center gap-2 text-sm text-primary hover:underline"
+            >
               <Mail className="h-4 w-4" />
-              <span>ashrafnaim81@gmail.com</span>
-            </div>
+              <span>Hubungi Saya</span>
+            </Link>
           </div>
 
           <div>
@@ -116,11 +119,9 @@ export default function Footer() {
                 <Linkedin className="h-5 w-5" />
               </Link>
               <Link
-                href="mailto:ashrafnaim81@gmail.com"
-                target="_blank"
-                rel="noopener noreferrer"
+                href="/contact"
                 className="text-muted-foreground hover:text-primary transition-colors"
-                aria-label="Email"
+                aria-label="Contact"
               >
                 <Mail className="h-5 w-5" />
               </Link>
