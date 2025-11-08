@@ -12,13 +12,45 @@ import {
   Presentation,
 } from 'lucide-react';
 import Link from 'next/link';
+import { prisma } from '@/lib/prisma';
 
 export const metadata: Metadata = {
   title: 'Talks & Workshops - Ts. Ashraf bin Naim',
   description: 'Bengkel, ceramah, dan presentation tentang AI, EdTech, dan transformasi digital',
 };
 
-export default function TalksPage() {
+// Force dynamic rendering
+export const dynamic = 'force-dynamic';
+
+async function getTalks() {
+  const talks = await prisma.talk.findMany({
+    where: {
+      published: true,
+    },
+    orderBy: [
+      { date: 'desc' },
+    ],
+  });
+
+  // Parse JSON fields
+  return talks.map((talk) => ({
+    ...talk,
+    images: talk.images ? JSON.parse(talk.images) : [],
+  }));
+}
+
+export default async function TalksPage() {
+  const allTalks = await getTalks();
+  const now = new Date();
+
+  // Separate upcoming and past talks
+  const upcomingTalks = allTalks.filter((talk) => new Date(talk.date) >= now);
+  const pastTalks = allTalks.filter((talk) => new Date(talk.date) < now);
+
+  // Calculate stats
+  const totalTalks = allTalks.length;
+  const totalParticipants = pastTalks.reduce((sum, talk) => sum + (talk.participants || 0), 0);
+  const uniqueLocations = new Set(pastTalks.map((t) => t.location).filter(Boolean)).size;
   return (
     <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
       {/* Header */}
@@ -35,21 +67,21 @@ export default function TalksPage() {
         <Card>
           <CardContent className="pt-6 text-center">
             <Presentation className="h-8 w-8 mx-auto text-primary mb-2" />
-            <p className="text-3xl font-bold text-primary">25+</p>
+            <p className="text-3xl font-bold text-primary">{totalTalks > 0 ? `${totalTalks}+` : '0'}</p>
             <p className="text-sm text-muted-foreground">Bengkel & Ceramah</p>
           </CardContent>
         </Card>
         <Card>
           <CardContent className="pt-6 text-center">
             <Users className="h-8 w-8 mx-auto text-secondary mb-2" />
-            <p className="text-3xl font-bold text-secondary">1,000+</p>
+            <p className="text-3xl font-bold text-secondary">{totalParticipants > 0 ? `${totalParticipants.toLocaleString()}+` : '0'}</p>
             <p className="text-sm text-muted-foreground">Peserta Terlatih</p>
           </CardContent>
         </Card>
         <Card>
           <CardContent className="pt-6 text-center">
             <MapPin className="h-8 w-8 mx-auto text-primary mb-2" />
-            <p className="text-3xl font-bold text-primary">50+</p>
+            <p className="text-3xl font-bold text-primary">{uniqueLocations > 0 ? `${uniqueLocations}+` : '0'}</p>
             <p className="text-sm text-muted-foreground">Sekolah Dilawati</p>
           </CardContent>
         </Card>
@@ -65,113 +97,170 @@ export default function TalksPage() {
       {/* Upcoming Talks */}
       <section className="mb-16 max-w-4xl mx-auto">
         <h2 className="text-3xl font-bold mb-6">Bengkel & Ceramah Akan Datang</h2>
-        <div className="space-y-4">
-          {upcomingTalks.map((talk, index) => (
-            <Card key={index} className="hover:shadow-lg transition-shadow">
-              <CardContent className="pt-6">
-                <div className="flex flex-col md:flex-row gap-6">
-                  <div className="flex-shrink-0">
-                    <div className="w-20 h-20 rounded-lg bg-gradient-to-br from-primary to-secondary flex items-center justify-center text-white">
-                      <div className="text-center">
-                        <div className="text-2xl font-bold">{talk.day}</div>
-                        <div className="text-xs">{talk.month}</div>
-                      </div>
-                    </div>
-                  </div>
+        {upcomingTalks.length === 0 ? (
+          <Card>
+            <CardContent className="py-12 text-center">
+              <p className="text-muted-foreground">
+                Tiada bengkel atau ceramah akan datang buat masa ini. Sila semak kembali kemudian.
+              </p>
+            </CardContent>
+          </Card>
+        ) : (
+          <div className="space-y-4">
+            {upcomingTalks.map((talk) => {
+              const talkDate = new Date(talk.date);
+              const day = talkDate.getDate();
+              const month = talkDate.toLocaleDateString('ms-MY', { month: 'short' }).toUpperCase();
+              const dateString = talkDate.toLocaleDateString('ms-MY', {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric'
+              });
 
-                  <div className="flex-1">
-                    <div className="flex items-start justify-between mb-2">
-                      <div>
-                        <h3 className="text-xl font-semibold mb-2">{talk.title}</h3>
-                        <div className="flex flex-wrap gap-2 mb-3">
-                          <Badge>{talk.category}</Badge>
-                          <Badge variant="outline">{talk.type}</Badge>
+              return (
+                <Card key={talk.id} className="hover:shadow-lg transition-shadow">
+                  <CardContent className="pt-6">
+                    <div className="flex flex-col md:flex-row gap-6">
+                      <div className="flex-shrink-0">
+                        <div className="w-20 h-20 rounded-lg bg-gradient-to-br from-primary to-secondary flex items-center justify-center text-white">
+                          <div className="text-center">
+                            <div className="text-2xl font-bold">{day}</div>
+                            <div className="text-xs">{month}</div>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div className="flex-1">
+                        <div className="flex items-start justify-between mb-2">
+                          <div>
+                            <h3 className="text-xl font-semibold mb-2">{talk.title}</h3>
+                            <div className="flex flex-wrap gap-2 mb-3">
+                              <Badge>{talk.type}</Badge>
+                              <Badge variant="outline">{talk.status}</Badge>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div className="space-y-2 text-sm text-muted-foreground mb-4">
+                          <div className="flex items-center gap-2">
+                            <Calendar className="h-4 w-4" />
+                            <span>{dateString}</span>
+                          </div>
+                          {talk.venue && (
+                            <div className="flex items-center gap-2">
+                              <MapPin className="h-4 w-4" />
+                              <span>{talk.venue}, {talk.location}</span>
+                            </div>
+                          )}
+                          {talk.audience && (
+                            <div className="flex items-center gap-2">
+                              <Users className="h-4 w-4" />
+                              <span>{talk.audience}</span>
+                            </div>
+                          )}
+                        </div>
+
+                        <p className="text-muted-foreground mb-4">{talk.description}</p>
+
+                        <div className="flex gap-2">
+                          {talk.slides && (
+                            <Button variant="outline" size="sm" asChild>
+                              <Link href={talk.slides} target="_blank">
+                                <FileText className="h-4 w-4 mr-1" />
+                                Slides
+                              </Link>
+                            </Button>
+                          )}
+                          {talk.recording && (
+                            <Button size="sm" asChild>
+                              <Link href={talk.recording} target="_blank">
+                                Daftar Sekarang
+                                <ExternalLink className="ml-2 h-4 w-4" />
+                              </Link>
+                            </Button>
+                          )}
                         </div>
                       </div>
                     </div>
-
-                    <div className="space-y-2 text-sm text-muted-foreground mb-4">
-                      <div className="flex items-center gap-2">
-                        <Calendar className="h-4 w-4" />
-                        <span>{talk.date}</span>
-                      </div>
-                      <div className="flex items-center gap-2">
-                        <MapPin className="h-4 w-4" />
-                        <span>{talk.location}</span>
-                      </div>
-                      <div className="flex items-center gap-2">
-                        <Users className="h-4 w-4" />
-                        <span>{talk.audience}</span>
-                      </div>
-                    </div>
-
-                    <p className="text-muted-foreground mb-4">{talk.description}</p>
-
-                    {talk.registrationLink && (
-                      <Button asChild>
-                        <Link href={talk.registrationLink} target="_blank">
-                          Daftar Sekarang
-                          <ExternalLink className="ml-2 h-4 w-4" />
-                        </Link>
-                      </Button>
-                    )}
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-          ))}
-        </div>
+                  </CardContent>
+                </Card>
+              );
+            })}
+          </div>
+        )}
       </section>
 
       {/* Past Talks */}
       <section className="mb-16 max-w-6xl mx-auto">
         <h2 className="text-3xl font-bold mb-6">Bengkel & Ceramah Lepas</h2>
-        <div className="grid md:grid-cols-2 gap-6">
-          {pastTalks.map((talk, index) => (
-            <Card key={index} className="hover:shadow-lg transition-shadow">
-              <CardHeader>
-                <div className="flex items-center justify-between mb-2">
-                  <Badge variant="secondary">{talk.date}</Badge>
-                  <Badge variant="outline">{talk.type}</Badge>
-                </div>
-                <CardTitle className="text-lg">{talk.title}</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="space-y-2 text-sm text-muted-foreground mb-4">
-                  <div className="flex items-center gap-2">
-                    <MapPin className="h-4 w-4" />
-                    <span>{talk.location}</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <Users className="h-4 w-4" />
-                    <span>{talk.participants} peserta</span>
-                  </div>
-                </div>
+        {pastTalks.length === 0 ? (
+          <Card>
+            <CardContent className="py-12 text-center">
+              <p className="text-muted-foreground">
+                Tiada rekod bengkel atau ceramah lepas buat masa ini.
+              </p>
+            </CardContent>
+          </Card>
+        ) : (
+          <div className="grid md:grid-cols-2 gap-6">
+            {pastTalks.map((talk) => {
+              const talkDate = new Date(talk.date);
+              const dateString = talkDate.toLocaleDateString('ms-MY', {
+                year: 'numeric',
+                month: 'short',
+              });
 
-                <p className="text-sm text-muted-foreground mb-4">{talk.summary}</p>
+              return (
+                <Card key={talk.id} className="hover:shadow-lg transition-shadow">
+                  <CardHeader>
+                    <div className="flex items-center justify-between mb-2">
+                      <Badge variant="secondary">{dateString}</Badge>
+                      <Badge variant="outline">{talk.type}</Badge>
+                    </div>
+                    <CardTitle className="text-lg">{talk.title}</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="space-y-2 text-sm text-muted-foreground mb-4">
+                      {talk.venue && (
+                        <div className="flex items-center gap-2">
+                          <MapPin className="h-4 w-4" />
+                          <span>{talk.venue}, {talk.location}</span>
+                        </div>
+                      )}
+                      {talk.participants && (
+                        <div className="flex items-center gap-2">
+                          <Users className="h-4 w-4" />
+                          <span>{talk.participants} peserta</span>
+                        </div>
+                      )}
+                    </div>
 
-                <div className="flex gap-2">
-                  {talk.slides && (
-                    <Button variant="outline" size="sm" asChild>
-                      <Link href={talk.slides} target="_blank">
-                        <FileText className="h-4 w-4 mr-1" />
-                        Slides
-                      </Link>
-                    </Button>
-                  )}
-                  {talk.recording && (
-                    <Button variant="outline" size="sm" asChild>
-                      <Link href={talk.recording} target="_blank">
-                        <Video className="h-4 w-4 mr-1" />
-                        Recording
-                      </Link>
-                    </Button>
-                  )}
-                </div>
-              </CardContent>
-            </Card>
-          ))}
-        </div>
+                    <p className="text-sm text-muted-foreground mb-4">{talk.description}</p>
+
+                    <div className="flex gap-2">
+                      {talk.slides && (
+                        <Button variant="outline" size="sm" asChild>
+                          <Link href={talk.slides} target="_blank">
+                            <FileText className="h-4 w-4 mr-1" />
+                            Slides
+                          </Link>
+                        </Button>
+                      )}
+                      {talk.recording && (
+                        <Button variant="outline" size="sm" asChild>
+                          <Link href={talk.recording} target="_blank">
+                            <Video className="h-4 w-4 mr-1" />
+                            Recording
+                          </Link>
+                        </Button>
+                      )}
+                    </div>
+                  </CardContent>
+                </Card>
+              );
+            })}
+          </div>
+        )}
       </section>
 
       {/* Topics */}
@@ -214,88 +303,6 @@ export default function TalksPage() {
     </div>
   );
 }
-
-const upcomingTalks = [
-  {
-    title: 'Bengkel AI untuk Pentadbir Sekolah',
-    date: '20 Mac 2025, 9:00 AM - 4:00 PM',
-    day: '20',
-    month: 'MAC',
-    location: 'Dewan Besar PPD Kluang',
-    audience: 'Pengetua & Guru Besar Daerah Kluang',
-    category: 'AI dalam Pendidikan',
-    type: 'Full Day Workshop',
-    description: 'Bengkel komprehensif tentang penggunaan AI tools untuk pentadbiran sekolah, dari automasi workflow hingga decision making dengan data analytics.',
-    registrationLink: '#',
-  },
-  {
-    title: 'Ceramah: Transformasi Digital di Sekolah',
-    date: '25 Mac 2025, 2:00 PM - 5:00 PM',
-    day: '25',
-    month: 'MAC',
-    location: 'SMK Taman Johor Jaya',
-    audience: 'Guru-guru SMK Taman Johor Jaya',
-    category: 'Digital Transformation',
-    type: 'Seminar',
-    description: 'Perkongsian tentang perjalanan transformasi digital di sekolah - challenges, best practices, dan success stories dari implementasi sebenar.',
-    registrationLink: '#',
-  },
-];
-
-const pastTalks = [
-  {
-    title: 'Workshop Canva AI untuk Pendidik',
-    date: 'Feb 2025',
-    location: 'PPD Kluang',
-    participants: 120,
-    type: 'Workshop',
-    summary: 'Hands-on workshop menggunakan Canva AI untuk create bahan pengajaran visual yang professional dalam minit.',
-    slides: '#',
-    recording: '#',
-  },
-  {
-    title: 'ChatGPT dalam Bilik Darjah',
-    date: 'Jan 2025',
-    location: 'JPN Johor',
-    participants: 200,
-    type: 'Webinar',
-    summary: 'Webinar online tentang practical applications ChatGPT untuk lesson planning, assessment, dan classroom management.',
-    slides: '#',
-    recording: '#',
-  },
-  {
-    title: 'Google Workspace Automation',
-    date: 'Dec 2024',
-    location: 'PPD Johor Bahru',
-    participants: 80,
-    type: 'Workshop',
-    summary: 'Workshop automasi menggunakan Google Apps Script untuk efficiency dalam pengurusan sekolah.',
-  },
-  {
-    title: 'Microsoft Teams untuk Pembelajaran Hibrid',
-    date: 'Nov 2024',
-    location: 'SMK Taman Johor',
-    participants: 50,
-    type: 'Training',
-    summary: 'Training lengkap setup dan penggunaan Microsoft Teams untuk effective hybrid learning.',
-  },
-  {
-    title: 'Video Production dengan Smartphone',
-    date: 'Oct 2024',
-    location: 'PPD Kluang',
-    participants: 60,
-    type: 'Workshop',
-    summary: 'Workshop hands-on shooting dan editing video pembelajaran menggunakan smartphone sahaja.',
-  },
-  {
-    title: 'Data Analytics untuk Sekolah',
-    date: 'Sep 2024',
-    location: 'JPN Johor',
-    participants: 40,
-    type: 'Training',
-    summary: 'Training menggunakan Power BI dan Excel untuk create insightful dashboards untuk school data.',
-  },
-];
 
 const topics = [
   {
