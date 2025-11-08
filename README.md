@@ -1,86 +1,210 @@
 # Ts. Ashraf bin Naim - Portfolio Website
 
-Modern, dynamic portfolio website built with Next.js 15, TypeScript, and Tailwind CSS.
+A modern, database-driven portfolio website with full Content Management System (CMS).
 
-## 🚀 Features
+🌐 **Live Site:** [https://ashrafnaim.my](https://ashrafnaim.my)
 
-- ✅ **Server-Side Rendering** - Fast, SEO-friendly pages
-- ✅ **Dark Mode** - Toggle between light and dark themes
-- ✅ **Responsive Design** - Works on all devices
-- ✅ **TypeScript** - Type-safe code
-- ✅ **Blog System** with CMS (Coming soon)
-- ✅ **Contact Form** with database (Coming soon)
-- ✅ **Portfolio Management** (Coming soon)
-- ✅ **Analytics Dashboard** (Coming soon)
+---
 
-## 📦 Tech Stack
+## ✨ Features
 
-- **Framework**: Next.js 15 (App Router)
-- **Language**: TypeScript
-- **Styling**: Tailwind CSS
-- **UI Components**: Custom components with Radix UI
-- **Icons**: Lucide React
-- **Theme**: next-themes
-- **Database**: PostgreSQL with Prisma (Coming soon)
-- **Authentication**: NextAuth.js (Coming soon)
+### Frontend Pages
+- **🏠 Homepage** - Database-driven hero, stats, achievements, and skills
+- **👤 About** - Dynamic profile, qualifications, expertise, and experience timeline
+- **📝 Blog** - Full blog system with real-time view counts
+- **💼 Portfolio** - Project showcase with categories
+- **🎤 Talks & Workshops** - Event listings with details
+- **📧 Contact** - Contact form with Web3Forms integration
 
-## 🛠️ Installation
+### Admin Panel (CMS)
+- **Dashboard** - Overview and statistics
+- **Home Page Editor** - Edit homepage content with dynamic forms (Add/Edit/Delete)
+- **About Page Editor** - Manage profile and professional information
+- **Blog Management** - Full CRUD for blog posts
+- **Settings** - Change password and security
+
+### Technical Features
+- ✅ **Database-Driven** - PostgreSQL with Prisma ORM
+- ✅ **Authentication** - NextAuth.js with secure session management
+- ✅ **Dynamic Rendering** - Real-time content updates
+- ✅ **Type-Safe** - Full TypeScript implementation
+- ✅ **Responsive Design** - Mobile-first approach
+- ✅ **SSL/HTTPS** - Secure with Let's Encrypt
+- ✅ **SEO Optimized** - Server-side rendering with Next.js
+
+---
+
+## 🛠️ Tech Stack
+
+| Category | Technology |
+|----------|-----------|
+| **Framework** | Next.js 15.5.6 (App Router) |
+| **Language** | TypeScript |
+| **Database** | PostgreSQL 15 |
+| **ORM** | Prisma 6.19.0 |
+| **Authentication** | NextAuth 4.24.13 |
+| **Styling** | Tailwind CSS |
+| **UI Components** | shadcn/ui (Radix UI) |
+| **Icons** | Lucide React |
+| **Form Handling** | Web3Forms |
+| **Hosting** | AWS Lightsail (Debian 12) |
+| **Process Manager** | PM2 |
+| **Web Server** | Nginx |
+
+---
+
+## 🚀 Quick Start
 
 ### Prerequisites
-
 - Node.js 18+
-- npm atau yarn
+- PostgreSQL (for production) or SQLite (for local dev)
 
 ### Local Development
 
-1. Install dependencies:
 ```bash
+# Clone repository
+git clone https://github.com/ashrafnaim81/ashrafnaim-portfolio.git
+cd ashrafnaim-portfolio
+
+# Install dependencies
 npm install
+
+# Setup database
+npx prisma generate
+npx prisma db push
+npx prisma db seed                   # Seed blog/portfolio data
+npx ts-node prisma/seed-pages.ts     # Seed home/about pages
+
+# Start development server (uses SQLite)
+unset DATABASE_URL && npm run dev
 ```
 
-2. Run development server:
-```bash
-npm run dev
-```
+Open [http://localhost:3000](http://localhost:3000)
 
-3. Open [http://localhost:3000](http://localhost:3000)
+### Admin Access
 
-## 🏗️ Build for Production
+- **URL:** http://localhost:3000/admin/login
+- **Email:** admin@ashrafnaim.my
+- **Password:** Admin@123 (change this!)
 
-```bash
-npm run build
-npm start
-```
+---
 
 ## 📁 Project Structure
 
 ```
 ashrafnaim-portfolio/
-├── app/                    # Next.js app directory
-│   ├── layout.tsx         # Root layout
-│   ├── page.tsx           # Homepage
-│   └── globals.css        # Global styles
-├── components/            # React components
-│   ├── ui/               # UI components (Button, Card, etc.)
-│   ├── navigation.tsx    # Navigation bar
-│   ├── footer.tsx        # Footer
-│   └── theme-provider.tsx # Theme provider
-├── lib/                   # Utility functions
-├── public/               # Static assets
-│   └── images/          # Images
-└── package.json         # Dependencies
+├── app/                          # Next.js app directory
+│   ├── (auth)/                   # Auth routes
+│   ├── admin/                    # Admin panel (CMS)
+│   │   ├── (dashboard)/
+│   │   │   ├── home/            # Home page editor
+│   │   │   ├── about/           # About page editor
+│   │   │   ├── blog/            # Blog management
+│   │   │   └── settings/        # Settings
+│   │   └── login/               # Admin login
+│   ├── api/                     # API routes
+│   │   ├── home/                # Home page API
+│   │   ├── about/               # About page API
+│   │   ├── blog/                # Blog API
+│   │   └── auth/                # NextAuth API
+│   ├── blog/                    # Public blog pages
+│   ├── portfolio/               # Portfolio page
+│   ├── talks/                   # Talks page
+│   ├── contact/                 # Contact page
+│   └── about/                   # About page
+├── components/                  # React components
+│   ├── ui/                      # UI components
+│   └── [feature-components]
+├── lib/                         # Utilities
+│   ├── prisma.ts               # Prisma client
+│   └── auth.ts                 # Auth config
+├── prisma/                      # Database
+│   ├── schema.prisma           # Database schema
+│   ├── seed.ts                 # Blog/portfolio seed
+│   └── seed-pages.ts           # Home/about seed
+└── public/                      # Static assets
 ```
 
-## 🚀 Deployment to AWS Lightsail
+---
 
-Coming soon...
+## 📚 Documentation
 
-## 📝 License
+- **[PROJECT_REFERENCE.md](PROJECT_REFERENCE.md)** - Comprehensive documentation, roadmap, and technical details
+- **[QUICK_REFERENCE.md](QUICK_REFERENCE.md)** - Quick commands and common tasks
+
+---
+
+## 🔐 Security
+
+- Password hashing with bcrypt
+- Secure session management with NextAuth
+- Protected admin routes with middleware
+- HTTPS/SSL with auto-renewal
+- SQL injection protection (Prisma ORM)
+- Environment variable protection
+
+**⚠️ Important:** Change the default admin password immediately after deployment!
+
+---
+
+## 🚢 Deployment
+
+The site is deployed on **AWS Lightsail** with:
+- Nginx reverse proxy
+- PM2 process management
+- PostgreSQL database
+- Let's Encrypt SSL
+- Custom domain (ashrafnaim.my)
+
+For deployment instructions, see [QUICK_REFERENCE.md](QUICK_REFERENCE.md#deploy-to-production)
+
+---
+
+## 📈 Recent Updates
+
+**November 9, 2025:**
+- ✨ Added database-driven Home & About page CMS
+- ✨ Dynamic forms with Add/Edit/Delete functionality
+- ✨ Job title gradient emphasis on homepage
+- 🔧 Fixed blog view count caching issues
+- 🔧 Implemented admin password change feature
+
+See [PROJECT_REFERENCE.md](PROJECT_REFERENCE.md#recent-fixes--features-latest-session) for full changelog.
+
+---
+
+## 🛣️ Roadmap
+
+### ✅ Completed
+- [x] Home & About page CMS
+- [x] Blog management system
+- [x] Real-time view counting
+- [x] Admin authentication
+- [x] Database-driven content
+
+### 🎯 Next Steps
+- [ ] Portfolio CRUD interface
+- [ ] Talks & Workshops CRUD
+- [ ] Contact messages management
+- [ ] Rich text editor for blog
+- [ ] Image upload system
+
+See full roadmap in [PROJECT_REFERENCE.md](PROJECT_REFERENCE.md#next-steps-suggested-priority)
+
+---
+
+## 📄 License
 
 © 2025 Ts. Ashraf bin Naim. All rights reserved.
 
+---
+
 ## 📧 Contact
 
-- Email: ashrafnaim81@gmail.com
-- Website: https://ashrafnaim.my
-- LinkedIn: https://www.linkedin.com/in/AshrafNaim81/
+- **Email:** ashrafnaim81@gmail.com
+- **Website:** [https://ashrafnaim.my](https://ashrafnaim.my)
+- **LinkedIn:** [AshrafNaim81](https://www.linkedin.com/in/AshrafNaim81/)
+
+---
+
+Built with ❤️ using Next.js, TypeScript, Prisma, and Tailwind CSS
