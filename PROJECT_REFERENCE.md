@@ -1,6 +1,6 @@
 # Portfolio Website - Project Reference & Roadmap
 
-**Last Updated:** 8 November 2025
+**Last Updated:** 9 November 2025
 **Domain:** https://ashrafnaim.my
 **Server:** AWS Lightsail (Debian 12)
 **Tech Stack:** Next.js 15.5.6, PostgreSQL 15, Prisma 6.19.0, NextAuth 4.24.13
@@ -12,8 +12,8 @@
 ### ✅ Completed Features
 
 #### Frontend Pages
-- **Homepage** (`/`) - Hero section, About preview, Featured work
-- **About** (`/about`) - Full profile dan background
+- **Homepage** (`/`) - ✨ **Database-driven!** Hero section, stats, achievements, skills (editable via admin)
+- **About** (`/about`) - ✨ **Database-driven!** Full profile, qualifications, expertise, experiences (editable via admin)
 - **Blog** (`/blog`) - Blog listing dengan dynamic data (real-time view counts)
 - **Blog Post** (`/blog/[slug]`) - Individual blog articles dengan auto view increment
 - **Portfolio** (`/portfolio`) - Project showcase
@@ -22,10 +22,22 @@
 
 #### Admin Panel
 - **Dashboard** (`/admin`) - Overview statistics
+- **Home Page Editor** (`/admin/home`) - ✨ **BARU!**
+  - Dynamic forms for stats (Add/Edit/Delete)
+  - Achievements management with icons
+  - Skills management with proficiency levels
+  - Hero section customization
+  - CTA section editing
+- **About Page Editor** (`/admin/about`) - ✨ **BARU!**
+  - Profile information management
+  - Professional qualifications (Add/Edit/Delete)
+  - Expertise areas management
+  - Experience timeline (Add/Edit/Delete)
+  - Achievements & contributions
 - **Blog Management** (`/admin/blog`) - List all blog posts
   - Create new post (`/admin/blog/new`)
   - Edit existing post (`/admin/blog/[id]`)
-- **Settings** (`/admin/settings`) - ✨ **BARU!**
+- **Settings** (`/admin/settings`)
   - View profile info
   - Change password functionality
   - Security tips
@@ -45,9 +57,39 @@
 
 ---
 
-## 🔧 Recent Fixes (Latest Session)
+## 🔧 Recent Fixes & Features (Latest Session)
 
-### 1. Blog View Count Caching Issue - FIXED
+### 1. Home & About Pages - Database-Driven CMS ✨ **MAJOR UPDATE**
+**Problem:** Homepage and About page content was hardcoded in components
+**Solution:** Complete database integration with user-friendly admin editors
+
+**Features Implemented:**
+- **New Database Models:** `HomePage` and `AboutPage` with JSON fields for structured content
+- **Dynamic Admin Forms:** Add/Edit/Delete interface for all sections (stats, achievements, skills, qualifications, experiences, etc.)
+- **API Routes:** `/api/home` and `/api/about` for CRUD operations
+- **Frontend Dynamic Rendering:** Both pages now fetch from database with `export const dynamic = 'force-dynamic'`
+- **Seed Script:** `prisma/seed-pages.ts` to populate initial data from profile
+
+**Files Created/Modified:**
+- `app/admin/(dashboard)/home/page.tsx` - Home page editor with dynamic forms
+- `app/admin/(dashboard)/about/page.tsx` - About page editor with dynamic forms
+- `app/api/home/route.ts` - Home page API endpoints
+- `app/api/about/route.ts` - About page API endpoints
+- `app/page.tsx` - Updated to fetch from database
+- `app/about/page.tsx` - Updated to fetch from database
+- `prisma/schema.prisma` - Added HomePage and AboutPage models
+- `prisma/seed-pages.ts` - Seeding script with profile data
+- `components/ui/textarea.tsx` - New component for forms
+
+**Impact:** Complete control over homepage and about page content through admin panel, no code changes needed for updates!
+
+### 2. Job Title Emphasis Enhancement
+**Change:** Added gradient color emphasis to job title on homepage
+```typescript
+className="text-xl font-semibold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent"
+```
+
+### 3. Blog View Count Caching Issue - FIXED
 **Problem:** Blog listing page showing old/dummy view counts
 **Solution:** Added dynamic rendering to `/app/blog/page.tsx`:
 ```typescript
@@ -55,7 +97,7 @@ export const dynamic = 'force-dynamic';
 export const revalidate = 0;
 ```
 
-### 2. Admin Password Change - IMPLEMENTED
+### 4. Admin Password Change - IMPLEMENTED
 **New Features:**
 - Complete Settings page with password change form
 - Validation (min 8 chars, must differ from current)
@@ -63,14 +105,14 @@ export const revalidate = 0;
 - Malay language interface
 - API endpoint: `/api/admin/change-password`
 
-### 3. Button Contrast Fix
+### 5. Button Contrast Fix
 **Change:** Secondary button text color from dark to white in `/app/globals.css`:
 ```css
 --secondary-foreground: 210 40% 98%; /* Was: 222.2 47.4% 11.2% */
 ```
 
-### 4. Blog Post Views Reset
-All blog posts reset to 0 views (from dummy data), now showing real view counts (1-3).
+### 6. Blog Post Views Reset
+All blog posts reset to 0 views (from dummy data), now showing real view counts.
 
 ---
 
@@ -198,25 +240,34 @@ Saat ini, hanya **Blog** sahaja ada full CRUD interface. Perlu tambah untuk:
 
 ---
 
-### 🎯 PRIORITY 3: Homepage Customization
+### 🎯 PRIORITY 3: Homepage & About Page Customization ✅ **COMPLETED!**
 
-**Current:** Homepage content is hardcoded in components
-**Recommendation:** Make it editable from admin panel
+**Status:** ✅ Fully implemented with database-driven CMS!
 
-#### Features needed:
-- Edit hero section text
-- Edit about section preview
-- Manage featured projects (select which to show)
-- Manage featured blog posts
-- Edit testimonials/quotes (if add later)
-- Manage social media links
+#### ✅ Completed Features:
+- ✅ Edit hero section text (title, job title, description, image)
+- ✅ Manage stats section (Add/Edit/Delete)
+- ✅ Manage achievements (Add/Edit/Delete with icons)
+- ✅ Manage skills (Add/Edit/Delete with proficiency levels)
+- ✅ Edit CTA section
+- ✅ About page profile section editable
+- ✅ Professional qualifications management
+- ✅ Expertise areas management
+- ✅ Experience timeline (Add/Edit/Delete)
+- ✅ Achievements & contributions management
 
 **Implementation:**
-- New table: `SiteSettings` untuk store homepage content
-- Admin page: `/admin/site-settings`
-- JSON field untuk store structured content
+- ✅ New tables: `HomePage` and `AboutPage` dalam Prisma schema
+- ✅ Admin pages: `/admin/home` and `/admin/about`
+- ✅ JSON fields untuk store structured content
+- ✅ Dynamic forms dengan Add/Edit/Delete functionality
+- ✅ API routes untuk CRUD operations
 
-**Estimated effort:** 4-5 hours
+**Next Steps (Optional Enhancements):**
+- [ ] Manage featured projects (select which to show on homepage)
+- [ ] Manage featured blog posts selection
+- [ ] Edit testimonials/quotes section
+- [ ] Manage social media links
 
 ---
 
@@ -347,6 +398,21 @@ Improve error pages:
 User (admin accounts)
 ├── id, name, email, password
 └── Relations: BlogPost (author), Contact, Talk, PortfolioProject
+
+HomePage ✅ FULL CRUD
+├── id, heroTitle, heroJobTitle, heroDescription, heroImage
+├── stats (JSON), achievements (JSON), skills (JSON)
+├── ctaTitle, ctaDescription
+├── published, createdAt, updatedAt
+└── Editable via /admin/home with dynamic forms
+
+AboutPage ✅ FULL CRUD
+├── id, profileTitle, profileSubtitle, profileJobTitle
+├── profileLocation, profileYearsExperience, profileSummary, profileImage
+├── qualifications (JSON), expertiseAreas (JSON)
+├── experiences (JSON), achievements (JSON)
+├── published, createdAt, updatedAt
+└── Editable via /admin/about with dynamic forms
 
 BlogPost ✅ FULL CRUD
 ├── id, title, slug, excerpt, content
@@ -652,7 +718,12 @@ sudo certbot certificates
 
 ## 🚀 Next Steps (Suggested Priority)
 
-### Phase 1 (This Month) - Core CRUD
+### ✅ Phase 0 (COMPLETED) - Content Management System
+1. ✅ **Homepage Management** - Database-driven with admin editor
+2. ✅ **About Page Management** - Complete profile editing
+3. ✅ **Blog Management** - Full CRUD with view tracking
+
+### Phase 1 (Current Priority) - Core CRUD
 1. **Portfolio Management** - Most important for showcase
 2. **Talks Management** - Complete the admin panel
 3. **Contact Messages View** - Don't lose inquiries!
@@ -735,5 +806,6 @@ When adding new feature, consider:
 
 **End of Reference Document**
 
-*Last updated: November 8, 2025*
+*Last updated: November 9, 2025*
+*Major Update: Home & About pages now fully editable via admin panel!*
 *For questions or updates, refer to this document before starting new development.*

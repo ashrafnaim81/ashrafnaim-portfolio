@@ -6,7 +6,7 @@ generator client {
 }
 
 datasource db {
-  provider = "sqlite"
+  provider = "postgresql"
   url      = env("DATABASE_URL")
 
   // For production on Lightsail, change to:
@@ -176,4 +176,62 @@ model Tag {
   slug      String     @unique
   blogPosts BlogPost[]
   createdAt DateTime   @default(now())
+}
+
+// Home Page Content
+model HomePage {
+  id String @id @default(cuid())
+
+  // Hero Section
+  heroTitle       String
+  heroJobTitle    String
+  heroDescription String
+  heroImage       String?
+
+  // Stats Section (JSON array)
+  stats String // [{value: "19+", label: "Tahun Pengalaman"}, ...]
+
+  // Achievements Section (JSON array)
+  achievements String // [{icon: "Award", title: "...", period: "...", description: "..."}, ...]
+
+  // Skills Section (JSON array)
+  skills String // [{name: "...", level: "...", description: "..."}, ...]
+
+  // CTA Section
+  ctaTitle       String
+  ctaDescription String
+
+  published Boolean  @default(true)
+  updatedAt DateTime @updatedAt
+  createdAt DateTime @default(now())
+}
+
+// About Page Content
+model AboutPage {
+  id String @id @default(cuid())
+
+  // Profile Section
+  profileTitle            String
+  profileSubtitle         String
+  profileJobTitle         String
+  profileLocation         String
+  profileYearsExperience  String
+  profileSummary          String
+  profileImage            String?
+
+  // Professional Qualifications (JSON array)
+  qualifications String // [{icon: "Award", title: "...", subtitle: "...", description: "..."}, ...]
+
+  // Expertise Areas (JSON array)
+  expertiseAreas String // [{title: "...", description: "..."}, ...]
+
+  // Experience Timeline (JSON array)
+  experiences String // [{title: "...", organization: "...", period: "...", description: "..."}, ...]
+
+  // Achievements (JSON array)
+  achievements String // [{title: "...", items: ["...", "..."]}]
+
+  published Boolean  @default(true)
+  updatedAt DateTime @updatedAt
+  createdAt DateTime @default(now())
 }

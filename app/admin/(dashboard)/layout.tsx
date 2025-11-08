@@ -14,12 +14,16 @@ import {
   Menu,
   X,
   User,
+  Home,
+  Info,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useState } from 'react';
 
 const navigation = [
   { name: 'Dashboard', href: '/admin', icon: LayoutDashboard },
+  { name: 'Home Page', href: '/admin/home', icon: Home },
+  { name: 'About Page', href: '/admin/about', icon: Info },
   { name: 'Blog Posts', href: '/admin/blog', icon: FileText },
   { name: 'Portfolio', href: '/admin/portfolio', icon: Briefcase },
   { name: 'Contacts', href: '/admin/contacts', icon: Mail },
