@@ -31,10 +31,11 @@ unset DATABASE_URL && npm run dev
 unset DATABASE_URL && npm run build
 
 # Database operations
-npx prisma studio          # Open database GUI
-npx prisma db push         # Update database schema
-npx prisma db seed         # Seed with sample data
-npx prisma generate        # Regenerate Prisma Client
+npx prisma studio                    # Open database GUI
+npx prisma db push                   # Update database schema
+npx prisma db seed                   # Seed blog/portfolio/talks data
+npx ts-node prisma/seed-pages.ts     # Seed Home & About pages
+npx prisma generate                  # Regenerate Prisma Client
 ```
 
 ### Deploy to Production
@@ -116,6 +117,23 @@ sudo certbot renew --dry-run
 ---
 
 ## 📊 Admin Panel Quick Guide
+
+### Home Page Management ✨ **NEW!**
+1. Go to `/admin/home`
+2. **Edit Stats:** Add/Edit/Delete stats with value and label
+3. **Edit Achievements:** Add/Edit/Delete achievements with icons
+4. **Edit Skills:** Add/Edit/Delete skills with proficiency levels
+5. **Edit Hero/CTA:** Update hero section and call-to-action text
+6. Click "Simpan Perubahan" to save
+
+### About Page Management ✨ **NEW!**
+1. Go to `/admin/about`
+2. **Edit Profile:** Update profile information
+3. **Edit Qualifications:** Add/Edit/Delete professional qualifications
+4. **Edit Expertise:** Add/Edit/Delete expertise areas
+5. **Edit Experiences:** Add/Edit/Delete experience timeline
+6. **Edit Achievements:** Update achievements & contributions
+7. Click "Simpan Perubahan" to save
 
 ### Blog Management
 1. **Create:** `/admin/blog` → "Create New Post" button
@@ -226,12 +244,20 @@ WEB3FORMS_ACCESS_KEY="your_key_here"
 
 ## 📞 Important URLs
 
+### Frontend
 - **Website:** https://ashrafnaim.my
-- **Admin:** https://ashrafnaim.my/admin
+- **About:** https://ashrafnaim.my/about
 - **Blog:** https://ashrafnaim.my/blog
 - **Contact:** https://ashrafnaim.my/contact
 - **Portfolio:** https://ashrafnaim.my/portfolio
 - **Talks:** https://ashrafnaim.my/talks
+
+### Admin Panel
+- **Dashboard:** https://ashrafnaim.my/admin
+- **Home Editor:** https://ashrafnaim.my/admin/home ✨ **NEW!**
+- **About Editor:** https://ashrafnaim.my/admin/about ✨ **NEW!**
+- **Blog Posts:** https://ashrafnaim.my/admin/blog
+- **Settings:** https://ashrafnaim.my/admin/settings
 
 ---
 
@@ -247,10 +273,17 @@ WEB3FORMS_ACCESS_KEY="your_key_here"
 
 ## 🚀 Priority Todo List
 
+### ✅ Recently Completed
+- [x] Home page database-driven CMS with admin editor
+- [x] About page database-driven CMS with admin editor
+- [x] Dynamic forms with Add/Edit/Delete functionality
+- [x] Blog view count real-time tracking
+- [x] Admin password change feature
+
 ### Immediate (This Week)
 - [ ] Change admin password from default
-- [ ] Test all admin features
-- [ ] Check 2 blog posts that return 404 (need user to identify)
+- [ ] Test new Home & About page editors
+- [ ] Update content via admin panel
 
 ### Short Term (This Month)
 - [ ] Add Portfolio CRUD in admin panel
@@ -282,6 +315,9 @@ WEB3FORMS_ACCESS_KEY="your_key_here"
 5. **Use Prisma Studio** for quick database edits (safer than raw SQL)
 6. **View counts update** on each blog post visit automatically
 7. **Blog listing** now shows real-time view counts (dynamic rendering)
+8. **Home & About pages** now editable via admin panel - no code changes needed! ✨
+9. **Job title on homepage** has gradient color emphasis for better visibility
+10. **Dynamic forms** make it easy to add/edit/delete stats, skills, achievements, etc.
 
 ---
 
@@ -303,4 +339,4 @@ If something breaks:
 
 ---
 
-*Last updated: November 8, 2025*
+*Last updated: November 9, 2025*
