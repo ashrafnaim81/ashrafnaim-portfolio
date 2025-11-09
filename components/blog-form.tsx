@@ -10,6 +10,7 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { ArrowLeft, Save, Eye } from 'lucide-react';
 import Link from 'next/link';
+import RichTextEditor from '@/components/rich-text-editor';
 
 const blogSchema = z.object({
   title: z.string().min(1, 'Title is required'),
@@ -203,20 +204,16 @@ export default function BlogForm({ initialData, isEdit = false }: BlogFormProps)
                 <label htmlFor="content" className="block text-sm font-medium mb-2">
                   Content *
                 </label>
-                <textarea
-                  id="content"
-                  {...register('content')}
-                  rows={15}
-                  className="w-full px-4 py-2 border rounded-md bg-background focus:outline-none focus:ring-2 focus:ring-primary resize-none font-mono text-sm"
-                  placeholder="Write your post content here...
-
-Supports Markdown formatting."
+                <RichTextEditor
+                  content={watch('content') || ''}
+                  onChange={(content) => setValue('content', content)}
+                  placeholder="Tulis artikel anda di sini..."
                 />
                 {errors.content && (
                   <p className="text-sm text-destructive mt-1">{errors.content.message}</p>
                 )}
                 <p className="text-xs text-muted-foreground mt-1">
-                  Tip: You can use Markdown formatting
+                  Gunakan toolbar di atas untuk format text, tambah links, code blocks, dan lain-lain
                 </p>
               </div>
             </CardContent>
