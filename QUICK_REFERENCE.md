@@ -31,11 +31,12 @@ unset DATABASE_URL && npm run dev
 unset DATABASE_URL && npm run build
 
 # Database operations
-npx prisma studio                    # Open database GUI
-npx prisma db push                   # Update database schema
-npx prisma db seed                   # Seed blog/portfolio/talks data
-npx ts-node prisma/seed-pages.ts     # Seed Home & About pages
-npx prisma generate                  # Regenerate Prisma Client
+npx prisma studio                      # Open database GUI
+npx prisma db push                     # Update database schema
+npx prisma db seed                     # Seed blog/portfolio/talks data
+npx ts-node prisma/seed-home-about.ts  # Seed Home & About pages
+npx ts-node prisma/seed-contact.ts     # Seed Contact page
+npx prisma generate                    # Regenerate Prisma Client
 ```
 
 ### Deploy to Production
@@ -134,6 +135,24 @@ sudo certbot renew --dry-run
 5. **Edit Experiences:** Add/Edit/Delete experience timeline
 6. **Edit Achievements:** Update achievements & contributions
 7. Click "Simpan Perubahan" to save
+
+### Contact Page Management ✨ **NEW!**
+1. Go to `/admin/contact-page`
+2. **Edit Header:** Update page title and description
+3. **Edit Contact Info:** Location, address, operating hours
+4. **Edit Social Media:** Add/Edit/Delete platforms with icons
+5. **Edit Quick Actions:** Add/Edit/Delete action buttons
+6. **Edit FAQs:** Add/Edit/Delete questions and answers
+7. Click "Simpan Perubahan" to save
+
+### Contact Messages Management ✨ **NEW!**
+1. Go to `/admin/contacts`
+2. **View Statistics:** Total, Unread, Replied counts
+3. **Filter Messages:** All, Unread, Read, Replied
+4. **Select Message:** Click to view details
+5. **Reply via Gmail:** Opens Gmail with pre-filled email
+6. **Mark as Read/Replied:** Update message status
+7. **Delete Message:** Remove unwanted messages
 
 ### Blog Management
 1. **Create:** `/admin/blog` → "Create New Post" button
@@ -254,9 +273,13 @@ WEB3FORMS_ACCESS_KEY="your_key_here"
 
 ### Admin Panel
 - **Dashboard:** https://ashrafnaim.my/admin
-- **Home Editor:** https://ashrafnaim.my/admin/home ✨ **NEW!**
-- **About Editor:** https://ashrafnaim.my/admin/about ✨ **NEW!**
+- **Home Editor:** https://ashrafnaim.my/admin/home
+- **About Editor:** https://ashrafnaim.my/admin/about
+- **Contact Page Editor:** https://ashrafnaim.my/admin/contact-page ✨ **NEW!**
 - **Blog Posts:** https://ashrafnaim.my/admin/blog
+- **Portfolio:** https://ashrafnaim.my/admin/portfolio
+- **Talks:** https://ashrafnaim.my/admin/talks
+- **Contacts Messages:** https://ashrafnaim.my/admin/contacts ✨ **NEW!**
 - **Settings:** https://ashrafnaim.my/admin/settings
 
 ---
@@ -274,28 +297,31 @@ WEB3FORMS_ACCESS_KEY="your_key_here"
 ## 🚀 Priority Todo List
 
 ### ✅ Recently Completed
+- [x] Contact Management System with full CRUD
+- [x] Contact Page CMS with editable sections
+- [x] Gmail compose integration for replies
 - [x] Home page database-driven CMS with admin editor
 - [x] About page database-driven CMS with admin editor
-- [x] Dynamic forms with Add/Edit/Delete functionality
+- [x] Portfolio & Talks management complete
 - [x] Blog view count real-time tracking
 - [x] Admin password change feature
 
 ### Immediate (This Week)
 - [ ] Change admin password from default
-- [ ] Test new Home & About page editors
-- [ ] Update content via admin panel
+- [ ] Test Contact Page editor
+- [ ] Reply to contact messages via Gmail
+- [ ] Update social media links and FAQs
 
 ### Short Term (This Month)
-- [ ] Add Portfolio CRUD in admin panel
-- [ ] Add Talks CRUD in admin panel
-- [ ] Add Contact messages viewer
-- [ ] Implement image upload
+- [ ] Rich text editor for blog/FAQs
+- [ ] Implement image upload system
+- [ ] Categories & tags management UI
 
 ### Medium Term (Next Month)
-- [ ] Rich text editor for blog
-- [ ] Categories & tags management UI
 - [ ] Search functionality
 - [ ] Dark mode toggle
+- [ ] Email notifications for new messages
+- [ ] Export contacts to CSV
 
 ### Long Term (Future)
 - [ ] Comments system
@@ -313,11 +339,11 @@ WEB3FORMS_ACCESS_KEY="your_key_here"
 3. **SSL auto-renews** via certbot timer (no manual action needed)
 4. **Nginx logs** at `/var/log/nginx/` if need to debug
 5. **Use Prisma Studio** for quick database edits (safer than raw SQL)
-6. **View counts update** on each blog post visit automatically
-7. **Blog listing** now shows real-time view counts (dynamic rendering)
-8. **Home & About pages** now editable via admin panel - no code changes needed! ✨
-9. **Job title on homepage** has gradient color emphasis for better visibility
-10. **Dynamic forms** make it easy to add/edit/delete stats, skills, achievements, etc.
+6. **Contact messages** save to both database and Web3Forms (dual system)
+7. **Gmail integration** opens compose window with pre-filled email for quick replies
+8. **All CMS pages** (Home, About, Contact) are database-driven - edit via admin panel
+9. **Contact Page** sections (social media, FAQs) have Add/Edit/Delete functionality
+10. **Dynamic forms** throughout admin panel make content management easy
 
 ---
 
