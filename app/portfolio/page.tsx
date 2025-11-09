@@ -4,6 +4,7 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { ExternalLink } from 'lucide-react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { prisma } from '@/lib/prisma';
 
 export const metadata: Metadata = {
@@ -77,23 +78,42 @@ export default async function PortfolioPage() {
       ) : (
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-7xl mx-auto">
           {projects.map((project) => (
-            <Card key={project.id} className="hover:shadow-lg transition-all hover:-translate-y-1">
-              <CardHeader>
-                <div className="flex items-start justify-between mb-2">
+            <Card key={project.id} className="hover:shadow-lg transition-all hover:-translate-y-1 overflow-hidden">
+              {/* Project Image or Icon */}
+              {project.images.length > 0 ? (
+                <div className="relative w-full h-48 bg-muted">
+                  <Image
+                    src={project.images[0]}
+                    alt={project.title}
+                    fill
+                    className="object-cover"
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                  />
+                  <div className="absolute top-4 right-4">
+                    <Badge variant="secondary">{project.category}</Badge>
+                  </div>
+                </div>
+              ) : (
+                <div
+                  className="w-full h-48 flex items-center justify-center"
+                  style={{
+                    background: project.color
+                      ? `linear-gradient(135deg, ${project.color}, ${project.color}dd)`
+                      : 'linear-gradient(135deg, #3b82f6, #2563eb)'
+                  }}
+                >
                   {project.icon && (
-                    <div
-                      className="w-12 h-12 rounded-lg flex items-center justify-center text-white font-bold text-xl"
-                      style={{
-                        background: project.color
-                          ? `linear-gradient(135deg, ${project.color}, ${project.color}dd)`
-                          : 'linear-gradient(135deg, #3b82f6, #2563eb)'
-                      }}
-                    >
+                    <div className="text-white text-6xl">
                       {project.icon}
                     </div>
                   )}
-                  <Badge variant="secondary">{project.category}</Badge>
+                  <div className="absolute top-4 right-4">
+                    <Badge variant="secondary">{project.category}</Badge>
+                  </div>
                 </div>
+              )}
+
+              <CardHeader>
                 <CardTitle className="text-xl">{project.title}</CardTitle>
               </CardHeader>
               <CardContent>

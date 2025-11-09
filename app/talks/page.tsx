@@ -12,6 +12,7 @@ import {
   Presentation,
 } from 'lucide-react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { prisma } from '@/lib/prisma';
 
 export const metadata: Metadata = {
@@ -118,7 +119,20 @@ export default async function TalksPage() {
               });
 
               return (
-                <Card key={talk.id} className="hover:shadow-lg transition-shadow">
+                <Card key={talk.id} className="hover:shadow-lg transition-shadow overflow-hidden">
+                  {/* Talk Image */}
+                  {talk.images.length > 0 && (
+                    <div className="relative w-full h-48 bg-muted">
+                      <Image
+                        src={talk.images[0]}
+                        alt={talk.title}
+                        fill
+                        className="object-cover"
+                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                      />
+                    </div>
+                  )}
+
                   <CardContent className="pt-6">
                     <div className="flex flex-col md:flex-row gap-6">
                       <div className="flex-shrink-0">
@@ -211,11 +225,27 @@ export default async function TalksPage() {
               });
 
               return (
-                <Card key={talk.id} className="hover:shadow-lg transition-shadow">
+                <Card key={talk.id} className="hover:shadow-lg transition-shadow overflow-hidden">
+                  {/* Talk Image */}
+                  {talk.images.length > 0 && (
+                    <div className="relative w-full h-48 bg-muted">
+                      <Image
+                        src={talk.images[0]}
+                        alt={talk.title}
+                        fill
+                        className="object-cover"
+                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                      />
+                      <div className="absolute top-4 right-4">
+                        <Badge variant="outline" className="bg-white/90 backdrop-blur-sm">{talk.type}</Badge>
+                      </div>
+                    </div>
+                  )}
+
                   <CardHeader>
                     <div className="flex items-center justify-between mb-2">
                       <Badge variant="secondary">{dateString}</Badge>
-                      <Badge variant="outline">{talk.type}</Badge>
+                      {talk.images.length === 0 && <Badge variant="outline">{talk.type}</Badge>}
                     </div>
                     <CardTitle className="text-lg">{talk.title}</CardTitle>
                   </CardHeader>
