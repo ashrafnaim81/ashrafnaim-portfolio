@@ -235,3 +235,34 @@ model AboutPage {
   updatedAt DateTime @updatedAt
   createdAt DateTime @default(now())
 }
+
+// Contact Page Content
+model ContactPage {
+  id String @id @default(cuid())
+
+  // Header Section
+  pageTitle       String
+  pageDescription String
+
+  // Contact Information
+  locationTitle    String
+  locationAddress  String
+  operatingHours   String
+
+  // Social Media Links (JSON array)
+  socialMedia String // [{platform: "Facebook", name: "@ashraf.naim.9", url: "https://..."}, ...]
+
+  // Quick Actions (JSON array)
+  quickActions String // [{title: "...", description: "...", link: "...", icon: "..."}, ...]
+
+  // Response Time
+  responseTime     String
+  responseTimeDesc String
+
+  // FAQs (JSON array)
+  faqs String // [{question: "...", answer: "..."}, ...]
+
+  published Boolean  @default(true)
+  updatedAt DateTime @updatedAt
+  createdAt DateTime @default(now())
+}

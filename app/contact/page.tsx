@@ -1,35 +1,75 @@
 import { Metadata } from 'next';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
 import {
   Mail,
   MapPin,
-  Phone,
-  Send,
-  MessageSquare,
   Calendar,
   Facebook,
   Youtube,
   Linkedin,
+  MessageSquare,
+  Phone,
+  Link as LinkIcon,
 } from 'lucide-react';
 import Link from 'next/link';
 import ContactForm from '@/components/contact-form';
+import { prisma } from '@/lib/prisma';
 
 export const metadata: Metadata = {
   title: 'Contact - Ts. Ashraf bin Naim',
   description: 'Hubungi Ts. Ashraf bin Naim untuk kerjasama, bengkel, atau perkongsian ilmu',
 };
 
-export default function ContactPage() {
+// Force dynamic rendering
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
+
+// Icon mapping helper
+const getIcon = (iconName: string) => {
+  const icons: any = {
+    Facebook,
+    Youtube,
+    Linkedin,
+    Calendar,
+    MessageSquare,
+    Mail,
+    Phone,
+    Link: LinkIcon,
+  };
+  return icons[iconName] || LinkIcon;
+};
+
+export default async function ContactPage() {
+  // Fetch contact page data from database
+  const contactPage = await prisma.contactPage.findFirst({
+    where: { published: true },
+    orderBy: { createdAt: 'desc' },
+  });
+
+  // Parse JSON fields
+  const socialMedia = contactPage ? JSON.parse(contactPage.socialMedia) : [];
+  const quickActions = contactPage ? JSON.parse(contactPage.quickActions) : [];
+  const faqs = contactPage ? JSON.parse(contactPage.faqs) : [];
+
+  // Fallback data if no contact page found
+  const pageData = contactPage || {
+    pageTitle: 'Hubungi Saya',
+    pageDescription: 'Berminat untuk kerjasama, bengkel, atau sekadar berbincang tentang AI & EdTech? Saya sedia untuk membantu.',
+    locationTitle: 'Pejabat Pendidikan Daerah Kluang',
+    locationAddress: 'Johor, Malaysia',
+    operatingHours: 'Isnin - Jumaat\n8:00 AM - 5:00 PM',
+    responseTime: '24-48h',
+    responseTimeDesc: 'Purata masa respons untuk semua pertanyaan',
+  };
+
   return (
     <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
       {/* Header */}
       <div className="text-center mb-12">
-        <h1 className="text-4xl md:text-5xl font-bold mb-4">Hubungi Saya</h1>
+        <h1 className="text-4xl md:text-5xl font-bold mb-4">{pageData.pageTitle}</h1>
         <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-          Berminat untuk kerjasama, bengkel, atau sekadar berbincang tentang
-          AI & EdTech? Saya sedia untuk membantu.
+          {pageData.pageDescription}
         </p>
       </div>
 
@@ -61,10 +101,10 @@ export default function ContactPage() {
                 <MapPin className="h-5 w-5 text-primary mt-0.5" />
                 <div>
                   <p className="font-medium">Lokasi</p>
-                  <p className="text-sm text-muted-foreground">
-                    Pejabat Pendidikan Daerah Kluang
-                    <br />
-                    Johor, Malaysia
+                  <p className="text-sm text-muted-foreground whitespace-pre-line">
+                    {pageData.locationTitle}
+                    {'\n'}
+                    {pageData.locationAddress}
                   </p>
                 </div>
               </div>
@@ -73,10 +113,8 @@ export default function ContactPage() {
                 <Calendar className="h-5 w-5 text-primary mt-0.5" />
                 <div>
                   <p className="font-medium">Waktu Operasi</p>
-                  <p className="text-sm text-muted-foreground">
-                    Isnin - Jumaat
-                    <br />
-                    8:00 AM - 5:00 PM
+                  <p className="text-sm text-muted-foreground whitespace-pre-line">
+                    {pageData.operatingHours}
                   </p>
                 </div>
               </div>
@@ -84,77 +122,67 @@ export default function ContactPage() {
           </Card>
 
           {/* Social Media */}
-          <Card>
-            <CardHeader>
-              <CardTitle>Media Sosial</CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-3">
-              <Link
-                href="https://www.facebook.com/ashraf.naim.9/"
-                target="_blank"
-                className="flex items-center gap-3 p-3 rounded-lg border hover:bg-accent transition-colors"
-              >
-                <Facebook className="h-5 w-5 text-blue-600" />
-                <div className="flex-1">
-                  <p className="font-medium">Facebook</p>
-                  <p className="text-xs text-muted-foreground">@ashraf.naim.9</p>
-                </div>
-              </Link>
-
-              <Link
-                href="https://www.youtube.com/c/AshrafNaim"
-                target="_blank"
-                className="flex items-center gap-3 p-3 rounded-lg border hover:bg-accent transition-colors"
-              >
-                <Youtube className="h-5 w-5 text-red-600" />
-                <div className="flex-1">
-                  <p className="font-medium">YouTube</p>
-                  <p className="text-xs text-muted-foreground">@AshrafNaim</p>
-                </div>
-              </Link>
-
-              <Link
-                href="https://www.linkedin.com/in/AshrafNaim81/"
-                target="_blank"
-                className="flex items-center gap-3 p-3 rounded-lg border hover:bg-accent transition-colors"
-              >
-                <Linkedin className="h-5 w-5 text-blue-700" />
-                <div className="flex-1">
-                  <p className="font-medium">LinkedIn</p>
-                  <p className="text-xs text-muted-foreground">@AshrafNaim81</p>
-                </div>
-              </Link>
-            </CardContent>
-          </Card>
+          {socialMedia.length > 0 && (
+            <Card>
+              <CardHeader>
+                <CardTitle>Media Sosial</CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-3">
+                {socialMedia.map((social: any, index: number) => {
+                  const Icon = getIcon(social.icon);
+                  return (
+                    <Link
+                      key={index}
+                      href={social.url}
+                      target="_blank"
+                      className="flex items-center gap-3 p-3 rounded-lg border hover:bg-accent transition-colors"
+                    >
+                      <Icon className={`h-5 w-5 ${social.color}`} />
+                      <div className="flex-1">
+                        <p className="font-medium">{social.platform}</p>
+                        <p className="text-xs text-muted-foreground">{social.name}</p>
+                      </div>
+                    </Link>
+                  );
+                })}
+              </CardContent>
+            </Card>
+          )}
 
           {/* Quick Actions */}
-          <Card className="bg-muted">
-            <CardContent className="pt-6">
-              <h3 className="font-semibold mb-3">Tindakan Pantas</h3>
-              <div className="space-y-2">
-                <Button asChild variant="outline" className="w-full justify-start">
-                  <Link href="/talks">
-                    <Calendar className="mr-2 h-4 w-4" />
-                    Jemput untuk Bengkel
-                  </Link>
-                </Button>
-                <Button asChild variant="outline" className="w-full justify-start">
-                  <Link href="/portfolio">
-                    <MessageSquare className="mr-2 h-4 w-4" />
-                    Kerjasama Projek
-                  </Link>
-                </Button>
-              </div>
-            </CardContent>
-          </Card>
+          {quickActions.length > 0 && (
+            <Card className="bg-muted">
+              <CardContent className="pt-6">
+                <h3 className="font-semibold mb-3">Tindakan Pantas</h3>
+                <div className="space-y-2">
+                  {quickActions.map((action: any, index: number) => {
+                    const Icon = getIcon(action.icon);
+                    return (
+                      <Button
+                        key={index}
+                        asChild
+                        variant="outline"
+                        className="w-full justify-start"
+                      >
+                        <Link href={action.link}>
+                          <Icon className="mr-2 h-4 w-4" />
+                          {action.title}
+                        </Link>
+                      </Button>
+                    );
+                  })}
+                </div>
+              </CardContent>
+            </Card>
+          )}
 
           {/* Response Time */}
           <Card className="bg-primary text-primary-foreground">
             <CardContent className="pt-6">
               <div className="text-center">
-                <div className="text-4xl font-bold mb-2">24-48h</div>
+                <div className="text-4xl font-bold mb-2">{pageData.responseTime}</div>
                 <p className="text-sm opacity-90">
-                  Purata masa respons untuk semua pertanyaan
+                  {pageData.responseTimeDesc}
                 </p>
               </div>
             </CardContent>
@@ -163,40 +191,23 @@ export default function ContactPage() {
       </div>
 
       {/* FAQ Section */}
-      <div className="mt-16 max-w-4xl mx-auto">
-        <h2 className="text-3xl font-bold mb-6 text-center">Soalan Lazim</h2>
-        <div className="grid md:grid-cols-2 gap-6">
-          {faqs.map((faq, index) => (
-            <Card key={index}>
-              <CardHeader>
-                <CardTitle className="text-lg">{faq.question}</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p className="text-sm text-muted-foreground">{faq.answer}</p>
-              </CardContent>
-            </Card>
-          ))}
+      {faqs.length > 0 && (
+        <div className="mt-16 max-w-4xl mx-auto">
+          <h2 className="text-3xl font-bold mb-6 text-center">Soalan Lazim</h2>
+          <div className="grid md:grid-cols-2 gap-6">
+            {faqs.map((faq: any, index: number) => (
+              <Card key={index}>
+                <CardHeader>
+                  <CardTitle className="text-lg">{faq.question}</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <p className="text-sm text-muted-foreground">{faq.answer}</p>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
         </div>
-      </div>
+      )}
     </div>
   );
 }
-
-const faqs = [
-  {
-    question: 'Berapa kos untuk bengkel?',
-    answer: 'Kos bergantung pada jenis bengkel, durasi, dan lokasi. Hubungi saya untuk quotation yang lebih tepat. Untuk sekolah kerajaan, ada kemudahan khas.',
-  },
-  {
-    question: 'Bolehkah mengadakan bengkel online?',
-    answer: 'Ya, saya menyediakan bengkel secara online melalui Google Meet atau Microsoft Teams. Format sama effective seperti face-to-face.',
-  },
-  {
-    question: 'Apa topik bengkel yang popular?',
-    answer: 'Topik paling popular adalah AI dalam Pendidikan (ChatGPT, Canva AI), Google Workspace automation, dan Microsoft Teams untuk pembelajaran.',
-  },
-  {
-    question: 'Berapa lama advance notice diperlukan?',
-    answer: 'Idealnya 2-3 minggu advance notice untuk booking bengkel. Walaubagaimanapun, untuk slot urgent, boleh berbincang.',
-  },
-];

@@ -18,15 +18,39 @@ export default function ContactForm() {
 
     const formData = new FormData(e.currentTarget);
 
+    // Extract form values for database
+    const contactData = {
+      name: formData.get('name') as string,
+      email: formData.get('email') as string,
+      phone: formData.get('phone') as string || '',
+      organization: formData.get('organization') as string || '',
+      subject: formData.get('subject') as string,
+      message: formData.get('message') as string,
+    };
+
     try {
-      const response = await fetch('https://api.web3forms.com/submit', {
+      // Step 1: Save to database
+      const dbResponse = await fetch('/api/contacts', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(contactData),
+      });
+
+      if (!dbResponse.ok) {
+        throw new Error('Failed to save to database');
+      }
+
+      // Step 2: Send to Web3Forms
+      const web3Response = await fetch('https://api.web3forms.com/submit', {
         method: 'POST',
         body: formData,
       });
 
-      const data = await response.json();
+      const web3Data = await web3Response.json();
 
-      if (data.success) {
+      if (web3Data.success) {
         setSubmitStatus('success');
         (e.target as HTMLFormElement).reset();
 
@@ -35,8 +59,12 @@ export default function ContactForm() {
           setSubmitStatus('idle');
         }, 5000);
       } else {
-        setSubmitStatus('error');
-        setErrorMessage(data.message || 'Ada masalah menghantar mesej. Sila cuba lagi.');
+        // Database saved but Web3Forms failed - still consider it success
+        setSubmitStatus('success');
+        (e.target as HTMLFormElement).reset();
+        setTimeout(() => {
+          setSubmitStatus('idle');
+        }, 5000);
       }
     } catch (error) {
       setSubmitStatus('error');
