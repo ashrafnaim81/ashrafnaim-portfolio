@@ -11,6 +11,7 @@ import { Badge } from '@/components/ui/badge';
 import { ArrowLeft, Save, Eye } from 'lucide-react';
 import Link from 'next/link';
 import RichTextEditor from '@/components/rich-text-editor';
+import ImageUpload from '@/components/image-upload';
 
 const blogSchema = z.object({
   title: z.string().min(1, 'Title is required'),
@@ -268,14 +269,13 @@ export default function BlogForm({ initialData, isEdit = false }: BlogFormProps)
               <CardTitle>Featured Image</CardTitle>
             </CardHeader>
             <CardContent>
-              <input
-                type="text"
-                {...register('coverImage')}
-                className="w-full px-4 py-2 border rounded-md bg-background focus:outline-none focus:ring-2 focus:ring-primary"
-                placeholder="Image URL..."
+              <ImageUpload
+                value={watch('coverImage') || ''}
+                onChange={(url) => setValue('coverImage', url)}
+                onRemove={() => setValue('coverImage', '')}
               />
               <p className="text-xs text-muted-foreground mt-2">
-                Enter image URL or upload (feature coming soon)
+                Upload gambar untuk cover article (max 5MB)
               </p>
             </CardContent>
           </Card>
