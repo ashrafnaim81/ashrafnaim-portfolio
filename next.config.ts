@@ -6,7 +6,7 @@ const nextConfig: NextConfig = {
   },
   experimental: {
     serverActions: {
-      bodySizeLimit: '2mb',
+      bodySizeLimit: '10mb', // Increased to support image uploads up to 5MB + overhead
     },
   },
 };
