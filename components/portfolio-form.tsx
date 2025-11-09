@@ -8,6 +8,7 @@ import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Loader2, Save, Trash2, X, Plus } from 'lucide-react';
+import ImageUpload from '@/components/image-upload';
 
 interface PortfolioProject {
   id?: string;
@@ -54,7 +55,6 @@ export default function PortfolioForm({ project, mode }: PortfolioFormProps) {
   });
 
   const [tagInput, setTagInput] = useState('');
-  const [imageInput, setImageInput] = useState('');
 
   // Auto-generate slug from title
   useEffect(() => {
@@ -154,16 +154,6 @@ export default function PortfolioForm({ project, mode }: PortfolioFormProps) {
       ...formData,
       tags: formData.tags.filter((tag) => tag !== tagToRemove),
     });
-  };
-
-  const addImage = () => {
-    if (imageInput.trim() && !formData.images.includes(imageInput.trim())) {
-      setFormData({
-        ...formData,
-        images: [...formData.images, imageInput.trim()],
-      });
-      setImageInput('');
-    }
   };
 
   const removeImage = (imageToRemove: string) => {
@@ -381,48 +371,53 @@ export default function PortfolioForm({ project, mode }: PortfolioFormProps) {
 
           <div className="space-y-2">
             <Label>Project Images</Label>
-            <div className="flex gap-2">
-              <Input
-                value={imageInput}
-                onChange={(e) => setImageInput(e.target.value)}
-                onKeyPress={(e) => {
-                  if (e.key === 'Enter') {
-                    e.preventDefault();
-                    addImage();
-                  }
-                }}
-                placeholder="Add image URL"
-                disabled={isLoading}
-              />
-              <Button
-                type="button"
-                onClick={addImage}
-                disabled={isLoading || !imageInput.trim()}
-                variant="outline"
-              >
-                <Plus className="h-4 w-4" />
-              </Button>
-            </div>
+            <p className="text-sm text-muted-foreground mb-2">
+              Upload images for your project gallery
+            </p>
             {formData.images.length > 0 && (
-              <div className="space-y-2 mt-2">
+              <div className="space-y-4 mb-4">
                 {formData.images.map((img, index) => (
-                  <div
-                    key={index}
-                    className="flex items-center gap-2 p-2 border rounded"
-                  >
-                    <span className="text-sm flex-1 truncate">{img}</span>
-                    <button
-                      type="button"
-                      onClick={() => removeImage(img)}
-                      disabled={isLoading}
-                      className="text-destructive hover:text-destructive/80"
-                    >
-                      <X className="h-4 w-4" />
-                    </button>
+                  <div key={index} className="space-y-2">
+                    <div className="flex items-center justify-between">
+                      <span className="text-sm font-medium">Image {index + 1}</span>
+                      <Button
+                        type="button"
+                        onClick={() => removeImage(img)}
+                        disabled={isLoading}
+                        variant="destructive"
+                        size="sm"
+                      >
+                        <X className="h-4 w-4" />
+                      </Button>
+                    </div>
+                    <ImageUpload
+                      value={img}
+                      onChange={(url) => {
+                        const newImages = [...formData.images];
+                        newImages[index] = url;
+                        setFormData({ ...formData, images: newImages });
+                      }}
+                      onRemove={() => removeImage(img)}
+                    />
                   </div>
                 ))}
               </div>
             )}
+            <Button
+              type="button"
+              onClick={() => {
+                setFormData({
+                  ...formData,
+                  images: [...formData.images, ''],
+                });
+              }}
+              disabled={isLoading}
+              variant="outline"
+              className="w-full"
+            >
+              <Plus className="h-4 w-4 mr-2" />
+              Add Image
+            </Button>
           </div>
         </CardContent>
       </Card>
