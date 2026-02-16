@@ -9,27 +9,8 @@ const nextConfig: NextConfig = {
       bodySizeLimit: '10mb',
     },
   },
-  async headers() {
-    return [
-      {
-        source: '/(.*)',
-        headers: [
-          { key: 'X-Frame-Options', value: 'DENY' },
-          { key: 'X-Content-Type-Options', value: 'nosniff' },
-          { key: 'Referrer-Policy', value: 'strict-origin-when-cross-origin' },
-          { key: 'X-XSS-Protection', value: '1; mode=block' },
-          {
-            key: 'Strict-Transport-Security',
-            value: 'max-age=31536000; includeSubDomains',
-          },
-          {
-            key: 'Permissions-Policy',
-            value: 'camera=(), microphone=(), geolocation=()',
-          },
-        ],
-      },
-    ];
-  },
+  // Security headers are configured in Nginx (not here)
+  // due to Next.js 15.5.x compatibility issue with async headers()
 };
 
 export default nextConfig;
