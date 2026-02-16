@@ -4,13 +4,8 @@ const nextConfig: NextConfig = {
   images: {
     unoptimized: true,
   },
-  experimental: {
-    serverActions: {
-      bodySizeLimit: '10mb',
-    },
-  },
-  // Security headers are configured in Nginx (not here)
-  // due to Next.js 15.5.x compatibility issue with async headers()
+  // Security headers configured in Nginx
+  // experimental.serverActions removed - causes POST hang on Next.js 15.5.x
 };
 
 export default nextConfig;
