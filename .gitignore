@@ -47,4 +47,21 @@ Thumbs.db
 *.tar.gz
 DEPLOYMENT_GUIDE.md
 
+# Security - never commit these
+*.pem
+*.key
+*.p12
+*.pfx
+credentials.json
+
+# Distribution
+portfolio-template.zip
+
+# Screenshots
+Screenshot*
+
+# SQLite database
+prisma/dev.db
+prisma/dev.db-journal
+
 /lib/generated/prisma

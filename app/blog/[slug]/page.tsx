@@ -7,6 +7,7 @@ import { Calendar, Clock, ArrowLeft, Eye, User } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
+import sanitizeHtml from 'sanitize-html';
 
 interface BlogPostPageProps {
   params: Promise<{
@@ -156,7 +157,24 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
         {/* Article Content */}
         <div
           className="prose prose-lg dark:prose-invert max-w-none mb-12"
-          dangerouslySetInnerHTML={{ __html: post.content }}
+          dangerouslySetInnerHTML={{
+            __html: sanitizeHtml(post.content, {
+              allowedTags: sanitizeHtml.defaults.allowedTags.concat([
+                'img', 'iframe', 'video', 'audio', 'source',
+                'h1', 'h2', 'figure', 'figcaption',
+              ]),
+              allowedAttributes: {
+                ...sanitizeHtml.defaults.allowedAttributes,
+                img: ['src', 'alt', 'title', 'width', 'height', 'class', 'style'],
+                iframe: ['src', 'width', 'height', 'frameborder', 'allowfullscreen', 'title'],
+                video: ['src', 'controls', 'width', 'height', 'class'],
+                audio: ['src', 'controls', 'class'],
+                source: ['src', 'type'],
+                '*': ['class', 'id', 'style'],
+              },
+              allowedIframeHostnames: ['www.youtube.com', 'youtube.com', 'player.vimeo.com', 'www.slideshare.net'],
+            }),
+          }}
         />
 
         <hr className="border-t mb-8" />
