@@ -68,3 +68,6 @@ prisma/dev.db-journal
 
 # Design reference (local-only: screenshots + Playwright scripts)
 .design-ref/
+
+# Brainstorming visual companion (local-only)
+.superpowers/
