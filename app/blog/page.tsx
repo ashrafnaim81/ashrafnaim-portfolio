@@ -39,10 +39,11 @@ async function getBlogPosts() {
 }
 
 async function getFeaturedPost() {
-  // Get the most viewed published post as featured
+  // Get the post marked as featured by admin
   const post = await prisma.blogPost.findFirst({
     where: {
       published: true,
+      featured: true,
     },
     include: {
       author: {
@@ -52,9 +53,6 @@ async function getFeaturedPost() {
       },
       category: true,
       tags: true,
-    },
-    orderBy: {
-      views: 'desc',
     },
   });
 

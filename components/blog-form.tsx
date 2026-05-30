@@ -20,6 +20,7 @@ const blogSchema = z.object({
   content: z.string().min(1, 'Content is required'),
   coverImage: z.string().optional(),
   published: z.boolean(),
+  featured: z.boolean(),
   categoryId: z.string().optional(),
 });
 
@@ -55,6 +56,7 @@ export default function BlogForm({ initialData, isEdit = false }: BlogFormProps)
       content: '',
       coverImage: '',
       published: false,
+      featured: false,
       categoryId: '',
     },
   });
@@ -240,6 +242,20 @@ export default function BlogForm({ initialData, isEdit = false }: BlogFormProps)
                   Publish immediately
                 </label>
               </div>
+              <div className="flex items-center gap-2">
+                <input
+                  type="checkbox"
+                  id="featured"
+                  {...register('featured')}
+                  className="w-4 h-4 rounded border-gray-300"
+                />
+                <label htmlFor="featured" className="text-sm font-medium">
+                  Featured Post
+                </label>
+              </div>
+              <p className="text-xs text-muted-foreground">
+                Post yang ditanda Featured akan dipaparkan di bahagian atas halaman Blog.
+              </p>
             </CardContent>
           </Card>
 

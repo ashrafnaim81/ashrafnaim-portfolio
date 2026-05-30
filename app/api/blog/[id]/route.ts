@@ -47,12 +47,12 @@ export async function PUT(
     const { id } = await params;
     const session = await getServerSession(authOptions);
 
-    if (!session || session.user.role !== 'admin') {
+    if (!session?.user?.email || (session.user as any)?.role !== 'admin') {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
     const body = await request.json();
-    const { title, slug, excerpt, content, coverImage, published, categoryId, tagIds } = body;
+    const { title, slug, excerpt, content, coverImage, published, featured, categoryId, tagIds } = body;
 
     // Check if slug already exists (excluding current post)
     if (slug) {
@@ -76,6 +76,14 @@ export async function PUT(
       where: { id },
     });
 
+    // If marking as featured, unfeatured all other posts
+    if (featured) {
+      await prisma.blogPost.updateMany({
+        where: { featured: true, NOT: { id } },
+        data: { featured: false },
+      });
+    }
+
     const post = await prisma.blogPost.update({
       where: { id },
       data: {
@@ -85,6 +93,7 @@ export async function PUT(
         content,
         coverImage,
         published,
+        featured: featured !== undefined ? featured : currentPost?.featured,
         publishedAt: published && !currentPost?.published ? new Date() : currentPost?.publishedAt,
         categoryId: categoryId || null,
         tags: tagIds
@@ -120,7 +129,7 @@ export async function DELETE(
     const { id } = await params;
     const session = await getServerSession(authOptions);
 
-    if (!session || session.user.role !== 'admin') {
+    if (!session?.user?.email || (session.user as any)?.role !== 'admin') {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 

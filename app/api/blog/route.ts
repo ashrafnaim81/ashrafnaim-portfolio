@@ -43,12 +43,12 @@ export async function POST(request: Request) {
   try {
     const session = await getServerSession(authOptions);
 
-    if (!session || session.user.role !== 'admin') {
+    if (!session?.user?.email || (session.user as any)?.role !== 'admin') {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
     const body = await request.json();
-    const { title, slug, excerpt, content, coverImage, published, categoryId, tagIds } = body;
+    const { title, slug, excerpt, content, coverImage, published, featured, categoryId, tagIds } = body;
 
     // Check if slug already exists
     const existingPost = await prisma.blogPost.findUnique({
@@ -62,6 +62,14 @@ export async function POST(request: Request) {
       );
     }
 
+    // If marking as featured, unfeatured all other posts
+    if (featured) {
+      await prisma.blogPost.updateMany({
+        where: { featured: true },
+        data: { featured: false },
+      });
+    }
+
     const post = await prisma.blogPost.create({
       data: {
         title,
@@ -70,8 +78,9 @@ export async function POST(request: Request) {
         content,
         coverImage,
         published: published || false,
+        featured: featured || false,
         publishedAt: published ? new Date() : null,
-        authorId: session.user.id,
+        authorId: (session.user as any).id,
         categoryId: categoryId || null,
         tags: {
           connect: tagIds?.map((id: string) => ({ id })) || [],

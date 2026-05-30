@@ -85,7 +85,7 @@ export default function ContactForm() {
       <CardContent>
         <form onSubmit={handleSubmit} className="space-y-6">
           {/* Web3Forms Access Key */}
-          <input type="hidden" name="access_key" value="092abadc-3a1e-4290-ad39-74f12c17e165" />
+          <input type="hidden" name="access_key" value={process.env.NEXT_PUBLIC_WEB3FORMS_KEY || ''} />
 
           {/* Optional: Redirect after submission */}
           <input type="hidden" name="redirect" value="false" />

@@ -40,6 +40,7 @@ export default async function EditBlogPostPage({
         content: post.content,
         coverImage: post.coverImage || '',
         published: post.published,
+        featured: post.featured,
         categoryId: post.categoryId || '',
       }}
       isEdit

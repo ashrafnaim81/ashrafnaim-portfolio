@@ -76,6 +76,7 @@ model BlogPost {
   content     String
   coverImage  String?
   published   Boolean  @default(false)
+  featured    Boolean  @default(false)
   views       Int      @default(0)
   authorId    String
   author      User     @relation(fields: [authorId], references: [id])

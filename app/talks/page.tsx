@@ -10,6 +10,7 @@ import {
   FileText,
   ExternalLink,
   Presentation,
+  ImageIcon,
 } from 'lucide-react';
 import Link from 'next/link';
 import Image from 'next/image';
@@ -119,85 +120,91 @@ export default async function TalksPage() {
               });
 
               return (
-                <Card key={talk.id} className="hover:shadow-lg transition-shadow overflow-hidden">
-                  {/* Talk Image */}
-                  {talk.images.length > 0 && (
-                    <div className="relative w-full h-48 bg-muted">
-                      <Image
-                        src={talk.images[0]}
-                        alt={talk.title}
-                        fill
-                        className="object-cover"
-                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                      />
-                    </div>
-                  )}
-
-                  <CardContent className="pt-6">
-                    <div className="flex flex-col md:flex-row gap-6">
-                      <div className="flex-shrink-0">
-                        <div className="w-20 h-20 rounded-lg bg-gradient-to-br from-primary to-secondary flex items-center justify-center text-white">
-                          <div className="text-center">
-                            <div className="text-2xl font-bold">{day}</div>
-                            <div className="text-xs">{month}</div>
+                <Link key={talk.id} href={`/talks/${talk.id}`}>
+                  <Card className="hover:shadow-lg transition-shadow overflow-hidden cursor-pointer">
+                    {/* Talk Image */}
+                    {talk.images.length > 0 && (
+                      <div className="relative w-full h-56 bg-muted">
+                        <Image
+                          src={talk.images[0]}
+                          alt={talk.title}
+                          fill
+                          className="object-cover"
+                          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                        />
+                        {talk.images.length > 1 && (
+                          <div className="absolute bottom-3 right-3">
+                            <Badge variant="secondary" className="bg-black/70 text-white border-0">
+                              <ImageIcon className="h-3 w-3 mr-1" />
+                              {talk.images.length} gambar
+                            </Badge>
                           </div>
-                        </div>
+                        )}
                       </div>
+                    )}
 
-                      <div className="flex-1">
-                        <div className="flex items-start justify-between mb-2">
-                          <div>
-                            <h3 className="text-xl font-semibold mb-2">{talk.title}</h3>
-                            <div className="flex flex-wrap gap-2 mb-3">
-                              <Badge>{talk.type}</Badge>
-                              <Badge variant="outline">{talk.status}</Badge>
+                    <CardContent className="pt-6">
+                      <div className="flex flex-col md:flex-row gap-6">
+                        <div className="flex-shrink-0">
+                          <div className="w-20 h-20 rounded-lg bg-gradient-to-br from-primary to-secondary flex items-center justify-center text-white">
+                            <div className="text-center">
+                              <div className="text-2xl font-bold">{day}</div>
+                              <div className="text-xs">{month}</div>
                             </div>
                           </div>
                         </div>
 
-                        <div className="space-y-2 text-sm text-muted-foreground mb-4">
-                          <div className="flex items-center gap-2">
-                            <Calendar className="h-4 w-4" />
-                            <span>{dateString}</span>
+                        <div className="flex-1">
+                          <div className="flex items-start justify-between mb-2">
+                            <div>
+                              <h3 className="text-xl font-semibold mb-2">{talk.title}</h3>
+                              <div className="flex flex-wrap gap-2 mb-3">
+                                <Badge>{talk.type}</Badge>
+                                <Badge variant="outline">{talk.status}</Badge>
+                              </div>
+                            </div>
                           </div>
-                          {talk.venue && (
-                            <div className="flex items-center gap-2">
-                              <MapPin className="h-4 w-4" />
-                              <span>{talk.venue}, {talk.location}</span>
-                            </div>
-                          )}
-                          {talk.audience && (
-                            <div className="flex items-center gap-2">
-                              <Users className="h-4 w-4" />
-                              <span>{talk.audience}</span>
-                            </div>
-                          )}
-                        </div>
 
-                        <p className="text-muted-foreground mb-4">{talk.description}</p>
+                          <div className="space-y-2 text-sm text-muted-foreground mb-4">
+                            <div className="flex items-center gap-2">
+                              <Calendar className="h-4 w-4" />
+                              <span>{dateString}</span>
+                            </div>
+                            {talk.venue && (
+                              <div className="flex items-center gap-2">
+                                <MapPin className="h-4 w-4" />
+                                <span>{talk.venue}, {talk.location}</span>
+                              </div>
+                            )}
+                            {talk.audience && (
+                              <div className="flex items-center gap-2">
+                                <Users className="h-4 w-4" />
+                                <span>{talk.audience}</span>
+                              </div>
+                            )}
+                          </div>
 
-                        <div className="flex gap-2">
-                          {talk.slides && (
-                            <Button variant="outline" size="sm" asChild>
-                              <Link href={talk.slides} target="_blank">
-                                <FileText className="h-4 w-4 mr-1" />
+                          <p className="text-muted-foreground mb-4 line-clamp-2">{talk.description}</p>
+
+                          <div className="flex gap-2">
+                            {talk.slides && (
+                              <Badge variant="outline">
+                                <FileText className="h-3 w-3 mr-1" />
                                 Slides
-                              </Link>
-                            </Button>
-                          )}
-                          {talk.recording && (
-                            <Button size="sm" asChild>
-                              <Link href={talk.recording} target="_blank">
-                                Daftar Sekarang
-                                <ExternalLink className="ml-2 h-4 w-4" />
-                              </Link>
-                            </Button>
-                          )}
+                              </Badge>
+                            )}
+                            {talk.recording && (
+                              <Badge variant="outline">
+                                <Video className="h-3 w-3 mr-1" />
+                                Recording
+                              </Badge>
+                            )}
+                          </div>
                         </div>
                       </div>
-                    </div>
-                  </CardContent>
-                </Card>
+                    </CardContent>
+                  </Card>
+                </Link>
               );
             })}
           </div>
@@ -225,68 +232,74 @@ export default async function TalksPage() {
               });
 
               return (
-                <Card key={talk.id} className="hover:shadow-lg transition-shadow overflow-hidden">
-                  {/* Talk Image */}
-                  {talk.images.length > 0 && (
-                    <div className="relative w-full h-48 bg-muted">
-                      <Image
-                        src={talk.images[0]}
-                        alt={talk.title}
-                        fill
-                        className="object-cover"
-                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                      />
-                      <div className="absolute top-4 right-4">
-                        <Badge variant="outline" className="bg-white/90 backdrop-blur-sm">{talk.type}</Badge>
+                <Link key={talk.id} href={`/talks/${talk.id}`}>
+                  <Card className="hover:shadow-lg transition-all hover:-translate-y-1 overflow-hidden cursor-pointer h-full">
+                    {/* Talk Image */}
+                    {talk.images.length > 0 && (
+                      <div className="relative w-full h-56 bg-muted">
+                        <Image
+                          src={talk.images[0]}
+                          alt={talk.title}
+                          fill
+                          className="object-cover"
+                          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                        />
+                        <div className="absolute top-4 right-4">
+                          <Badge variant="outline" className="bg-white/90 backdrop-blur-sm">{talk.type}</Badge>
+                        </div>
+                        {talk.images.length > 1 && (
+                          <div className="absolute bottom-3 right-3">
+                            <Badge variant="secondary" className="bg-black/70 text-white border-0">
+                              <ImageIcon className="h-3 w-3 mr-1" />
+                              {talk.images.length} gambar
+                            </Badge>
+                          </div>
+                        )}
                       </div>
-                    </div>
-                  )}
+                    )}
 
-                  <CardHeader>
-                    <div className="flex items-center justify-between mb-2">
-                      <Badge variant="secondary">{dateString}</Badge>
-                      {talk.images.length === 0 && <Badge variant="outline">{talk.type}</Badge>}
-                    </div>
-                    <CardTitle className="text-lg">{talk.title}</CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <div className="space-y-2 text-sm text-muted-foreground mb-4">
-                      {talk.venue && (
-                        <div className="flex items-center gap-2">
-                          <MapPin className="h-4 w-4" />
-                          <span>{talk.venue}, {talk.location}</span>
-                        </div>
-                      )}
-                      {talk.participants && (
-                        <div className="flex items-center gap-2">
-                          <Users className="h-4 w-4" />
-                          <span>{talk.participants} peserta</span>
-                        </div>
-                      )}
-                    </div>
+                    <CardHeader>
+                      <div className="flex items-center justify-between mb-2">
+                        <Badge variant="secondary">{dateString}</Badge>
+                        {talk.images.length === 0 && <Badge variant="outline">{talk.type}</Badge>}
+                      </div>
+                      <CardTitle className="text-lg">{talk.title}</CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                      <div className="space-y-2 text-sm text-muted-foreground mb-4">
+                        {talk.venue && (
+                          <div className="flex items-center gap-2">
+                            <MapPin className="h-4 w-4" />
+                            <span>{talk.venue}, {talk.location}</span>
+                          </div>
+                        )}
+                        {talk.participants && (
+                          <div className="flex items-center gap-2">
+                            <Users className="h-4 w-4" />
+                            <span>{talk.participants} peserta</span>
+                          </div>
+                        )}
+                      </div>
 
-                    <p className="text-sm text-muted-foreground mb-4">{talk.description}</p>
+                      <p className="text-sm text-muted-foreground mb-4 line-clamp-2">{talk.description}</p>
 
-                    <div className="flex gap-2">
-                      {talk.slides && (
-                        <Button variant="outline" size="sm" asChild>
-                          <Link href={talk.slides} target="_blank">
-                            <FileText className="h-4 w-4 mr-1" />
+                      <div className="flex gap-2">
+                        {talk.slides && (
+                          <Badge variant="outline">
+                            <FileText className="h-3 w-3 mr-1" />
                             Slides
-                          </Link>
-                        </Button>
-                      )}
-                      {talk.recording && (
-                        <Button variant="outline" size="sm" asChild>
-                          <Link href={talk.recording} target="_blank">
-                            <Video className="h-4 w-4 mr-1" />
+                          </Badge>
+                        )}
+                        {talk.recording && (
+                          <Badge variant="outline">
+                            <Video className="h-3 w-3 mr-1" />
                             Recording
-                          </Link>
-                        </Button>
-                      )}
-                    </div>
-                  </CardContent>
-                </Card>
+                          </Badge>
+                        )}
+                      </div>
+                    </CardContent>
+                  </Card>
+                </Link>
               );
             })}
           </div>
