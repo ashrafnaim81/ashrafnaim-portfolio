@@ -2,7 +2,13 @@
 
 import type { ReactNode } from 'react';
 import { motion, useReducedMotion } from 'framer-motion';
-import { staggerContainer, staggerItem, staggerItemReduced, VIEWPORT } from './tokens';
+import {
+  staggerContainer,
+  staggerItem,
+  staggerItemHero,
+  staggerItemReduced,
+  VIEWPORT,
+} from './tokens';
 
 export function Stagger({
   children,
@@ -33,13 +39,20 @@ export function Stagger({
 export function StaggerItem({
   children,
   className,
+  expressive = false,
 }: {
   children: ReactNode;
   className?: string;
+  expressive?: boolean;
 }) {
   const reduce = useReducedMotion();
+  const variants = reduce
+    ? staggerItemReduced
+    : expressive
+      ? staggerItemHero
+      : staggerItem;
   return (
-    <motion.div className={className} variants={reduce ? staggerItemReduced : staggerItem}>
+    <motion.div className={className} variants={variants}>
       {children}
     </motion.div>
   );
