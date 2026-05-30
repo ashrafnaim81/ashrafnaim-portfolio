@@ -57,3 +57,43 @@
     @apply bg-background text-foreground;
   }
 }
+
+/* Hover lift untuk kad (CSS sahaja; hormat reduced-motion) */
+@media (prefers-reduced-motion: no-preference) {
+  .hover-lift {
+    transition: transform 0.25s cubic-bezier(0.22, 0.61, 0.36, 1),
+      box-shadow 0.25s ease;
+  }
+  .hover-lift:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 18px 40px hsl(var(--secondary) / 0.45);
+  }
+}
+
+/* Teks gradient shimmer (job title hero) — gerak perlahan berterusan.
+   Jalur cahaya terang (putih) menyapu merentas teks supaya kilauan jelas. */
+.text-shimmer {
+  background-image: linear-gradient(
+    100deg,
+    hsl(var(--primary)) 0%,
+    hsl(var(--secondary)) 30%,
+    hsl(0 0% 100%) 50%,
+    hsl(var(--secondary)) 70%,
+    hsl(var(--primary)) 100%
+  );
+  background-size: 250% auto;
+  background-position: 100% center;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .text-shimmer {
+    animation: text-shimmer 6s linear infinite;
+  }
+}
+@keyframes text-shimmer {
+  to {
+    background-position: -150% center;
+  }
+}

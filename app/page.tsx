@@ -11,6 +11,10 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { prisma } from '@/lib/prisma';
+import { Reveal } from '@/components/motion/reveal';
+import { Stagger, StaggerItem } from '@/components/motion/stagger';
+import { CountUp } from '@/components/motion/count-up';
+import { ScrollIndicator } from '@/components/motion/scroll-indicator';
 
 // Force dynamic rendering
 export const dynamic = 'force-dynamic';
@@ -56,38 +60,48 @@ export default async function HomePage() {
       <section className="relative py-20 md:py-32 bg-gradient-to-b from-primary/5 to-background">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid md:grid-cols-2 gap-12 items-center">
-            <div className="space-y-6">
-              <Badge className="w-fit">
-                <Sparkles className="w-3 h-3 mr-1" />
-                Teknologis Profesional MBOT
-              </Badge>
+            <Stagger trigger="load" className="space-y-6">
+              <StaggerItem expressive>
+                <Badge className="w-fit">
+                  <Sparkles className="w-3 h-3 mr-1" />
+                  Teknologis Profesional MBOT
+                </Badge>
+              </StaggerItem>
 
-              <h1 className="text-4xl md:text-6xl font-bold tracking-tight">
-                {data.heroTitle}
-              </h1>
+              <StaggerItem expressive>
+                <h1 className="text-4xl md:text-6xl font-bold tracking-tight">
+                  {data.heroTitle}
+                </h1>
+              </StaggerItem>
 
-              <p className="text-xl font-semibold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
-                {data.heroJobTitle}
-              </p>
+              <StaggerItem expressive>
+                <p className="text-xl font-semibold text-shimmer">
+                  {data.heroJobTitle}
+                </p>
+              </StaggerItem>
 
-              <p className="text-lg text-muted-foreground leading-relaxed">
-                {data.heroDescription}
-              </p>
+              <StaggerItem expressive>
+                <p className="text-lg text-muted-foreground leading-relaxed">
+                  {data.heroDescription}
+                </p>
+              </StaggerItem>
 
-              <div className="flex flex-col sm:flex-row gap-4">
-                <Button asChild size="lg">
-                  <Link href="/contact">
-                    Hubungi Saya
-                    <ArrowRight className="ml-2 h-4 w-4" />
-                  </Link>
-                </Button>
-                <Button asChild variant="outline" size="lg">
-                  <Link href="/about">Lihat Profil Lengkap</Link>
-                </Button>
-              </div>
-            </div>
+              <StaggerItem expressive>
+                <div className="flex flex-col sm:flex-row gap-4">
+                  <Button asChild size="lg">
+                    <Link href="/contact">
+                      Hubungi Saya
+                      <ArrowRight className="ml-2 h-4 w-4" />
+                    </Link>
+                  </Button>
+                  <Button asChild variant="outline" size="lg">
+                    <Link href="/about">Lihat Profil Lengkap</Link>
+                  </Button>
+                </div>
+              </StaggerItem>
+            </Stagger>
 
-            <div className="relative aspect-[3/4] max-w-md mx-auto">
+            <Reveal className="relative aspect-[3/4] max-w-md mx-auto">
               <div className="absolute inset-0 bg-gradient-to-r from-primary to-secondary rounded-full opacity-20 blur-3xl" />
               <div className="relative rounded-2xl overflow-hidden border-2 border-primary/20 shadow-2xl">
                 {data.heroImage && (
@@ -101,24 +115,26 @@ export default async function HomePage() {
                   />
                 )}
               </div>
-            </div>
+            </Reveal>
           </div>
         </div>
+
+        <ScrollIndicator className="absolute bottom-6 left-1/2 hidden -translate-x-1/2 flex-col items-center gap-1 md:flex" />
       </section>
 
       {/* Stats Section */}
       <section className="py-12 border-y bg-card">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+          <Stagger trigger="scroll" className="grid grid-cols-2 md:grid-cols-4 gap-8">
             {data.stats.map((stat: any, index: number) => (
-              <div key={index} className="text-center">
+              <StaggerItem key={index} className="text-center">
                 <p className={`text-4xl font-bold ${index % 2 === 0 ? 'text-primary' : 'text-secondary'}`}>
-                  {stat.value}
+                  <CountUp value={String(stat.value)} />
                 </p>
                 <p className="text-sm text-muted-foreground mt-2">{stat.label}</p>
-              </div>
+              </StaggerItem>
             ))}
-          </div>
+          </Stagger>
         </div>
       </section>
 
@@ -132,25 +148,27 @@ export default async function HomePage() {
             </p>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-6">
+          <Stagger trigger="scroll" className="grid md:grid-cols-3 gap-6">
             {data.achievements.map((achievement: any, index: number) => {
               const Icon = iconMap[achievement.icon] || Award;
               return (
-                <Card key={index} className="hover:shadow-lg transition-shadow">
-                  <CardHeader>
-                    <Icon className={`h-10 w-10 ${index % 2 === 0 ? 'text-primary' : 'text-secondary'} mb-2`} />
-                    <h3 className="font-semibold">{achievement.title}</h3>
-                    <p className="text-sm text-muted-foreground">{achievement.period}</p>
-                  </CardHeader>
-                  <CardContent>
-                    <p className="text-sm text-muted-foreground">
-                      {achievement.description}
-                    </p>
-                  </CardContent>
-                </Card>
+                <StaggerItem key={index}>
+                  <Card className="h-full hover-lift">
+                    <CardHeader>
+                      <Icon className={`h-10 w-10 ${index % 2 === 0 ? 'text-primary' : 'text-secondary'} mb-2`} />
+                      <h3 className="font-semibold">{achievement.title}</h3>
+                      <p className="text-sm text-muted-foreground">{achievement.period}</p>
+                    </CardHeader>
+                    <CardContent>
+                      <p className="text-sm text-muted-foreground">
+                        {achievement.description}
+                      </p>
+                    </CardContent>
+                  </Card>
+                </StaggerItem>
               );
             })}
-          </div>
+          </Stagger>
         </div>
       </section>
 
@@ -164,25 +182,27 @@ export default async function HomePage() {
             </p>
           </div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <Stagger trigger="scroll" className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             {data.skills.map((skill: any, index: number) => (
-              <Card key={index} className="hover:shadow-md transition-shadow">
-                <CardHeader>
-                  <h3 className="font-semibold text-lg">{skill.name}</h3>
-                  <Badge variant="secondary" className="w-fit">{skill.level}</Badge>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-sm text-muted-foreground">{skill.description}</p>
-                </CardContent>
-              </Card>
+              <StaggerItem key={index}>
+                <Card className="h-full hover-lift">
+                  <CardHeader>
+                    <h3 className="font-semibold text-lg">{skill.name}</h3>
+                    <Badge variant="secondary" className="w-fit">{skill.level}</Badge>
+                  </CardHeader>
+                  <CardContent>
+                    <p className="text-sm text-muted-foreground">{skill.description}</p>
+                  </CardContent>
+                </Card>
+              </StaggerItem>
             ))}
-          </div>
+          </Stagger>
         </div>
       </section>
 
       {/* CTA Section */}
       <section className="py-20 bg-primary text-primary-foreground">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <Reveal className="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="text-3xl md:text-4xl font-bold mb-4">{data.ctaTitle}</h2>
           <p className="text-lg mb-8 max-w-2xl mx-auto opacity-90">
             {data.ctaDescription}
@@ -203,7 +223,7 @@ export default async function HomePage() {
               <Link href="/portfolio">Lihat Portfolio</Link>
             </Button>
           </div>
-        </div>
+        </Reveal>
       </section>
     </div>
   );
