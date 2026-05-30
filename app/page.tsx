@@ -13,6 +13,8 @@ import { Badge } from '@/components/ui/badge';
 import { prisma } from '@/lib/prisma';
 import { Reveal } from '@/components/motion/reveal';
 import { Stagger, StaggerItem } from '@/components/motion/stagger';
+import { CountUp } from '@/components/motion/count-up';
+import { ScrollIndicator } from '@/components/motion/scroll-indicator';
 
 // Force dynamic rendering
 export const dynamic = 'force-dynamic';
@@ -59,32 +61,32 @@ export default async function HomePage() {
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid md:grid-cols-2 gap-12 items-center">
             <Stagger trigger="load" className="space-y-6">
-              <StaggerItem>
+              <StaggerItem expressive>
                 <Badge className="w-fit">
                   <Sparkles className="w-3 h-3 mr-1" />
                   Teknologis Profesional MBOT
                 </Badge>
               </StaggerItem>
 
-              <StaggerItem>
+              <StaggerItem expressive>
                 <h1 className="text-4xl md:text-6xl font-bold tracking-tight">
                   {data.heroTitle}
                 </h1>
               </StaggerItem>
 
-              <StaggerItem>
-                <p className="text-xl font-semibold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
+              <StaggerItem expressive>
+                <p className="text-xl font-semibold text-shimmer">
                   {data.heroJobTitle}
                 </p>
               </StaggerItem>
 
-              <StaggerItem>
+              <StaggerItem expressive>
                 <p className="text-lg text-muted-foreground leading-relaxed">
                   {data.heroDescription}
                 </p>
               </StaggerItem>
 
-              <StaggerItem>
+              <StaggerItem expressive>
                 <div className="flex flex-col sm:flex-row gap-4">
                   <Button asChild size="lg">
                     <Link href="/contact">
@@ -116,6 +118,8 @@ export default async function HomePage() {
             </Reveal>
           </div>
         </div>
+
+        <ScrollIndicator className="absolute bottom-6 left-1/2 hidden -translate-x-1/2 flex-col items-center gap-1 md:flex" />
       </section>
 
       {/* Stats Section */}
@@ -125,7 +129,7 @@ export default async function HomePage() {
             {data.stats.map((stat: any, index: number) => (
               <StaggerItem key={index} className="text-center">
                 <p className={`text-4xl font-bold ${index % 2 === 0 ? 'text-primary' : 'text-secondary'}`}>
-                  {stat.value}
+                  <CountUp value={String(stat.value)} />
                 </p>
                 <p className="text-sm text-muted-foreground mt-2">{stat.label}</p>
               </StaggerItem>
