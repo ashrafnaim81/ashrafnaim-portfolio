@@ -89,7 +89,7 @@
 }
 @media (prefers-reduced-motion: no-preference) {
   .text-shimmer {
-    animation: text-shimmer 3s linear infinite;
+    animation: text-shimmer 6s linear infinite;
   }
 }
 @keyframes text-shimmer {
