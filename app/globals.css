@@ -71,26 +71,29 @@
 }
 
 /* Teks gradient shimmer (job title hero) — gerak perlahan berterusan.
-   Gradient 3-hentian (primary -> secondary -> primary) supaya gelung mulus. */
+   Jalur cahaya terang (putih) menyapu merentas teks supaya kilauan jelas. */
 .text-shimmer {
   background-image: linear-gradient(
-    90deg,
-    hsl(var(--primary)),
-    hsl(var(--secondary)),
-    hsl(var(--primary))
+    100deg,
+    hsl(var(--primary)) 0%,
+    hsl(var(--secondary)) 30%,
+    hsl(0 0% 100%) 50%,
+    hsl(var(--secondary)) 70%,
+    hsl(var(--primary)) 100%
   );
-  background-size: 200% auto;
+  background-size: 250% auto;
+  background-position: 100% center;
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
 }
 @media (prefers-reduced-motion: no-preference) {
   .text-shimmer {
-    animation: text-shimmer 4s linear infinite;
+    animation: text-shimmer 3s linear infinite;
   }
 }
 @keyframes text-shimmer {
   to {
-    background-position: 200% center;
+    background-position: -150% center;
   }
 }
