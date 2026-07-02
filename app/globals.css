@@ -4,48 +4,53 @@
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
+    /* Premium Tech — light-first. Latar putih-sejuk berona biru, dakwat navy. */
+    --background: 220 33% 98%;
+    --foreground: 228 40% 10%;
     --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
+    --card-foreground: 228 40% 10%;
     --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
-    --primary: 221.2 83.2% 53.3%;
+    --popover-foreground: 228 40% 10%;
+    --primary: 221 90% 52%;
     --primary-foreground: 210 40% 98%;
-    --secondary: 280 100% 70%;
+    --secondary: 262 85% 58%;
     --secondary-foreground: 210 40% 98%;
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
+    --muted: 220 25% 94%;
+    --muted-foreground: 226 15% 42%;
+    --accent: 220 30% 93%;
+    --accent-foreground: 228 40% 10%;
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 210 40% 98%;
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 221.2 83.2% 53.3%;
-    --radius: 0.5rem;
+    --border: 224 25% 88%;
+    --input: 224 25% 88%;
+    --ring: 221 90% 52%;
+    --radius: 0.75rem;
+    /* Warna cahaya (glow/aurora ke-3) — cyan elektrik */
+    --glow: 199 95% 48%;
   }
 
   .dark {
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
-    --card: 222.2 84% 4.9%;
-    --card-foreground: 210 40% 98%;
-    --popover: 222.2 84% 4.9%;
-    --popover-foreground: 210 40% 98%;
-    --primary: 217.2 91.2% 59.8%;
-    --primary-foreground: 222.2 47.4% 11.2%;
-    --secondary: 280 100% 70%;
-    --secondary-foreground: 210 40% 98%;
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
-    --accent: 217.2 32.6% 17.5%;
-    --accent-foreground: 210 40% 98%;
+    /* Navy-hitam dalam, bukan hitam pekat */
+    --background: 228 30% 6%;
+    --foreground: 220 30% 96%;
+    --card: 228 28% 9%;
+    --card-foreground: 220 30% 96%;
+    --popover: 228 28% 8%;
+    --popover-foreground: 220 30% 96%;
+    --primary: 221 95% 64%;
+    --primary-foreground: 228 40% 10%;
+    --secondary: 262 90% 70%;
+    --secondary-foreground: 228 40% 10%;
+    --muted: 228 20% 14%;
+    --muted-foreground: 222 15% 68%;
+    --accent: 228 20% 14%;
+    --accent-foreground: 220 30% 96%;
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 210 40% 98%;
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 224.3 76.3% 48%;
+    --border: 228 20% 16%;
+    --input: 228 20% 16%;
+    --ring: 221 95% 64%;
+    --glow: 199 95% 60%;
   }
 }
 
@@ -56,28 +61,55 @@
   body {
     @apply bg-background text-foreground;
   }
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @apply font-display;
+  }
 }
 
-/* Hover lift untuk kad (CSS sahaja; hormat reduced-motion) */
+@layer utilities {
+  /* Teks gradient statik (logo, penekanan) */
+  .text-gradient {
+    @apply bg-gradient-to-r from-primary via-[hsl(var(--glow))] to-secondary bg-clip-text text-transparent;
+  }
+
+  /* Cincin cahaya untuk foto hero */
+  .glow-ring {
+    box-shadow:
+      0 0 0 1px hsl(var(--primary) / 0.25),
+      0 0 40px hsl(var(--primary) / 0.25),
+      0 0 90px hsl(var(--secondary) / 0.18);
+  }
+}
+
+/* Hover lift untuk kad kaca (CSS sahaja; hormat reduced-motion) */
 @media (prefers-reduced-motion: no-preference) {
   .hover-lift {
-    transition: transform 0.25s cubic-bezier(0.22, 0.61, 0.36, 1),
-      box-shadow 0.25s ease;
+    transition:
+      transform 0.25s cubic-bezier(0.22, 0.61, 0.36, 1),
+      box-shadow 0.25s ease,
+      border-color 0.25s ease;
   }
   .hover-lift:hover {
-    transform: translateY(-6px);
-    box-shadow: 0 18px 40px hsl(var(--secondary) / 0.45);
+    transform: translateY(-4px);
+    border-color: hsl(var(--primary) / 0.4);
+    box-shadow:
+      0 12px 32px hsl(var(--primary) / 0.14),
+      0 0 24px hsl(var(--glow) / 0.12);
   }
 }
 
-/* Teks gradient shimmer (job title hero) — gerak perlahan berterusan.
-   Jalur cahaya terang (putih) menyapu merentas teks supaya kilauan jelas. */
+/* Teks gradient shimmer (job title hero) — jalur cahaya menyapu perlahan */
 .text-shimmer {
   background-image: linear-gradient(
     100deg,
     hsl(var(--primary)) 0%,
     hsl(var(--secondary)) 30%,
-    hsl(0 0% 100%) 50%,
+    hsl(var(--glow)) 50%,
     hsl(var(--secondary)) 70%,
     hsl(var(--primary)) 100%
   );
@@ -95,5 +127,35 @@
 @keyframes text-shimmer {
   to {
     background-position: -150% center;
+  }
+}
+
+/* Blob aurora — hanyut perlahan; statik apabila reduced-motion */
+.aurora-blob {
+  position: absolute;
+  border-radius: 9999px;
+  filter: blur(90px);
+  pointer-events: none;
+  will-change: transform;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .aurora-blob {
+    animation: aurora-drift 26s ease-in-out infinite alternate;
+  }
+  .aurora-blob:nth-child(2) {
+    animation-duration: 32s;
+    animation-delay: -8s;
+  }
+  .aurora-blob:nth-child(3) {
+    animation-duration: 38s;
+    animation-delay: -16s;
+  }
+}
+@keyframes aurora-drift {
+  from {
+    transform: translate3d(-6%, -4%, 0) scale(1);
+  }
+  to {
+    transform: translate3d(6%, 8%, 0) scale(1.15);
   }
 }

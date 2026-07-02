@@ -10,9 +10,12 @@ import {
   Calendar,
   CheckCircle2
 } from 'lucide-react';
-import { Card, CardContent, CardHeader } from '@/components/ui/card';
+import { CardContent, CardHeader } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { prisma } from '@/lib/prisma';
+import { GlassCard } from '@/components/futuristic/glass-card';
+import { PageHero } from '@/components/futuristic/page-hero';
+import { SectionHeading } from '@/components/futuristic/section-heading';
 
 export const metadata: Metadata = {
   title: 'About - Ts. Ashraf bin Naim',
@@ -59,22 +62,21 @@ export default async function AboutPage() {
   }
 
   return (
-    <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
-      {/* Header Section */}
-      <div className="max-w-4xl mx-auto">
-        <div className="text-center mb-12">
-          <h1 className="text-4xl md:text-5xl font-bold mb-4">{data.profileTitle}</h1>
-          <p className="text-xl text-muted-foreground">
-            {data.profileSubtitle}
-          </p>
-        </div>
+    <div>
+      <PageHero
+        eyebrow="Profil"
+        title={data.profileTitle}
+        description={data.profileSubtitle}
+      />
 
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 pb-12">
+      <div className="max-w-4xl mx-auto">
         {/* Profile Card */}
-        <Card className="mb-12">
+        <GlassCard className="mb-12">
           <CardContent className="pt-6">
             <div className="grid md:grid-cols-3 gap-8">
               <div className="md:col-span-1">
-                <div className="relative aspect-[3/4] rounded-lg overflow-hidden">
+                <div className="relative aspect-[3/4] rounded-lg overflow-hidden ring-1 ring-primary/25 glow-ring">
                   {data.profileImage && (
                     <Image
                       src={data.profileImage}
@@ -122,18 +124,20 @@ export default async function AboutPage() {
               </div>
             </div>
           </CardContent>
-        </Card>
+        </GlassCard>
 
         {/* Professional Qualifications */}
         <section className="mb-12">
-          <h2 className="text-3xl font-bold mb-6">Kelayakan Profesional</h2>
+          <SectionHeading eyebrow="Kelayakan" title="Kelayakan Profesional" align="left" className="mb-6" />
           <div className="grid md:grid-cols-2 gap-6">
             {data.qualifications.map((qual: any, index: number) => {
               const Icon = iconMap[qual.icon] || Award;
               return (
-                <Card key={index}>
+                <GlassCard key={index}>
                   <CardHeader>
-                    <Icon className={`h-10 w-10 ${index % 2 === 0 ? 'text-primary' : 'text-secondary'} mb-2`} />
+                    <div className={`mb-2 flex h-12 w-12 items-center justify-center rounded-xl ${index % 2 === 0 ? 'bg-primary/10 text-primary' : 'bg-secondary/10 text-secondary'}`}>
+                      <Icon className="h-6 w-6" />
+                    </div>
                     <h3 className="font-semibold text-lg">{qual.title}</h3>
                     <p className="text-sm text-muted-foreground">{qual.subtitle}</p>
                   </CardHeader>
@@ -142,7 +146,7 @@ export default async function AboutPage() {
                       {qual.description}
                     </p>
                   </CardContent>
-                </Card>
+                </GlassCard>
               );
             })}
           </div>
@@ -150,10 +154,10 @@ export default async function AboutPage() {
 
         {/* Expertise Areas */}
         <section className="mb-12">
-          <h2 className="text-3xl font-bold mb-6">Bidang Kepakaran</h2>
+          <SectionHeading eyebrow="Kepakaran" title="Bidang Kepakaran" align="left" className="mb-6" />
           <div className="grid md:grid-cols-3 gap-4">
             {data.expertiseAreas.map((area: any, index: number) => (
-              <div key={index} className="flex items-start gap-3 p-4 rounded-lg border bg-card">
+              <div key={index} className="flex items-start gap-3 p-4 rounded-lg border border-border/70 bg-card/70 backdrop-blur-md hover-lift">
                 <CheckCircle2 className="h-5 w-5 text-primary mt-0.5 flex-shrink-0" />
                 <div>
                   <h4 className="font-medium mb-1">{area.title}</h4>
@@ -166,10 +170,10 @@ export default async function AboutPage() {
 
         {/* Experience Timeline */}
         <section className="mb-12">
-          <h2 className="text-3xl font-bold mb-6">Pengalaman Profesional</h2>
+          <SectionHeading eyebrow="Pengalaman" title="Pengalaman Profesional" align="left" className="mb-6" />
           <div className="space-y-6">
             {data.experiences.map((exp: any, index: number) => (
-              <Card key={index}>
+              <GlassCard key={index}>
                 <CardContent className="pt-6">
                   <div className="flex items-start gap-4">
                     <div className="flex-shrink-0">
@@ -189,15 +193,15 @@ export default async function AboutPage() {
                     </div>
                   </div>
                 </CardContent>
-              </Card>
+              </GlassCard>
             ))}
           </div>
         </section>
 
         {/* Achievements */}
         <section>
-          <h2 className="text-3xl font-bold mb-6">Pencapaian & Sumbangan</h2>
-          <Card>
+          <SectionHeading eyebrow="Pencapaian" title="Pencapaian & Sumbangan" align="left" className="mb-6" />
+          <GlassCard>
             <CardContent className="pt-6">
               <div className="grid md:grid-cols-2 gap-6">
                 {data.achievements.map((achievement: any, index: number) => {
@@ -218,8 +222,9 @@ export default async function AboutPage() {
                 })}
               </div>
             </CardContent>
-          </Card>
+          </GlassCard>
         </section>
+      </div>
       </div>
     </div>
   );

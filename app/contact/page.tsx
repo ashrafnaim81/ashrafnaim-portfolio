@@ -1,6 +1,9 @@
 import { Metadata } from 'next';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
+import { GlassCard } from '@/components/futuristic/glass-card';
+import { PageHero } from '@/components/futuristic/page-hero';
+import { SectionHeading } from '@/components/futuristic/section-heading';
 import {
   Mail,
   MapPin,
@@ -64,15 +67,14 @@ export default async function ContactPage() {
   };
 
   return (
-    <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
-      {/* Header */}
-      <div className="text-center mb-12">
-        <h1 className="text-4xl md:text-5xl font-bold mb-4">{pageData.pageTitle}</h1>
-        <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-          {pageData.pageDescription}
-        </p>
-      </div>
+    <div>
+      <PageHero
+        eyebrow="Hubungi"
+        title={pageData.pageTitle}
+        description={pageData.pageDescription}
+      />
 
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 pb-12">
       <div className="grid lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
         {/* Contact Form */}
         <div className="lg:col-span-2">
@@ -82,7 +84,7 @@ export default async function ContactPage() {
         {/* Contact Info & Social */}
         <div className="space-y-6">
           {/* Contact Details */}
-          <Card>
+          <GlassCard>
             <CardHeader>
               <CardTitle>Maklumat Hubungan</CardTitle>
             </CardHeader>
@@ -119,11 +121,11 @@ export default async function ContactPage() {
                 </div>
               </div>
             </CardContent>
-          </Card>
+          </GlassCard>
 
           {/* Social Media */}
           {socialMedia.length > 0 && (
-            <Card>
+            <GlassCard>
               <CardHeader>
                 <CardTitle>Media Sosial</CardTitle>
               </CardHeader>
@@ -146,12 +148,12 @@ export default async function ContactPage() {
                   );
                 })}
               </CardContent>
-            </Card>
+            </GlassCard>
           )}
 
           {/* Quick Actions */}
           {quickActions.length > 0 && (
-            <Card className="bg-muted">
+            <GlassCard>
               <CardContent className="pt-6">
                 <h3 className="font-semibold mb-3">Tindakan Pantas</h3>
                 <div className="space-y-2">
@@ -173,11 +175,11 @@ export default async function ContactPage() {
                   })}
                 </div>
               </CardContent>
-            </Card>
+            </GlassCard>
           )}
 
           {/* Response Time */}
-          <Card className="bg-primary text-primary-foreground">
+          <Card className="relative overflow-hidden border-0 bg-gradient-to-br from-primary via-primary to-secondary text-primary-foreground">
             <CardContent className="pt-6">
               <div className="text-center">
                 <div className="text-4xl font-bold mb-2">{pageData.responseTime}</div>
@@ -193,21 +195,22 @@ export default async function ContactPage() {
       {/* FAQ Section */}
       {faqs.length > 0 && (
         <div className="mt-16 max-w-4xl mx-auto">
-          <h2 className="text-3xl font-bold mb-6 text-center">Soalan Lazim</h2>
+          <SectionHeading eyebrow="FAQ" title="Soalan Lazim" className="mb-6" />
           <div className="grid md:grid-cols-2 gap-6">
             {faqs.map((faq: any, index: number) => (
-              <Card key={index}>
+              <GlassCard key={index}>
                 <CardHeader>
                   <CardTitle className="text-lg">{faq.question}</CardTitle>
                 </CardHeader>
                 <CardContent>
                   <p className="text-sm text-muted-foreground">{faq.answer}</p>
                 </CardContent>
-              </Card>
+              </GlassCard>
             ))}
           </div>
         </div>
       )}
+      </div>
     </div>
   );
 }

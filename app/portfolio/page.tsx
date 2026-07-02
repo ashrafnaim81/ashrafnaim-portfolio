@@ -1,5 +1,7 @@
 import { Metadata } from 'next';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { GlassCard } from '@/components/futuristic/glass-card';
+import { PageHero } from '@/components/futuristic/page-hero';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { ExternalLink } from 'lucide-react';
@@ -41,16 +43,14 @@ export default async function PortfolioPage() {
   const categories = ['Semua', ...Array.from(new Set(projects.map(p => p.category)))];
 
   return (
-    <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
-      {/* Header */}
-      <div className="text-center mb-12">
-        <h1 className="text-4xl md:text-5xl font-bold mb-4">Portfolio</h1>
-        <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-          Projek dan sistem yang telah dibangunkan untuk memajukan pendidikan
-          melalui teknologi
-        </p>
-      </div>
+    <div>
+      <PageHero
+        eyebrow="Portfolio"
+        title="Portfolio"
+        description="Projek dan sistem yang telah dibangunkan untuk memajukan pendidikan melalui teknologi"
+      />
 
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 pb-12">
       {/* Filter Tabs */}
       {categories.length > 1 && (
         <div className="flex flex-wrap justify-center gap-2 mb-12">
@@ -68,17 +68,17 @@ export default async function PortfolioPage() {
 
       {/* Projects Grid */}
       {projects.length === 0 ? (
-        <Card className="max-w-2xl mx-auto">
+        <GlassCard className="max-w-2xl mx-auto">
           <CardContent className="py-12 text-center">
             <p className="text-muted-foreground">
               No projects available yet. Check back soon!
             </p>
           </CardContent>
-        </Card>
+        </GlassCard>
       ) : (
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-7xl mx-auto">
           {projects.map((project) => (
-            <Card key={project.id} className="hover:shadow-lg transition-all hover:-translate-y-1 overflow-hidden">
+            <GlassCard key={project.id} className="overflow-hidden">
               {/* Project Image or Icon */}
               {project.images.length > 0 ? (
                 <div className="relative w-full h-48 bg-muted">
@@ -150,14 +150,14 @@ export default async function PortfolioPage() {
                   </div>
                 )}
               </CardContent>
-            </Card>
+            </GlassCard>
           ))}
         </div>
       )}
 
       {/* CTA Section */}
       <div className="mt-16 text-center">
-        <Card className="max-w-2xl mx-auto bg-primary text-primary-foreground">
+        <Card className="max-w-2xl mx-auto relative overflow-hidden border-0 bg-gradient-to-br from-primary via-primary to-secondary text-primary-foreground">
           <CardContent className="pt-6">
             <h2 className="text-2xl font-bold mb-2">Ada Projek untuk Saya?</h2>
             <p className="mb-6 opacity-90">
@@ -169,6 +169,7 @@ export default async function PortfolioPage() {
             </Button>
           </CardContent>
         </Card>
+      </div>
       </div>
     </div>
   );

@@ -15,6 +15,9 @@ import {
 import Link from 'next/link';
 import Image from 'next/image';
 import { prisma } from '@/lib/prisma';
+import { GlassCard } from '@/components/futuristic/glass-card';
+import { PageHero } from '@/components/futuristic/page-hero';
+import { SectionHeading } from '@/components/futuristic/section-heading';
 
 export const metadata: Metadata = {
   title: 'Talks & Workshops - Ts. Ashraf bin Naim',
@@ -54,59 +57,57 @@ export default async function TalksPage() {
   const totalParticipants = pastTalks.reduce((sum, talk) => sum + (talk.participants || 0), 0);
   const uniqueLocations = new Set(pastTalks.map((t) => t.location).filter(Boolean)).size;
   return (
-    <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
-      {/* Header */}
-      <div className="text-center mb-12">
-        <h1 className="text-4xl md:text-5xl font-bold mb-4">Talks & Workshops</h1>
-        <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-          Perkongsian ilmu melalui bengkel, ceramah, dan presentation untuk pendidik
-          di seluruh Malaysia
-        </p>
-      </div>
+    <div>
+      <PageHero
+        eyebrow="Talks"
+        title="Talks & Workshops"
+        description="Perkongsian ilmu melalui bengkel, ceramah, dan presentation untuk pendidik di seluruh Malaysia"
+      />
 
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 pb-12">
       {/* Stats */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-4xl mx-auto mb-12">
-        <Card>
+        <GlassCard>
           <CardContent className="pt-6 text-center">
             <Presentation className="h-8 w-8 mx-auto text-primary mb-2" />
-            <p className="text-3xl font-bold text-primary">{totalTalks > 0 ? `${totalTalks}+` : '0'}</p>
+            <p className="font-display text-3xl font-bold text-primary">{totalTalks > 0 ? `${totalTalks}+` : '0'}</p>
             <p className="text-sm text-muted-foreground">Bengkel & Ceramah</p>
           </CardContent>
-        </Card>
-        <Card>
+        </GlassCard>
+        <GlassCard>
           <CardContent className="pt-6 text-center">
             <Users className="h-8 w-8 mx-auto text-secondary mb-2" />
-            <p className="text-3xl font-bold text-secondary">{totalParticipants > 0 ? `${totalParticipants.toLocaleString()}+` : '0'}</p>
+            <p className="font-display text-3xl font-bold text-secondary">{totalParticipants > 0 ? `${totalParticipants.toLocaleString()}+` : '0'}</p>
             <p className="text-sm text-muted-foreground">Peserta Terlatih</p>
           </CardContent>
-        </Card>
-        <Card>
+        </GlassCard>
+        <GlassCard>
           <CardContent className="pt-6 text-center">
             <MapPin className="h-8 w-8 mx-auto text-primary mb-2" />
-            <p className="text-3xl font-bold text-primary">{uniqueLocations > 0 ? `${uniqueLocations}+` : '0'}</p>
+            <p className="font-display text-3xl font-bold text-primary">{uniqueLocations > 0 ? `${uniqueLocations}+` : '0'}</p>
             <p className="text-sm text-muted-foreground">Sekolah Dilawati</p>
           </CardContent>
-        </Card>
-        <Card>
+        </GlassCard>
+        <GlassCard>
           <CardContent className="pt-6 text-center">
             <Video className="h-8 w-8 mx-auto text-secondary mb-2" />
-            <p className="text-3xl font-bold text-secondary">4.9/5</p>
+            <p className="font-display text-3xl font-bold text-secondary">4.9/5</p>
             <p className="text-sm text-muted-foreground">Rating Peserta</p>
           </CardContent>
-        </Card>
+        </GlassCard>
       </div>
 
       {/* Upcoming Talks */}
       <section className="mb-16 max-w-4xl mx-auto">
-        <h2 className="text-3xl font-bold mb-6">Bengkel & Ceramah Akan Datang</h2>
+        <SectionHeading eyebrow="Akan Datang" title="Bengkel & Ceramah Akan Datang" align="left" className="mb-6" />
         {upcomingTalks.length === 0 ? (
-          <Card>
+          <GlassCard>
             <CardContent className="py-12 text-center">
               <p className="text-muted-foreground">
                 Tiada bengkel atau ceramah akan datang buat masa ini. Sila semak kembali kemudian.
               </p>
             </CardContent>
-          </Card>
+          </GlassCard>
         ) : (
           <div className="space-y-4">
             {upcomingTalks.map((talk) => {
@@ -121,7 +122,7 @@ export default async function TalksPage() {
 
               return (
                 <Link key={talk.id} href={`/talks/${talk.id}`}>
-                  <Card className="hover:shadow-lg transition-shadow overflow-hidden cursor-pointer">
+                  <GlassCard className="overflow-hidden cursor-pointer">
                     {/* Talk Image */}
                     {talk.images.length > 0 && (
                       <div className="relative w-full h-56 bg-muted">
@@ -203,7 +204,7 @@ export default async function TalksPage() {
                         </div>
                       </div>
                     </CardContent>
-                  </Card>
+                  </GlassCard>
                 </Link>
               );
             })}
@@ -213,15 +214,15 @@ export default async function TalksPage() {
 
       {/* Past Talks */}
       <section className="mb-16 max-w-6xl mx-auto">
-        <h2 className="text-3xl font-bold mb-6">Bengkel & Ceramah Lepas</h2>
+        <SectionHeading eyebrow="Arkib" title="Bengkel & Ceramah Lepas" align="left" className="mb-6" />
         {pastTalks.length === 0 ? (
-          <Card>
+          <GlassCard>
             <CardContent className="py-12 text-center">
               <p className="text-muted-foreground">
                 Tiada rekod bengkel atau ceramah lepas buat masa ini.
               </p>
             </CardContent>
-          </Card>
+          </GlassCard>
         ) : (
           <div className="grid md:grid-cols-2 gap-6">
             {pastTalks.map((talk) => {
@@ -233,7 +234,7 @@ export default async function TalksPage() {
 
               return (
                 <Link key={talk.id} href={`/talks/${talk.id}`}>
-                  <Card className="hover:shadow-lg transition-all hover:-translate-y-1 overflow-hidden cursor-pointer h-full">
+                  <GlassCard className="overflow-hidden cursor-pointer h-full">
                     {/* Talk Image */}
                     {talk.images.length > 0 && (
                       <div className="relative w-full h-56 bg-muted">
@@ -298,7 +299,7 @@ export default async function TalksPage() {
                         )}
                       </div>
                     </CardContent>
-                  </Card>
+                  </GlassCard>
                 </Link>
               );
             })}
@@ -308,10 +309,10 @@ export default async function TalksPage() {
 
       {/* Topics */}
       <section className="mb-16 max-w-4xl mx-auto">
-        <h2 className="text-3xl font-bold mb-6">Topik Bengkel & Ceramah</h2>
+        <SectionHeading eyebrow="Topik" title="Topik Bengkel & Ceramah" align="left" className="mb-6" />
         <div className="grid md:grid-cols-2 gap-4">
           {topics.map((topic, index) => (
-            <Card key={index}>
+            <GlassCard key={index}>
               <CardContent className="pt-6">
                 <div className="flex items-start gap-4">
                   <div className={`text-4xl ${topic.color}`}>{topic.icon}</div>
@@ -321,14 +322,14 @@ export default async function TalksPage() {
                   </div>
                 </div>
               </CardContent>
-            </Card>
+            </GlassCard>
           ))}
         </div>
       </section>
 
       {/* CTA */}
       <div className="max-w-2xl mx-auto">
-        <Card className="bg-primary text-primary-foreground">
+        <Card className="relative overflow-hidden border-0 bg-gradient-to-br from-primary via-primary to-secondary text-primary-foreground">
           <CardContent className="pt-6 text-center">
             <h2 className="text-2xl font-bold mb-2">Jemput Saya untuk Bengkel</h2>
             <p className="mb-6 opacity-90">
@@ -342,6 +343,7 @@ export default async function TalksPage() {
             </div>
           </CardContent>
         </Card>
+      </div>
       </div>
     </div>
   );

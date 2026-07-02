@@ -1,9 +1,11 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Calendar, Clock, ArrowRight, Search, Eye } from 'lucide-react';
+import { GlassCard } from '@/components/futuristic/glass-card';
+import { PageHero } from '@/components/futuristic/page-hero';
 import { prisma } from '@/lib/prisma';
 import { format } from 'date-fns';
 
@@ -66,15 +68,14 @@ export default async function BlogPage() {
   ]);
 
   return (
-    <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
-      {/* Header */}
-      <div className="text-center mb-12">
-        <h1 className="text-4xl md:text-5xl font-bold mb-4">Blog</h1>
-        <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-          Perkongsian ilmu tentang AI, EdTech, dan transformasi digital dalam pendidikan
-        </p>
-      </div>
+    <div>
+      <PageHero
+        eyebrow="Blog"
+        title="Blog"
+        description="Perkongsian ilmu tentang AI, EdTech, dan transformasi digital dalam pendidikan"
+      />
 
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 pb-12">
       {/* Search & Filter */}
       <div className="max-w-4xl mx-auto mb-12">
         <div className="flex flex-col sm:flex-row gap-4">
@@ -83,7 +84,7 @@ export default async function BlogPage() {
             <input
               type="text"
               placeholder="Cari artikel..."
-              className="w-full pl-10 pr-4 py-2 border rounded-md bg-background"
+              className="w-full rounded-full border border-border/70 bg-card/70 py-2 pl-10 pr-4 backdrop-blur-md transition-shadow focus:outline-none focus:ring-2 focus:ring-ring/50"
             />
           </div>
           <div className="flex gap-2">
@@ -104,7 +105,7 @@ export default async function BlogPage() {
       {featuredPost && (
         <div className="max-w-4xl mx-auto mb-12">
           <Link href={`/blog/${featuredPost.slug}`}>
-            <Card className="overflow-hidden hover:shadow-xl transition-shadow">
+            <GlassCard className="overflow-hidden">
               <div className="grid md:grid-cols-2">
                 <div className="bg-gradient-to-br from-primary to-secondary p-8 flex items-center justify-center">
                   <div className="text-white text-center">
@@ -141,7 +142,7 @@ export default async function BlogPage() {
                   </Button>
                 </CardContent>
               </div>
-            </Card>
+            </GlassCard>
           </Link>
         </div>
       )}
@@ -151,17 +152,17 @@ export default async function BlogPage() {
         <h2 className="text-2xl font-bold mb-6">Artikel Terkini</h2>
 
         {posts.length === 0 ? (
-          <Card className="py-12">
+          <GlassCard className="py-12">
             <CardContent className="text-center">
               <p className="text-muted-foreground">Tiada artikel diterbitkan lagi.</p>
               <p className="text-sm text-muted-foreground mt-2">Sila semak semula kemudian.</p>
             </CardContent>
-          </Card>
+          </GlassCard>
         ) : (
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
             {posts.filter((post) => post.id !== featuredPost?.id).map((post) => (
               <Link key={post.id} href={`/blog/${post.slug}`}>
-                <Card className="hover:shadow-lg transition-all hover:-translate-y-1 h-full">
+                <GlassCard className="h-full">
                   <CardHeader>
                     <div className="flex items-center gap-2 text-sm text-muted-foreground mb-3">
                       <Calendar className="h-4 w-4" />
@@ -192,7 +193,7 @@ export default async function BlogPage() {
                       <ArrowRight className="ml-2 h-4 w-4" />
                     </Button>
                   </CardContent>
-                </Card>
+                </GlassCard>
               </Link>
             ))}
           </div>
@@ -209,7 +210,7 @@ export default async function BlogPage() {
 
       {/* Newsletter CTA */}
       <div className="mt-16 max-w-2xl mx-auto">
-        <Card className="bg-muted">
+        <GlassCard>
           <CardContent className="pt-6 text-center">
             <h3 className="text-2xl font-bold mb-2">Langgan Newsletter</h3>
             <p className="text-muted-foreground mb-6">
@@ -220,12 +221,13 @@ export default async function BlogPage() {
               <input
                 type="email"
                 placeholder="Email anda..."
-                className="flex-1 px-4 py-2 border rounded-md bg-background"
+                className="flex-1 rounded-full border border-border/70 bg-background/70 px-4 py-2 focus:outline-none focus:ring-2 focus:ring-ring/50"
               />
-              <Button>Langgan</Button>
+              <Button className="rounded-full">Langgan</Button>
             </div>
           </CardContent>
-        </Card>
+        </GlassCard>
+      </div>
       </div>
     </div>
   );

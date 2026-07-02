@@ -9,7 +9,12 @@ export default {
   ],
   theme: {
     extend: {
+      fontFamily: {
+        sans: ['var(--font-inter)', 'system-ui', 'sans-serif'],
+        display: ['var(--font-space-grotesk)', 'var(--font-inter)', 'sans-serif'],
+      },
       colors: {
+        glow: 'hsl(var(--glow))',
         background: 'hsl(var(--background))',
         foreground: 'hsl(var(--foreground))',
         card: {

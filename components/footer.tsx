@@ -3,11 +3,15 @@ import { Facebook, Youtube, Linkedin, Mail } from 'lucide-react';
 
 export default function Footer() {
   return (
-    <footer className="border-t bg-background">
+    <footer className="relative mt-16 bg-muted/40 dark:bg-card/40">
+      <div
+        aria-hidden
+        className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-primary/60 to-transparent"
+      />
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           <div className="md:col-span-2">
-            <h3 className="text-lg font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent mb-3">
+            <h3 className="text-lg font-bold text-gradient mb-3">
               Ts. Ashraf bin Naim
             </h3>
             <p className="text-sm text-muted-foreground mb-4 max-w-md">
