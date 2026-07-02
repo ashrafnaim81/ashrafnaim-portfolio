@@ -4,53 +4,53 @@
 
 @layer base {
   :root {
-    /* Premium Tech — light-first. Latar putih-sejuk berona biru, dakwat navy. */
-    --background: 220 33% 98%;
-    --foreground: 228 40% 10%;
+    /* Graphite × Gold — light-first. Putih gading hangat, grafit, aksen emas. */
+    --background: 42 30% 98%;
+    --foreground: 225 15% 12%;
     --card: 0 0% 100%;
-    --card-foreground: 228 40% 10%;
+    --card-foreground: 225 15% 12%;
     --popover: 0 0% 100%;
-    --popover-foreground: 228 40% 10%;
-    --primary: 221 90% 52%;
-    --primary-foreground: 210 40% 98%;
-    --secondary: 262 85% 58%;
-    --secondary-foreground: 210 40% 98%;
-    --muted: 220 25% 94%;
-    --muted-foreground: 226 15% 42%;
-    --accent: 220 30% 93%;
-    --accent-foreground: 228 40% 10%;
+    --popover-foreground: 225 15% 12%;
+    --primary: 225 12% 16%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 40 90% 35%;
+    --secondary-foreground: 0 0% 100%;
+    --muted: 40 22% 94%;
+    --muted-foreground: 225 10% 40%;
+    --accent: 40 22% 93%;
+    --accent-foreground: 225 15% 12%;
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 210 40% 98%;
-    --border: 224 25% 88%;
-    --input: 224 25% 88%;
-    --ring: 221 90% 52%;
+    --border: 40 18% 86%;
+    --input: 40 18% 86%;
+    --ring: 40 85% 38%;
     --radius: 0.75rem;
-    /* Warna cahaya (glow/aurora ke-3) — cyan elektrik */
-    --glow: 199 95% 48%;
+    /* Warna cahaya (glow/aurora/beam) — emas terang */
+    --glow: 46 95% 45%;
   }
 
   .dark {
-    /* Navy-hitam dalam, bukan hitam pekat */
-    --background: 228 30% 6%;
-    --foreground: 220 30% 96%;
-    --card: 228 28% 9%;
-    --card-foreground: 220 30% 96%;
-    --popover: 228 28% 8%;
-    --popover-foreground: 220 30% 96%;
-    --primary: 221 95% 64%;
-    --primary-foreground: 228 40% 10%;
-    --secondary: 262 90% 70%;
-    --secondary-foreground: 228 40% 10%;
-    --muted: 228 20% 14%;
-    --muted-foreground: 222 15% 68%;
-    --accent: 228 20% 14%;
-    --accent-foreground: 220 30% 96%;
+    /* Hitam grafit hangat, bukan hitam pekat; emas lebih terang untuk kontras */
+    --background: 225 12% 6%;
+    --foreground: 42 20% 94%;
+    --card: 225 10% 9%;
+    --card-foreground: 42 20% 94%;
+    --popover: 225 10% 8%;
+    --popover-foreground: 42 20% 94%;
+    --primary: 42 25% 92%;
+    --primary-foreground: 225 12% 8%;
+    --secondary: 44 92% 55%;
+    --secondary-foreground: 225 12% 8%;
+    --muted: 225 8% 14%;
+    --muted-foreground: 40 12% 68%;
+    --accent: 225 8% 14%;
+    --accent-foreground: 42 20% 94%;
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 210 40% 98%;
-    --border: 228 20% 16%;
-    --input: 228 20% 16%;
-    --ring: 221 95% 64%;
-    --glow: 199 95% 60%;
+    --border: 225 8% 16%;
+    --input: 225 8% 16%;
+    --ring: 44 92% 55%;
+    --glow: 48 100% 58%;
   }
 }
 
@@ -77,12 +77,12 @@
     @apply bg-gradient-to-r from-primary via-[hsl(var(--glow))] to-secondary bg-clip-text text-transparent;
   }
 
-  /* Cincin cahaya untuk foto hero */
+  /* Cincin cahaya untuk foto hero — emas */
   .glow-ring {
     box-shadow:
-      0 0 0 1px hsl(var(--primary) / 0.25),
-      0 0 40px hsl(var(--primary) / 0.25),
-      0 0 90px hsl(var(--secondary) / 0.18);
+      0 0 0 1px hsl(var(--glow) / 0.3),
+      0 0 40px hsl(var(--glow) / 0.28),
+      0 0 90px hsl(var(--secondary) / 0.2);
   }
 }
 
