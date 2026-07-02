@@ -5,6 +5,7 @@ import { ThemeProvider } from '@/components/theme-provider';
 import SessionProvider from '@/components/providers/session-provider';
 import Navigation from '@/components/navigation';
 import Footer from '@/components/footer';
+import { ScrollProgress } from '@/components/futuristic/scroll-progress';
 
 const inter = Inter({
   subsets: ['latin'],
@@ -63,6 +64,7 @@ export default function RootLayout({
             disableTransitionOnChange
           >
             <div className="flex min-h-screen flex-col">
+              <ScrollProgress />
               <Navigation />
               <main className="flex-1">{children}</main>
               <Footer />

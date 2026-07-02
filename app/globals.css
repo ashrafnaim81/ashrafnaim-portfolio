@@ -159,3 +159,159 @@
     transform: translate3d(6%, 8%, 0) scale(1.15);
   }
 }
+
+/* ===== Lapisan "wow" ===== */
+
+/* Cip terapung di sekeliling foto hero */
+@media (prefers-reduced-motion: no-preference) {
+  .float-chip {
+    animation: chip-float 5s ease-in-out infinite;
+  }
+}
+@keyframes chip-float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+/* Marquee kemahiran — kandungan diduakan; gerak 50% = satu kitaran penuh */
+@media (prefers-reduced-motion: no-preference) {
+  .marquee-track {
+    animation: marquee-scroll 28s linear infinite;
+  }
+  .marquee:hover .marquee-track {
+    animation-play-state: paused;
+  }
+}
+@keyframes marquee-scroll {
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+/* Border cahaya berpusing (conic) — guna @property untuk animasi sudut */
+@property --beam-angle {
+  syntax: '<angle>';
+  initial-value: 0deg;
+  inherits: false;
+}
+.border-beam {
+  position: relative;
+}
+.border-beam::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1.5px;
+  background: conic-gradient(
+    from var(--beam-angle),
+    transparent 0%,
+    hsl(var(--primary)) 8%,
+    hsl(var(--glow)) 16%,
+    hsl(var(--secondary)) 24%,
+    transparent 32%
+  );
+  -webkit-mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .border-beam::before {
+    animation: beam-rotate 6s linear infinite;
+  }
+}
+@keyframes beam-rotate {
+  to {
+    --beam-angle: 360deg;
+  }
+}
+
+/* Penjuru HUD — kurungan teknikal di sudut panel */
+.hud-corners {
+  position: relative;
+}
+.hud-corners::before,
+.hud-corners::after {
+  content: '';
+  position: absolute;
+  width: 18px;
+  height: 18px;
+  border-color: hsl(var(--primary) / 0.7);
+  pointer-events: none;
+}
+.hud-corners::before {
+  top: 10px;
+  left: 10px;
+  border-top: 2px solid;
+  border-left: 2px solid;
+  border-color: inherit;
+  border-top-color: hsl(var(--primary) / 0.7);
+  border-left-color: hsl(var(--primary) / 0.7);
+}
+.hud-corners::after {
+  bottom: 10px;
+  right: 10px;
+  border-bottom: 2px solid;
+  border-right: 2px solid;
+  border-bottom-color: hsl(var(--primary) / 0.7);
+  border-right-color: hsl(var(--primary) / 0.7);
+}
+
+/* Shine sweep pada kad ketika hover */
+.card-shine {
+  position: relative;
+  overflow: hidden;
+}
+.card-shine::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -160%;
+  height: 100%;
+  width: 55%;
+  transform: skewX(-20deg);
+  background: linear-gradient(
+    90deg,
+    transparent,
+    hsl(var(--foreground) / 0.09),
+    transparent
+  );
+  pointer-events: none;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .card-shine:hover::after {
+    animation: shine-sweep 0.9s ease forwards;
+  }
+}
+@keyframes shine-sweep {
+  to {
+    left: 160%;
+  }
+}
+
+/* Gradient CTA "bernafas" */
+.animated-gradient {
+  background-size: 200% 200%;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .animated-gradient {
+    animation: gradient-pan 9s ease infinite;
+  }
+}
+@keyframes gradient-pan {
+  0%,
+  100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}

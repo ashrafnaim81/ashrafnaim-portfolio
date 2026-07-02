@@ -1,5 +1,6 @@
 import { AuroraBackground } from './aurora-background';
 import { GridPattern } from './grid-pattern';
+import { Particles } from './particles';
 
 /**
  * Hero kecil seragam untuk halaman dalaman (About/Portfolio/Blog/Talks/Contact).
@@ -18,6 +19,7 @@ export function PageHero({
     <section className="relative -mt-[4.25rem] overflow-hidden pb-12 pt-32 md:pt-36">
       <AuroraBackground className="opacity-70" />
       <GridPattern />
+      <Particles density={26} />
       <div className="container mx-auto px-4 text-center sm:px-6 lg:px-8">
         <p className="mb-3 font-mono text-xs font-medium uppercase tracking-[0.25em] text-primary">
           {'// '}
