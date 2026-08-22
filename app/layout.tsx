@@ -6,6 +6,8 @@ import SessionProvider from '@/components/providers/session-provider';
 import Navigation from '@/components/navigation';
 import Footer from '@/components/footer';
 import { ScrollProgress } from '@/components/futuristic/scroll-progress';
+import { GoogleAdsense } from '@/components/google-adsense';
+import { GoogleAnalytics } from '@/components/google-analytics';
 
 const inter = Inter({
   subsets: ['latin'],
@@ -46,6 +48,11 @@ export const metadata: Metadata = {
     title: 'Ts. Ashraf bin Naim - Teknologis Profesional',
     description: 'Teknologis Profesional dalam bidang Pendidikan & Teknologi Maklumat',
   },
+  other: {
+    // Pengesahan pemilikan laman untuk Google AdSense. Ini melengkapkan
+    // fail /ads.txt dan mempercepat semakan apabila Auto Ads diaktifkan.
+    'google-adsense-account': 'ca-pub-3612581682895457',
+  },
 };
 
 export default function RootLayout({
@@ -56,6 +63,8 @@ export default function RootLayout({
   return (
     <html lang="ms" suppressHydrationWarning>
       <body className={`${inter.variable} ${spaceGrotesk.variable} font-sans antialiased`}>
+        <GoogleAdsense />
+        <GoogleAnalytics />
         <SessionProvider>
           <ThemeProvider
             attribute="class"
