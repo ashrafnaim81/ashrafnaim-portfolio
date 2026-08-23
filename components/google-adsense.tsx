@@ -11,7 +11,9 @@ import { usePathname } from 'next/navigation';
  * persekitaran tambahan yang perlu diselaras semasa deploy ke VPS.
  */
 const ADSENSE_CLIENT_ID =
-  process.env.NEXT_PUBLIC_ADSENSE_CLIENT_ID || 'ca-pub-3612581682895457';
+  process.env.NEXT_PUBLIC_ADSENSE_ID ||
+  process.env.NEXT_PUBLIC_ADSENSE_CLIENT_ID ||
+  'ca-pub-3612581682895457';
 
 /**
  * Laluan yang TIDAK boleh memaparkan iklan.
