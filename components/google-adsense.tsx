@@ -1,6 +1,5 @@
 'use client';
 
-import Script from 'next/script';
 import { usePathname } from 'next/navigation';
 
 /**
@@ -35,11 +34,18 @@ export function GoogleAdsense() {
     return null;
   }
 
+  // Sengaja menggunakan elemen <script> biasa, bukan next/script.
+  //
+  // next/script menambah atribut data-nscript pada tag, dan skrip AdSense
+  // mengadu "AdSense head tag doesn't support data-nscript attribute" dalam
+  // konsol. Google menyemak tag kepala ini semasa proses semakan laman, jadi
+  // tag yang diubah suai berisiko menjejaskan kelulusan.
+  //
+  // React 19 mengangkat <script async src> ke dalam <head> dengan sendirinya
+  // dan menyahduplikasi mengikut src, jadi ia dimuatkan sekali sahaja.
   return (
-    <Script
-      id="google-adsense"
+    <script
       async
-      strategy="afterInteractive"
       crossOrigin="anonymous"
       src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${ADSENSE_CLIENT_ID}`}
     />
