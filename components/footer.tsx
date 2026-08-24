@@ -84,15 +84,31 @@ export default function Footer() {
                   Contact
                 </Link>
               </li>
+              <li>
+                <Link
+                  href="/privacy"
+                  className="text-sm text-muted-foreground hover:text-primary transition-colors"
+                >
+                  Dasar Privasi
+                </Link>
+              </li>
             </ul>
           </div>
         </div>
 
         <div className="mt-8 pt-8 border-t">
           <div className="flex flex-col md:flex-row justify-between items-center gap-4">
-            <p className="text-sm text-muted-foreground">
-              © {new Date().getFullYear()} Ts. Ashraf bin Naim. All rights reserved.
-            </p>
+            <div className="flex flex-col sm:flex-row items-center gap-2 sm:gap-4">
+              <p className="text-sm text-muted-foreground">
+                © {new Date().getFullYear()} Ts. Ashraf bin Naim. All rights reserved.
+              </p>
+              <Link
+                href="/privacy"
+                className="text-sm text-muted-foreground hover:text-primary transition-colors"
+              >
+                Dasar Privasi
+              </Link>
+            </div>
 
             <div className="flex items-center gap-4">
               <Link
