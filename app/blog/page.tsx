@@ -1,5 +1,6 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
+import Image from 'next/image';
 import { CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
@@ -107,11 +108,20 @@ export default async function BlogPage() {
           <Link href={`/blog/${featuredPost.slug}`}>
             <GlassCard className="overflow-hidden">
               <div className="grid md:grid-cols-2">
-                <div className="bg-gradient-to-br from-primary to-secondary p-8 flex items-center justify-center">
-                  <div className="text-white text-center">
-                    <div className="text-6xl mb-4">🤖</div>
-                    <Badge className="bg-white text-primary">Featured</Badge>
-                  </div>
+                <div className="relative min-h-[220px] md:min-h-full bg-gradient-to-br from-primary to-secondary">
+                  {featuredPost.coverImage && (
+                    <Image
+                      src={featuredPost.coverImage}
+                      alt={featuredPost.title}
+                      fill
+                      sizes="(max-width: 768px) 100vw, 50vw"
+                      className="object-cover"
+                      priority
+                    />
+                  )}
+                  <Badge className="absolute top-4 left-4 bg-white text-primary shadow-sm">
+                    Featured
+                  </Badge>
                 </div>
                 <CardContent className="p-8 flex flex-col justify-center">
                   <div className="flex items-center gap-2 text-sm text-muted-foreground mb-3">
@@ -162,7 +172,18 @@ export default async function BlogPage() {
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
             {posts.filter((post) => post.id !== featuredPost?.id).map((post) => (
               <Link key={post.id} href={`/blog/${post.slug}`}>
-                <GlassCard className="h-full">
+                <GlassCard className="h-full overflow-hidden">
+                  {post.coverImage && (
+                    <div className="relative aspect-[16/9] w-full">
+                      <Image
+                        src={post.coverImage}
+                        alt={post.title}
+                        fill
+                        sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                        className="object-cover"
+                      />
+                    </div>
+                  )}
                   <CardHeader>
                     <div className="flex items-center gap-2 text-sm text-muted-foreground mb-3">
                       <Calendar className="h-4 w-4" />
