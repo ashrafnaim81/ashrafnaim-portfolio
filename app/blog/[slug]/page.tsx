@@ -179,6 +179,18 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
 
         <hr className="border-t mb-8" />
 
+        {/* Nota penyunting: pendedahan penggunaan AI.
+            Dasar Google membenarkan kandungan berbantukan AI, tetapi menuntut
+            semakan manusia dan nilai tambah yang jelas. Nota ini menyatakan
+            kedua-duanya secara terbuka pada setiap artikel. */}
+        <p className="text-sm text-muted-foreground border-l-2 border-secondary pl-4 mb-8">
+          <strong className="text-foreground">Nota penyunting:</strong> Artikel ini
+          disediakan dengan bantuan alat AI, kemudian disemak dan disunting oleh
+          Ts. Ashraf bin Naim sebelum diterbitkan. Contoh dan saranan di dalamnya
+          berdasarkan pengalaman sebenar dalam pentadbiran dan latihan pendidikan
+          di Malaysia.
+        </p>
+
         {/* Author Info */}
         <Card className="bg-muted">
           <CardContent className="pt-6">

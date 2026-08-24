@@ -65,6 +65,21 @@ export default async function TalksPage() {
       />
 
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 pb-12">
+      {/* Intro */}
+      <div className="max-w-3xl mx-auto mb-12 space-y-4 text-muted-foreground leading-relaxed">
+        <p>
+          Saya menyampaikan bengkel dan ceramah tentang AI dalam pendidikan kepada
+          guru, pengetua dan guru besar, pegawai PPD dan JPN, serta bahagian di
+          Kementerian Pendidikan Malaysia.
+        </p>
+        <p>
+          Setiap sesi disertakan pakej lengkap: slaid, skrip penyampaian, modul
+          hands-on dan platform pembelajaran dalam talian supaya peserta boleh
+          terus mencuba semasa sesi berjalan. Fokusnya bukan teori, tetapi alat
+          yang boleh digunakan di sekolah pada keesokan harinya.
+        </p>
+      </div>
+
       {/* Stats */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-4xl mx-auto mb-12">
         <GlassCard>

@@ -51,6 +51,22 @@ export default async function PortfolioPage() {
       />
 
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 pb-12">
+      {/* Intro */}
+      <div className="max-w-3xl mx-auto mb-12 space-y-4 text-muted-foreground leading-relaxed">
+        <p>
+          Setiap sistem di bawah dibangunkan sendiri untuk menyelesaikan masalah
+          sebenar dalam pentadbiran pendidikan, bermula daripada keperluan harian
+          di Pejabat Pendidikan Daerah Kluang dan Jabatan Pendidikan Negeri Johor.
+        </p>
+        <p>
+          Kebanyakannya kini digunakan setiap hari oleh pegawai dan sekolah,
+          meliputi pengurusan guru ganti, pementoran perkhidmatan awam, laporan
+          CPD, tinjauan persepsi guru, sehingga permohonan sekolah ke PPD dan JPN.
+          Dibina menggunakan PHP, Laravel, Next.js dengan MySQL atau PostgreSQL,
+          dan dihoskan sendiri.
+        </p>
+      </div>
+
       {/* Filter Tabs */}
       {categories.length > 1 && (
         <div className="flex flex-wrap justify-center gap-2 mb-12">
