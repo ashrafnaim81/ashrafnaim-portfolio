@@ -7,6 +7,7 @@ import { useTheme } from 'next-themes';
 import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { useState } from 'react';
+import { AccentSwitcher } from '@/components/accent-switcher';
 
 const navItems = [
   { name: 'Home', href: '/' },
@@ -72,11 +73,13 @@ export default function Navigation() {
                 </Link>
               );
             })}
+            <AccentSwitcher />
             {themeToggle}
           </nav>
 
           {/* Mobile Navigation */}
           <div className="flex items-center gap-1 md:hidden">
+            <AccentSwitcher />
             {themeToggle}
             <Button
               variant="ghost"

@@ -24,6 +24,8 @@ import { Particles } from '@/components/futuristic/particles';
 import { DecodeText } from '@/components/futuristic/decode-text';
 import { TiltCard } from '@/components/futuristic/tilt-card';
 import { Marquee } from '@/components/futuristic/marquee';
+import { HeroAiVisual } from '@/components/futuristic/hero-ai-visual';
+import { VibeCodingDemo } from '@/components/futuristic/vibe-coding-demo';
 
 // Force dynamic rendering
 export const dynamic = 'force-dynamic';
@@ -88,9 +90,26 @@ export default async function HomePage() {
               </StaggerItem>
 
               <StaggerItem expressive>
-                <p className="text-xl font-semibold text-shimmer">
-                  <DecodeText text={data.heroJobTitle} />
-                </p>
+                {/* Jawatan boleh berbilang baris: setiap baris dalam medan admin
+                    (Textarea) dipaparkan sebagai baris sendiri. */}
+                <div className="space-y-1">
+                  {String(data.heroJobTitle)
+                    .split('\n')
+                    .map((line) => line.trim())
+                    .filter(Boolean)
+                    .map((line, i) => (
+                      <p
+                        key={i}
+                        className={
+                          i === 0
+                            ? 'text-xl font-semibold text-shimmer'
+                            : 'text-base font-medium text-shimmer md:text-lg'
+                        }
+                      >
+                        <DecodeText text={line} />
+                      </p>
+                    ))}
+                </div>
               </StaggerItem>
 
               <StaggerItem expressive>
@@ -114,7 +133,12 @@ export default async function HomePage() {
               </StaggerItem>
             </Stagger>
 
-            <Reveal className="relative aspect-[3/4] max-w-md mx-auto">
+            <div className="relative">
+              {/* Di luar <Reveal> dengan sengaja: lihat ulasan dalam HeroAiVisual */}
+              {/* Teras rangkaian diletak di bucu kanan atas potret: jika di tengah,
+                  denyut emas terlindung sepenuhnya di belakang gambar. */}
+              <HeroAiVisual className="absolute left-[90%] top-[12%] aspect-square w-[125%] max-w-none -translate-x-1/2 -translate-y-1/2" />
+              <Reveal className="relative aspect-[3/4] max-w-md mx-auto">
               <div className="absolute -inset-6 rounded-full bg-gradient-to-tr from-primary/30 via-glow/20 to-secondary/30 blur-3xl" />
               <TiltCard className="relative h-full w-full rounded-2xl bg-gradient-to-br from-primary via-glow to-secondary p-[2px] glow-ring">
                 <div className="h-full w-full overflow-hidden rounded-[calc(var(--radius)+4px)] bg-card">
@@ -148,6 +172,7 @@ export default async function HomePage() {
                 ☁️ M365 · Google
               </div>
             </Reveal>
+            </div>
           </div>
         </div>
 
@@ -190,7 +215,7 @@ export default async function HomePage() {
             description="Sumbangan dan pengiktirafan terkini dalam bidang pendidikan dan teknologi"
           />
 
-          <Stagger trigger="scroll" className="grid md:grid-cols-3 gap-6">
+          <Stagger trigger="scroll" className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
             {data.achievements.map((achievement: any, index: number) => {
               const Icon = iconMap[achievement.icon] || Award;
               return (
@@ -213,6 +238,31 @@ export default async function HomePage() {
               );
             })}
           </Stagger>
+        </div>
+      </section>
+
+      {/* Vibe Coding Section */}
+      <section className="py-20">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+          <SectionHeading
+            eyebrow="Vibe Coding"
+            title="Daripada Idea kepada Aplikasi"
+            description="Membina aplikasi dengan arahan bahasa biasa, dibantu AI. Pendekatan yang saya gunakan untuk membangunkan sistem, dan yang saya kongsikan dalam bengkel."
+          />
+          <Reveal className="mx-auto max-w-5xl">
+            <VibeCodingDemo />
+          </Reveal>
+          <div className="mt-8 flex flex-col justify-center gap-4 sm:flex-row">
+            <Button asChild variant="outline">
+              <Link href="/portfolio">
+                Lihat Projek
+                <ArrowRight className="ml-2 h-4 w-4" />
+              </Link>
+            </Button>
+            <Button asChild variant="ghost">
+              <Link href="/talks">Bengkel Vibe Coding</Link>
+            </Button>
+          </div>
         </div>
       </section>
 

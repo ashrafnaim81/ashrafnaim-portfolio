@@ -52,6 +52,31 @@
     --ring: 44 92% 55%;
     --glow: 48 100% 58%;
   }
+
+  /* Penukar aksen (components/accent-switcher.tsx). Emas ialah lalai di atas.
+     Hanya tiga token ditimpa supaya identiti Graphite dan kontras teks kekal.
+     Nilai cerah cukup gelap untuk teks putih (>= 4.5:1); nilai gelap cukup
+     terang di atas latar grafit. */
+  [data-accent='emerald'] {
+    --secondary: 160 84% 27%;
+    --ring: 160 80% 31%;
+    --glow: 158 78% 38%;
+  }
+  .dark[data-accent='emerald'] {
+    --secondary: 158 64% 52%;
+    --ring: 158 64% 52%;
+    --glow: 156 72% 56%;
+  }
+  [data-accent='royal'] {
+    --secondary: 224 76% 42%;
+    --ring: 224 72% 46%;
+    --glow: 217 91% 55%;
+  }
+  .dark[data-accent='royal'] {
+    --secondary: 217 91% 68%;
+    --ring: 217 91% 68%;
+    --glow: 213 94% 72%;
+  }
 }
 
 @layer base {
@@ -315,3 +340,26 @@
     background-position: 100% 50%;
   }
 }
+
+/* Visual AI hero (components/futuristic/hero-ai-visual.tsx).
+   Video berlatar gading: multiply melenyapkan putih dalam tema cerah. Tema
+   gelap menerbalikkan video (hue-rotate 180 mengembalikan rona emas) lalu
+   screen melenyapkan hitam. Topeng jejari memudarkan tepi petak video. */
+.hero-ai-visual {
+  mix-blend-mode: multiply;
+  opacity: 0.6;
+  -webkit-mask-image: radial-gradient(circle at center, #000 38%, transparent 70%);
+  mask-image: radial-gradient(circle at center, #000 38%, transparent 70%);
+}
+.dark .hero-ai-visual {
+  mix-blend-mode: screen;
+  opacity: 0.55;
+}
+.dark .hero-ai-visual video {
+  filter: invert(1) hue-rotate(180deg);
+}
+/* Rona denyut video mengikut aksen: emas (~45deg) -> zamrud (~158) / biru (~220) */
+[data-accent='emerald'] .hero-ai-visual video { filter: hue-rotate(113deg); }
+[data-accent='royal'] .hero-ai-visual video { filter: hue-rotate(175deg); }
+.dark[data-accent='emerald'] .hero-ai-visual video { filter: invert(1) hue-rotate(293deg); }
+.dark[data-accent='royal'] .hero-ai-visual video { filter: invert(1) hue-rotate(355deg); }

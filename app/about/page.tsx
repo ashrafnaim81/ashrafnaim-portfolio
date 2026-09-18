@@ -16,6 +16,7 @@ import { prisma } from '@/lib/prisma';
 import { GlassCard } from '@/components/futuristic/glass-card';
 import { PageHero } from '@/components/futuristic/page-hero';
 import { SectionHeading } from '@/components/futuristic/section-heading';
+import { ExperienceTimeline } from '@/components/motion/experience-timeline';
 
 export const metadata: Metadata = {
   title: 'About - Ts. Ashraf bin Naim',
@@ -94,9 +95,9 @@ export default async function AboutPage() {
                   <Badge className="mb-4">Teknologis Profesional MBOT</Badge>
 
                   <div className="space-y-3 text-muted-foreground">
-                    <div className="flex items-center gap-2">
-                      <Briefcase className="h-4 w-4" />
-                      <span>{data.profileJobTitle}</span>
+                    <div className="flex items-start gap-2">
+                      <Briefcase className="mt-1 h-4 w-4 shrink-0" />
+                      <span className="whitespace-pre-line">{data.profileJobTitle}</span>
                     </div>
                     <div className="flex items-center gap-2">
                       <MapPin className="h-4 w-4" />
@@ -171,31 +172,7 @@ export default async function AboutPage() {
         {/* Experience Timeline */}
         <section className="mb-12">
           <SectionHeading eyebrow="Pengalaman" title="Pengalaman Profesional" align="left" className="mb-6" />
-          <div className="space-y-6">
-            {data.experiences.map((exp: any, index: number) => (
-              <GlassCard key={index}>
-                <CardContent className="pt-6">
-                  <div className="flex items-start gap-4">
-                    <div className="flex-shrink-0">
-                      <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center">
-                        <Briefcase className="h-6 w-6 text-primary" />
-                      </div>
-                    </div>
-                    <div className="flex-1">
-                      <div className="flex items-start justify-between mb-2">
-                        <div>
-                          <h3 className="font-semibold text-lg">{exp.title}</h3>
-                          <p className="text-muted-foreground">{exp.organization}</p>
-                        </div>
-                        <Badge variant="secondary">{exp.period}</Badge>
-                      </div>
-                      <p className="text-sm text-muted-foreground">{exp.description}</p>
-                    </div>
-                  </div>
-                </CardContent>
-              </GlassCard>
-            ))}
-          </div>
+          <ExperienceTimeline items={data.experiences} />
         </section>
 
         {/* Achievements */}

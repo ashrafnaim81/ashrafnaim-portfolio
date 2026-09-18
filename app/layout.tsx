@@ -62,6 +62,16 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ms" suppressHydrationWarning>
+      <head>
+        {/* Guna semula warna aksen pilihan pengguna SEBELUM cat pertama supaya
+            tiada kelipan emas -> warna pilihan. Rujuk components/accent-switcher.tsx. */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html:
+              "try{var a=localStorage.getItem('accent');if(a==='emerald'||a==='royal')document.documentElement.dataset.accent=a}catch(e){}",
+          }}
+        />
+      </head>
       <body className={`${inter.variable} ${spaceGrotesk.variable} font-sans antialiased`}>
         <GoogleAdsense />
         <GoogleAnalytics />
