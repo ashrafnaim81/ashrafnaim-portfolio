@@ -1,5 +1,5 @@
 import { Metadata } from 'next';
-import { notFound } from 'next/navigation';
+import { notFound, permanentRedirect } from 'next/navigation';
 import Link from 'next/link';
 import { prisma } from '@/lib/prisma';
 import { format } from 'date-fns';
@@ -10,6 +10,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import sanitizeHtml from 'sanitize-html';
 import { BLOG_LABELS, getBlogLang, getLanguageAlternates, getPairSlug } from '@/lib/blog-i18n';
 import { BlogLanguageToggle } from '@/components/blog-language-toggle';
+import { getMergedTarget } from '@/lib/blog-redirects';
 
 interface BlogPostPageProps {
   params: Promise<{
@@ -80,6 +81,9 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
   const post = await getBlogPost(slug);
 
   if (!post) {
+    // Artikel lama yang telah digabungkan: ubah hala kekal ke artikel simpan.
+    const target = getMergedTarget(slug);
+    if (target) permanentRedirect(`/blog/${target}`);
     notFound();
   }
 
