@@ -8,6 +8,7 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import sanitizeHtml from 'sanitize-html';
+import { BLOG_LABELS, getBlogLang, getLanguageAlternates, getPairSlug } from '@/lib/blog-i18n';
 
 interface BlogPostPageProps {
   params: Promise<{
@@ -59,9 +60,17 @@ export async function generateMetadata({ params }: BlogPostPageProps): Promise<M
     };
   }
 
+  const languages = getLanguageAlternates(slug);
+
   return {
     title: `${post.title} - Ts. Ashraf bin Naim`,
     description: post.excerpt || post.title,
+    ...(languages && {
+      alternates: {
+        canonical: `https://ashrafnaim.my/blog/${slug}`,
+        languages,
+      },
+    }),
   };
 }
 
@@ -73,6 +82,10 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
     notFound();
   }
 
+  const lang = getBlogLang(slug);
+  const t = BLOG_LABELS[lang];
+  const pairSlug = getPairSlug(slug);
+
   return (
     <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
       {/* Back Button */}
@@ -80,13 +93,22 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
         <Link href="/blog">
           <Button variant="ghost" size="sm">
             <ArrowLeft className="mr-2 h-4 w-4" />
-            Kembali ke Blog
+            {t.back}
           </Button>
         </Link>
+        {pairSlug && (
+          <Link
+            href={`/blog/${pairSlug}`}
+            hrefLang={lang === 'ms' ? 'en' : 'ms'}
+            className="ml-2 text-sm text-muted-foreground underline underline-offset-4 hover:text-foreground"
+          >
+            {t.readOther}
+          </Link>
+        )}
       </div>
 
       {/* Article Header */}
-      <article className="max-w-4xl mx-auto">
+      <article className="max-w-4xl mx-auto" lang={lang}>
         <header className="mb-8">
           {/* Category Badge */}
           {post.category && (
@@ -121,7 +143,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
             </div>
             <div className="flex items-center gap-2">
               <Clock className="h-4 w-4" />
-              <span>{Math.ceil(post.content.length / 1000)} min bacaan</span>
+              <span>{Math.ceil(post.content.length / 1000)} {t.minRead}</span>
             </div>
             <div className="flex items-center gap-2">
               <Eye className="h-4 w-4" />
@@ -184,11 +206,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
             semakan manusia dan nilai tambah yang jelas. Nota ini menyatakan
             kedua-duanya secara terbuka pada setiap artikel. */}
         <p className="text-sm text-muted-foreground border-l-2 border-secondary pl-4 mb-8">
-          <strong className="text-foreground">Nota penyunting:</strong> Artikel ini
-          disediakan dengan bantuan alat AI, kemudian disemak dan disunting oleh
-          Ts. Ashraf bin Naim sebelum diterbitkan. Contoh dan saranan di dalamnya
-          berdasarkan pengalaman sebenar dalam pentadbiran dan latihan pendidikan
-          di Malaysia.
+          <strong className="text-foreground">{t.editorNoteTitle}</strong> {t.editorNote}
         </p>
 
         {/* Author Info */}
@@ -200,11 +218,10 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
               </div>
               <div className="flex-1">
                 <h3 className="text-xl font-bold mb-2">
-                  Tentang {post.author.name || 'Penulis'}
+                  {t.about} {post.author.name || 'Penulis'}
                 </h3>
                 <p className="text-muted-foreground">
-                  Pendidik berpengalaman yang bersemangat tentang AI, EdTech, dan transformasi digital dalam pendidikan.
-                  Berkongsi insights dan pengalaman praktikal untuk membantu pendidik lain.
+                  {t.authorBio}
                 </p>
               </div>
             </div>
@@ -216,17 +233,17 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
       <div className="mt-16 max-w-2xl mx-auto">
         <Card className="bg-muted">
           <CardContent className="pt-6 text-center">
-            <h3 className="text-2xl font-bold mb-2">Suka artikel ini?</h3>
+            <h3 className="text-2xl font-bold mb-2">{t.newsletterTitle}</h3>
             <p className="text-muted-foreground mb-6">
-              Langgan newsletter untuk dapatkan artikel terkini terus ke inbox anda.
+              {t.newsletterBody}
             </p>
             <div className="flex gap-2 max-w-md mx-auto">
               <input
                 type="email"
-                placeholder="Email anda..."
+                placeholder={t.emailPlaceholder}
                 className="flex-1 px-4 py-2 border rounded-md bg-background"
               />
-              <Button>Langgan</Button>
+              <Button>{t.subscribe}</Button>
             </div>
           </CardContent>
         </Card>
