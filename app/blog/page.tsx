@@ -9,6 +9,7 @@ import { GlassCard } from '@/components/futuristic/glass-card';
 import { PageHero } from '@/components/futuristic/page-hero';
 import { prisma } from '@/lib/prisma';
 import { format } from 'date-fns';
+import { getPairSlug, isTranslation } from '@/lib/blog-i18n';
 
 export const metadata: Metadata = {
   title: 'Blog - Ts. Ashraf bin Naim',
@@ -38,7 +39,8 @@ async function getBlogPosts() {
     },
   });
 
-  return posts;
+  // Satu kad bagi setiap artikel: versi EN berpasangan tidak disenaraikan.
+  return posts.filter((post) => !isTranslation(post.slug));
 }
 
 async function getFeaturedPost() {
@@ -192,6 +194,11 @@ export default async function BlogPage() {
                       <span>{post.views}</span>
                     </div>
                     <CardTitle className="text-lg leading-tight">{post.title}</CardTitle>
+                    {getPairSlug(post.slug) && (
+                      <span className="mt-2 w-fit rounded-full border border-border/70 px-2 py-0.5 text-xs text-muted-foreground">
+                        BM · EN
+                      </span>
+                    )}
                   </CardHeader>
                   <CardContent>
                     <p className="text-sm text-muted-foreground mb-4 line-clamp-3">

@@ -9,6 +9,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import sanitizeHtml from 'sanitize-html';
 import { BLOG_LABELS, getBlogLang, getLanguageAlternates, getPairSlug } from '@/lib/blog-i18n';
+import { BlogLanguageToggle } from '@/components/blog-language-toggle';
 
 interface BlogPostPageProps {
   params: Promise<{
@@ -89,22 +90,14 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
   return (
     <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
       {/* Back Button */}
-      <div className="max-w-4xl mx-auto mb-8">
+      <div className="max-w-4xl mx-auto mb-8 flex flex-wrap items-center justify-between gap-3">
         <Link href="/blog">
           <Button variant="ghost" size="sm">
             <ArrowLeft className="mr-2 h-4 w-4" />
             {t.back}
           </Button>
         </Link>
-        {pairSlug && (
-          <Link
-            href={`/blog/${pairSlug}`}
-            hrefLang={lang === 'ms' ? 'en' : 'ms'}
-            className="ml-2 text-sm text-muted-foreground underline underline-offset-4 hover:text-foreground"
-          >
-            {t.readOther}
-          </Link>
-        )}
+        {pairSlug && <BlogLanguageToggle lang={lang} pairSlug={pairSlug} />}
       </div>
 
       {/* Article Header */}

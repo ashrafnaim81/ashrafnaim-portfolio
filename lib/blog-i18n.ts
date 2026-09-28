@@ -15,6 +15,12 @@ export function getBlogLang(slug: string): BlogLang {
   return PAIRS.some((p) => p.en === slug) ? 'en' : 'ms';
 }
 
+// Versi terjemahan (EN) disembunyikan daripada senarai blog; pembaca sampai
+// kepadanya melalui suis BM | EN pada artikel BM.
+export function isTranslation(slug: string): boolean {
+  return getBlogLang(slug) === 'en';
+}
+
 // Slug pasangan dalam bahasa lain, atau null jika artikel tiada pasangan.
 export function getPairSlug(slug: string): string | null {
   const pair = PAIRS.find((p) => p.ms === slug || p.en === slug);
@@ -39,7 +45,6 @@ export const BLOG_LABELS = {
   ms: {
     back: 'Kembali ke Blog',
     minRead: 'min bacaan',
-    readOther: 'Read this article in English',
     editorNoteTitle: 'Nota penyunting:',
     editorNote:
       'Artikel ini disediakan dengan bantuan alat AI, kemudian disemak dan disunting oleh Ts. Ashraf bin Naim sebelum diterbitkan. Contoh dan saranan di dalamnya berdasarkan pengalaman sebenar dalam pentadbiran dan latihan pendidikan di Malaysia.',
@@ -54,7 +59,6 @@ export const BLOG_LABELS = {
   en: {
     back: 'Back to Blog',
     minRead: 'min read',
-    readOther: 'Baca artikel ini dalam Bahasa Melayu',
     editorNoteTitle: "Editor's note:",
     editorNote:
       'This article was drafted with the help of AI tools, then reviewed and edited by Ts. Ashraf bin Naim before publication. The examples and recommendations are based on real experience in education administration and teacher training in Malaysia.',
