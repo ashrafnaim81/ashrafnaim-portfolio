@@ -9,6 +9,12 @@ const BASE_URL = 'https://ashrafnaim.my';
 
 const PAIRS: { ms: string; en: string }[] = [
   { ms: 'gamma-atau-canva-untuk-slaid-guru', en: 'gamma-vs-canva-for-teachers' },
+  { ms: 'notebooklm-jadikan-buku-teks-jadi-podcast-audio-untuk-murid', en: 'notebooklm-for-teachers' },
+  { ms: 'ulasan-diffit-untuk-guru-bi-automasi-teks-soalan-pelbagai-aras', en: 'diffit-for-teachers-review' },
+  {
+    ms: 'ai-dalam-pendidikan-khas-peribadikan-pembelajaran-murid-keperluan-istimewa',
+    en: 'ai-for-special-education-teachers',
+  },
 ];
 
 export function getBlogLang(slug: string): BlogLang {
