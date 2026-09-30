@@ -15,6 +15,18 @@ const PAIRS: { ms: string; en: string }[] = [
     ms: 'ai-dalam-pendidikan-khas-peribadikan-pembelajaran-murid-keperluan-istimewa',
     en: 'ai-for-special-education-teachers',
   },
+  {
+    ms: 'kuasai-google-gemini-analisis-markah-ringkasan-dan-idea-aktiviti-kelas',
+    en: 'gemini-for-teachers-guide',
+  },
+  {
+    ms: 'perplexity-ai-untuk-guru-sejarah-fakta-sahih-tanpa-halusinasi-ai',
+    en: 'perplexity-for-teachers',
+  },
+  {
+    ms: 'magicschool-ai-60-alat-eksklusif-permudah-tugas-harian-guru',
+    en: 'magicschool-ai-for-teachers-review',
+  },
 ];
 
 export function getBlogLang(slug: string): BlogLang {
