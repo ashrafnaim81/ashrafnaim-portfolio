@@ -27,6 +27,18 @@ const PAIRS: { ms: string; en: string }[] = [
     ms: 'magicschool-ai-60-alat-eksklusif-permudah-tugas-harian-guru',
     en: 'magicschool-ai-for-teachers-review',
   },
+  {
+    ms: 'canva-ai-cipta-poster-infografik-pp-tanpa-kemahiran-grafik',
+    en: 'canva-ai-for-teachers-guide',
+  },
+  {
+    ms: 'microsoft-copilot-untuk-guru-kuasai-word-powerpoint-dan-excel-lebih-pantas',
+    en: 'microsoft-copilot-for-teachers-guide',
+  },
+  {
+    ms: 'curipod-cipta-slaid-interaktif-berkuiz-dan-polling-mudah-untuk-guru',
+    en: 'curipod-for-teachers-review',
+  },
 ];
 
 export function getBlogLang(slug: string): BlogLang {
