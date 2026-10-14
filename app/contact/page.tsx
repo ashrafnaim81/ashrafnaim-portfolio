@@ -11,12 +11,15 @@ import {
   Facebook,
   Youtube,
   Linkedin,
+  Instagram,
+  AtSign,
   MessageSquare,
   Phone,
   Link as LinkIcon,
 } from 'lucide-react';
 import Link from 'next/link';
 import ContactForm from '@/components/contact-form';
+import { TikTokIcon } from '@/components/social-icons';
 import { prisma } from '@/lib/prisma';
 
 export const metadata: Metadata = {
@@ -34,6 +37,10 @@ const getIcon = (iconName: string) => {
     Facebook,
     Youtube,
     Linkedin,
+    Instagram,
+    TikTok: TikTokIcon,
+    // Logo Threads ialah "@" bergaya; lucide tiada ikon Threads
+    Threads: AtSign,
     Calendar,
     MessageSquare,
     Mail,
