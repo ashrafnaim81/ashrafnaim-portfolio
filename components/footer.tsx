@@ -78,6 +78,14 @@ export default function Footer() {
               </li>
               <li>
                 <Link
+                  href="/videos"
+                  className="text-sm text-muted-foreground hover:text-primary transition-colors"
+                >
+                  Video
+                </Link>
+              </li>
+              <li>
+                <Link
                   href="/contact"
                   className="text-sm text-muted-foreground hover:text-primary transition-colors"
                 >
