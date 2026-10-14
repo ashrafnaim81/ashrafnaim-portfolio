@@ -39,6 +39,10 @@ const PAIRS: { ms: string; en: string }[] = [
     ms: 'curipod-cipta-slaid-interaktif-berkuiz-dan-polling-mudah-untuk-guru',
     en: 'curipod-for-teachers-review',
   },
+  {
+    ms: 'ash-and-the-robot-lagu-tentang-ai-untuk-perbincangan-kelas',
+    en: 'ash-and-the-robot-songs-about-ai',
+  },
 ];
 
 export function getBlogLang(slug: string): BlogLang {
