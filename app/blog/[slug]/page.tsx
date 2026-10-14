@@ -67,12 +67,10 @@ export async function generateMetadata({ params }: BlogPostPageProps): Promise<M
   return {
     title: `${post.title} - Ts. Ashraf bin Naim`,
     description: post.excerpt || post.title,
-    ...(languages && {
-      alternates: {
-        canonical: `https://ashrafnaim.my/blog/${slug}`,
-        languages,
-      },
-    }),
+    alternates: {
+      canonical: `https://ashrafnaim.my/blog/${slug}`,
+      ...(languages && { languages }),
+    },
   };
 }
 
@@ -184,6 +182,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
               ]),
               allowedAttributes: {
                 ...sanitizeHtml.defaults.allowedAttributes,
+                a: ['href', 'name', 'target', 'rel', 'class', 'style'],
                 img: ['src', 'alt', 'title', 'width', 'height', 'class', 'style'],
                 iframe: ['src', 'width', 'height', 'frameborder', 'allowfullscreen', 'title'],
                 video: ['src', 'controls', 'width', 'height', 'class'],

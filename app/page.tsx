@@ -1,3 +1,4 @@
+import type { Metadata } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
 import {
@@ -29,6 +30,10 @@ import { VibeCodingDemo } from '@/components/futuristic/vibe-coding-demo';
 
 // Force dynamic rendering
 export const dynamic = 'force-dynamic';
+
+export const metadata: Metadata = {
+  alternates: { canonical: 'https://ashrafnaim.my/' },
+};
 
 async function getHomePageData() {
   const homePage = await prisma.homePage.findFirst({
