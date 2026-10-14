@@ -1,4 +1,5 @@
 import { Metadata } from 'next';
+import Link from 'next/link';
 import { Badge } from '@/components/ui/badge';
 import { Play, ExternalLink } from 'lucide-react';
 import { GlassCard } from '@/components/futuristic/glass-card';
@@ -115,6 +116,20 @@ export default async function VideosPage() {
                         <ExternalLink className="h-3.5 w-3.5" aria-hidden="true" />
                       </a>
                     </div>
+
+                    {p.intro && (
+                      <p className="mb-5 max-w-3xl text-muted-foreground">
+                        {p.intro.text}
+                        {p.intro.link && (
+                          <>
+                            {' '}
+                            <Link href={p.intro.link.href} className="text-primary hover:underline">
+                              {p.intro.link.label}
+                            </Link>
+                          </>
+                        )}
+                      </p>
+                    )}
 
                     <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
                       {visible.map((v) => (
