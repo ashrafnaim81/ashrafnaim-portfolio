@@ -5,6 +5,8 @@ import { Play, ExternalLink } from 'lucide-react';
 import { GlassCard } from '@/components/futuristic/glass-card';
 import { PageHero } from '@/components/futuristic/page-hero';
 import { getChannelPlaylists, type YtVideo } from '@/lib/youtube';
+import { ShortsPrompts } from '@/components/shorts-prompts';
+import { SHORTS_PLAYLIST_ID } from '@/lib/shorts-prompts';
 
 export const metadata: Metadata = {
   title: 'Video - Ts. Ashraf bin Naim',
@@ -57,7 +59,8 @@ function VideoCard({ video, playlistId }: { video: YtVideo; playlistId: string }
 }
 
 export default async function VideosPage() {
-  const playlists = await getChannelPlaylists();
+  // Playlist "Satu Prompt, Satu Video" sudah dipaparkan dalam sorotan di atas.
+  const playlists = (await getChannelPlaylists())?.filter((p) => p.id !== SHORTS_PLAYLIST_ID);
 
   return (
     <div>
@@ -68,6 +71,8 @@ export default async function VideosPage() {
       />
 
       <div className="container mx-auto px-4 pb-16 sm:px-6 lg:px-8">
+        <ShortsPrompts />
+
         {!playlists || playlists.length === 0 ? (
           <p className="mx-auto max-w-xl py-12 text-center text-muted-foreground">
             Senarai video sedang disediakan. Sementara itu, tonton terus di{' '}
