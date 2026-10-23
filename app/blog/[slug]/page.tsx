@@ -53,7 +53,14 @@ export async function generateMetadata({ params }: BlogPostPageProps): Promise<M
   const { slug } = await params;
   const post = await prisma.blogPost.findUnique({
     where: { slug },
-    select: { title: true, excerpt: true },
+    select: {
+      title: true,
+      excerpt: true,
+      coverImage: true,
+      publishedAt: true,
+      createdAt: true,
+      updatedAt: true,
+    },
   });
 
   if (!post) {
@@ -63,13 +70,41 @@ export async function generateMetadata({ params }: BlogPostPageProps): Promise<M
   }
 
   const languages = getLanguageAlternates(slug);
+  const url = `https://ashrafnaim.my/blog/${slug}`;
+  const description = post.excerpt || post.title;
+  // Pratonton Facebook/WhatsApp memerlukan URL gambar penuh.
+  const image = post.coverImage
+    ? post.coverImage.startsWith('/')
+      ? `https://ashrafnaim.my${post.coverImage}`
+      : post.coverImage
+    : undefined;
 
+  // openGraph dan twitter mesti ditetapkan di sini: jika tidak, artikel
+  // mewarisi tajuk, URL dan ringkasan laman utama daripada app/layout.tsx.
   return {
     title: `${post.title} - Ts. Ashraf bin Naim`,
-    description: post.excerpt || post.title,
+    description,
     alternates: {
-      canonical: `https://ashrafnaim.my/blog/${slug}`,
+      canonical: url,
       ...(languages && { languages }),
+    },
+    openGraph: {
+      type: 'article',
+      title: post.title,
+      description,
+      url,
+      siteName: 'Ts. Ashraf bin Naim Portfolio',
+      locale: getBlogLang(slug) === 'en' ? 'en_GB' : 'ms_MY',
+      publishedTime: (post.publishedAt || post.createdAt).toISOString(),
+      modifiedTime: post.updatedAt.toISOString(),
+      authors: ['Ts. Ashraf bin Naim'],
+      ...(image && { images: [{ url: image, alt: post.title }] }),
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: post.title,
+      description,
+      ...(image && { images: [image] }),
     },
   };
 }
