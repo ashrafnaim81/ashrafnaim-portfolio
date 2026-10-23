@@ -7,8 +7,8 @@ const MERGED: Record<string, string> = {
   // 1. 10 aplikasi AI selain ChatGPT
   '10-aplikasi-ai-menarik-selain-chatgpt-20260505': '10-aplikasi-ai-menarik-selain-chatgpt',
   // 2. AI jimat masa guru
-  '5-cara-ai-boleh-jimatkan-masa-guru': '5-cara-pintar-ai-ringankan-beban-kerja-guru-setiap-hari',
-  'automasi-tugas-guru-dengan-ai': '5-cara-pintar-ai-ringankan-beban-kerja-guru-setiap-hari',
+  '5-cara-ai-boleh-jimatkan-masa-guru': 'seni-tulis-prompt-ai-rahsia-guru-jimat-masa-tingkat-kualiti-pdp',
+  'automasi-tugas-guru-dengan-ai': 'automasi-workflow-sekolah-dengan-apps-script',
   // 3. ChatGPT untuk guru
   '5-cara-chatgpt-boleh-membantu-guru-setiap-hari': 'chatgpt-untuk-guru-malaysia-review-lengkap-tips-guna',
   // 4. AI pendidikan khas
@@ -16,13 +16,13 @@ const MERGED: Record<string, string> = {
     'ai-dalam-pendidikan-khas-peribadikan-pembelajaran-murid-keperluan-istimewa',
   'ai-untuk-pendidikan-khas': 'ai-dalam-pendidikan-khas-peribadikan-pembelajaran-murid-keperluan-istimewa',
   // 5. Analisis data murid
-  'ai-untuk-analisis-data-murid': 'analisis-prestasi-murid-dengan-ai-kenal-pasti-dan-bantu-lebih-awal',
+  'ai-untuk-analisis-data-murid': 'kuasai-google-gemini-analisis-markah-ringkasan-dan-idea-aktiviti-kelas',
   // 6. Etika AI
   'ai-dan-etika-dalam-pendidikan': 'etika-ai-dalam-bilik-darjah-plagiarisme-privasi-dan-tanggungjawab-guru',
   // 7. Keselamatan digital murid
-  'keselamatan-digital-untuk-guru-dan-murid': 'lindungi-privasi-murid-panduan-keselamatan-digital-untuk-warga-sekolah',
+  'keselamatan-digital-untuk-guru-dan-murid': 'cybersecurity-untuk-sekolah',
   // 8. Website portfolio guru
-  'cara-buat-website-portfolio-guru': 'bina-website-portfolio-guru-profesional-langkah-demi-langkah-2026',
+  'cara-buat-website-portfolio-guru': 'quest-saya-dengan-claude-projek-sebenar-guru-claude-code',
   // 9. Canva AI
   'canva-ai-game-changer-untuk-bahan-pengajaran': 'canva-ai-cipta-poster-infografik-pp-tanpa-kemahiran-grafik',
   // 10. Curipod
@@ -49,7 +49,24 @@ const MERGED: Record<string, string> = {
   // 17. Menulis prompt
   'prompt-engineering-untuk-guru': 'seni-tulis-prompt-ai-rahsia-guru-jimat-masa-tingkat-kualiti-pdp',
   // 19. Panduan AI di kelas
-  'panduan-lengkap-menggunakan-ai-dalam-bilik-darjah': 'panduan-memilih-tool-ai-untuk-pengajaran',
+  'panduan-lengkap-menggunakan-ai-dalam-bilik-darjah': '10-aplikasi-ai-menarik-selain-chatgpt',
+  // Arkib 24/10/2026 (published = false): artikel lapuk, bertindih atau
+  // bertemplat seragam, diubah hala ke artikel paling hampir yang kekal.
+  'hybrid-learning-best-practices': 'google-classroom-vs-microsoft-teams',
+  'digital-transformation-dari-mana-nak-mula': 'panduan-delima-3-0-untuk-guru',
+  'power-bi-untuk-pendidik': 'kuasai-google-gemini-analisis-markah-ringkasan-dan-idea-aktiviti-kelas',
+  'gemini-vs-chatgpt-hasilkan-rph-dari-pdf-buku-teks': 'perbandingan-chatgpt-vs-gemini-vs-claude-untuk-guru',
+  'panduan-memilih-tool-ai-untuk-pengajaran': '10-aplikasi-ai-menarik-selain-chatgpt',
+  'cara-buat-quiz-automatik-dengan-ai': 'kahoot-untuk-guru-kuiz-interaktif-yang-buat-murid-tak-sabar-nak-belajar',
+  'bina-website-portfolio-guru-profesional-langkah-demi-langkah-2026':
+    'quest-saya-dengan-claude-projek-sebenar-guru-claude-code',
+  'lindungi-privasi-murid-panduan-keselamatan-digital-untuk-warga-sekolah': 'cybersecurity-untuk-sekolah',
+  'analisis-prestasi-murid-dengan-ai-kenal-pasti-dan-bantu-lebih-awal':
+    'kuasai-google-gemini-analisis-markah-ringkasan-dan-idea-aktiviti-kelas',
+  '5-cara-pintar-ai-ringankan-beban-kerja-guru-setiap-hari': 'seni-tulis-prompt-ai-rahsia-guru-jimat-masa-tingkat-kualiti-pdp',
+  'quillbot-untuk-guru-paraphrase-tepat-grammar-sempurna-penulisan-berkualiti':
+    'grammarly-untuk-guru-semak-esei-murid-10x-lebih-pantas',
+  // cara-guru-buat-duit-sampingan-online: tiada artikel setara, dibiarkan 404.
 };
 
 export function getMergedTarget(slug: string): string | null {
