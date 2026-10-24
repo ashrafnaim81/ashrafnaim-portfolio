@@ -2,7 +2,6 @@ import { Metadata } from 'next';
 import { notFound, permanentRedirect } from 'next/navigation';
 import Link from 'next/link';
 import { prisma } from '@/lib/prisma';
-import { format } from 'date-fns';
 import { Calendar, Clock, ArrowLeft, Eye, User } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
@@ -12,6 +11,7 @@ import { BLOG_LABELS, getBlogLang, getLanguageAlternates, getPairSlug } from '@/
 import { BlogLanguageToggle } from '@/components/blog-language-toggle';
 import { getMergedTarget } from '@/lib/blog-redirects';
 import { getRelatedPosts } from '@/lib/related-posts';
+import { formatBlogDate, readingMinutes } from '@/lib/blog-format';
 
 interface BlogPostPageProps {
   params: Promise<{
@@ -221,11 +221,11 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
             </div>
             <div className="flex items-center gap-2">
               <Calendar className="h-4 w-4" />
-              <span>{format(new Date(post.publishedAt || post.createdAt), 'dd MMMM yyyy')}</span>
+              <span>{formatBlogDate(post.publishedAt || post.createdAt, lang)}</span>
             </div>
             <div className="flex items-center gap-2">
               <Clock className="h-4 w-4" />
-              <span>{Math.ceil(post.content.length / 1000)} {t.minRead}</span>
+              <span>{readingMinutes(post.content)} {t.minRead}</span>
             </div>
             <div className="flex items-center gap-2">
               <Eye className="h-4 w-4" />

@@ -9,8 +9,8 @@ import { GlassCard } from '@/components/futuristic/glass-card';
 import { PageHero } from '@/components/futuristic/page-hero';
 import { BlogPostGrid, type BlogGridPost } from '@/components/blog-post-grid';
 import { prisma } from '@/lib/prisma';
-import { format } from 'date-fns';
 import { getPairSlug, isTranslation } from '@/lib/blog-i18n';
+import { formatBlogDate, readingMinutes } from '@/lib/blog-format';
 
 export const metadata: Metadata = {
   title: 'Blog - Ts. Ashraf bin Naim',
@@ -86,7 +86,7 @@ export default async function BlogPage() {
         post.excerpt ||
         post.content.replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim().substring(0, 150) + '...',
       coverImage: post.coverImage,
-      date: format(new Date(post.publishedAt || post.createdAt), 'dd MMM yyyy'),
+      date: formatBlogDate(post.publishedAt || post.createdAt, 'ms', 'short'),
       views: post.views,
       category: post.category?.name ?? null,
       tags: post.tags.map((tag) => tag.name),
@@ -126,9 +126,9 @@ export default async function BlogPage() {
                 <CardContent className="p-8 flex flex-col justify-center">
                   <div className="flex items-center gap-2 text-sm text-muted-foreground mb-3">
                     <Calendar className="h-4 w-4" />
-                    <span>{format(new Date(featuredPost.publishedAt || featuredPost.createdAt), 'dd MMM yyyy')}</span>
+                    <span>{formatBlogDate(featuredPost.publishedAt || featuredPost.createdAt, 'ms', 'short')}</span>
                     <Clock className="h-4 w-4 ml-2" />
-                    <span>{Math.ceil(featuredPost.content.length / 1000)} min bacaan</span>
+                    <span>{readingMinutes(featuredPost.content)} min bacaan</span>
                     <Eye className="h-4 w-4 ml-2" />
                     <span>{featuredPost.views} views</span>
                   </div>
@@ -179,7 +179,7 @@ export default async function BlogPage() {
                         {post.title}
                       </h3>
                       <p className="mt-1 text-xs text-muted-foreground">
-                        {format(new Date(post.publishedAt || post.createdAt), 'dd MMM yyyy')}
+                        {formatBlogDate(post.publishedAt || post.createdAt, 'en', 'short')}
                       </p>
                     </div>
                   </div>
