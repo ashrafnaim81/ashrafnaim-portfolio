@@ -89,6 +89,7 @@ export const BLOG_LABELS = {
     newsletterBody: 'Langgan newsletter untuk dapatkan artikel terkini terus ke inbox anda.',
     emailPlaceholder: 'Email anda...',
     subscribe: 'Langgan',
+    related: 'Artikel berkaitan',
   },
   en: {
     back: 'Back to Blog',
@@ -103,5 +104,6 @@ export const BLOG_LABELS = {
     newsletterBody: 'Subscribe to get new articles in your inbox.',
     emailPlaceholder: 'Your email...',
     subscribe: 'Subscribe',
+    related: 'Related articles',
   },
 } as const;

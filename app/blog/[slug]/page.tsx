@@ -11,6 +11,7 @@ import sanitizeHtml from 'sanitize-html';
 import { BLOG_LABELS, getBlogLang, getLanguageAlternates, getPairSlug } from '@/lib/blog-i18n';
 import { BlogLanguageToggle } from '@/components/blog-language-toggle';
 import { getMergedTarget } from '@/lib/blog-redirects';
+import { getRelatedPosts } from '@/lib/related-posts';
 
 interface BlogPostPageProps {
   params: Promise<{
@@ -130,6 +131,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
   const lang = getBlogLang(slug);
   const t = BLOG_LABELS[lang];
   const pairSlug = getPairSlug(slug);
+  const related = await getRelatedPosts(post);
 
   // Data berstruktur schema.org: penulis, tarikh dan bahasa untuk Google.
   // Nama penulis diambil daripada pangkalan data supaya sepadan dengan byline.
@@ -258,7 +260,9 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
 
         {/* Article Content */}
         <div
-          className="prose prose-lg dark:prose-invert max-w-none mb-12"
+          // Jadual lebar ditatal mendatar dalam kotaknya sendiri, dan video YouTube (width="560")
+          // mengecil ikut skrin pada nisbah 16:9, supaya halaman tidak melimpah di telefon.
+          className="prose prose-lg dark:prose-invert max-w-none mb-12 [&_table]:block [&_table]:max-w-full [&_table]:overflow-x-auto [&_iframe]:w-full [&_iframe]:max-w-full [&_iframe]:h-auto [&_iframe]:aspect-video"
           dangerouslySetInnerHTML={{
             __html: sanitizeHtml(post.content, {
               allowedTags: sanitizeHtml.defaults.allowedTags.concat([
@@ -309,6 +313,37 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
           </CardContent>
         </Card>
       </article>
+
+      {/* Artikel berkaitan: bahasa sama, topik paling hampir (lib/related-posts.ts) */}
+      {related.length > 0 && (
+        <section className="mt-16 max-w-4xl mx-auto" lang={lang}>
+          <h2 className="text-2xl font-bold mb-6">{t.related}</h2>
+          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {related.map((r) => (
+              <Link key={r.slug} href={`/blog/${r.slug}`} className="group">
+                <Card className="h-full overflow-hidden transition-shadow group-hover:shadow-lg">
+                  {r.coverImage && (
+                    <img
+                      src={r.coverImage}
+                      alt={r.title}
+                      loading="lazy"
+                      className="w-full aspect-video object-cover"
+                    />
+                  )}
+                  <CardContent className="pt-4">
+                    <h3 className="font-semibold leading-snug mb-2 group-hover:text-primary transition-colors">
+                      {r.title}
+                    </h3>
+                    {r.excerpt && (
+                      <p className="text-sm text-muted-foreground line-clamp-3">{r.excerpt}</p>
+                    )}
+                  </CardContent>
+                </Card>
+              </Link>
+            ))}
+          </div>
+        </section>
+      )}
 
       {/* Newsletter CTA */}
       <div className="mt-16 max-w-2xl mx-auto">
