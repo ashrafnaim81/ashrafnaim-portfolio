@@ -18,6 +18,18 @@ interface BlogPostPageProps {
   }>;
 }
 
+const SITE_URL = 'https://ashrafnaim.my';
+// Profil awam yang sama dengan pautan di footer.
+const AUTHOR_SAME_AS = [
+  'https://www.facebook.com/ashraf.naim.9/',
+  'https://www.youtube.com/c/AshrafNaim',
+  'https://www.linkedin.com/in/AshrafNaim81/',
+];
+
+function absoluteUrl(path: string) {
+  return path.startsWith('/') ? `${SITE_URL}${path}` : path;
+}
+
 async function getBlogPost(slug: string) {
   const post = await prisma.blogPost.findUnique({
     where: {
@@ -40,11 +52,10 @@ async function getBlogPost(slug: string) {
     return null;
   }
 
-  // Increment view count
-  await prisma.blogPost.update({
-    where: { id: post.id },
-    data: { views: { increment: 1 } },
-  });
+  // Tambah kiraan views dengan SQL terus. prisma.blogPost.update akan mengemas kini
+  // updatedAt (@updatedAt) pada setiap paparan, lalu dateModified dan og:modifiedTime
+  // berubah walaupun kandungan tidak disunting.
+  await prisma.$executeRaw`UPDATE "BlogPost" SET views = views + 1 WHERE id = ${post.id}`;
 
   return post;
 }
@@ -70,14 +81,10 @@ export async function generateMetadata({ params }: BlogPostPageProps): Promise<M
   }
 
   const languages = getLanguageAlternates(slug);
-  const url = `https://ashrafnaim.my/blog/${slug}`;
+  const url = `${SITE_URL}/blog/${slug}`;
   const description = post.excerpt || post.title;
   // Pratonton Facebook/WhatsApp memerlukan URL gambar penuh.
-  const image = post.coverImage
-    ? post.coverImage.startsWith('/')
-      ? `https://ashrafnaim.my${post.coverImage}`
-      : post.coverImage
-    : undefined;
+  const image = post.coverImage ? absoluteUrl(post.coverImage) : undefined;
 
   // openGraph dan twitter mesti ditetapkan di sini: jika tidak, artikel
   // mewarisi tajuk, URL dan ringkasan laman utama daripada app/layout.tsx.
@@ -124,8 +131,51 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
   const t = BLOG_LABELS[lang];
   const pairSlug = getPairSlug(slug);
 
+  // Data berstruktur schema.org: penulis, tarikh dan bahasa untuk Google.
+  // Nama penulis diambil daripada pangkalan data supaya sepadan dengan byline.
+  const url = `${SITE_URL}/blog/${slug}`;
+  const authorName = post.author.name || 'Ts. Ashraf bin Naim';
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@graph': [
+      {
+        '@type': 'BlogPosting',
+        headline: post.title,
+        description: post.excerpt || post.title,
+        url,
+        mainEntityOfPage: { '@type': 'WebPage', '@id': url },
+        inLanguage: lang === 'en' ? 'en-GB' : 'ms-MY',
+        datePublished: (post.publishedAt || post.createdAt).toISOString(),
+        dateModified: post.updatedAt.toISOString(),
+        ...(post.coverImage && { image: [absoluteUrl(post.coverImage)] }),
+        author: {
+          '@type': 'Person',
+          name: authorName,
+          url: `${SITE_URL}/about`,
+          sameAs: AUTHOR_SAME_AS,
+        },
+        publisher: { '@type': 'Person', name: authorName, url: SITE_URL },
+        ...(post.category && { articleSection: post.category.name }),
+        ...(post.tags.length > 0 && { keywords: post.tags.map((tag) => tag.name).join(', ') }),
+      },
+      {
+        '@type': 'BreadcrumbList',
+        itemListElement: [
+          { '@type': 'ListItem', position: 1, name: 'Utama', item: SITE_URL },
+          { '@type': 'ListItem', position: 2, name: 'Blog', item: `${SITE_URL}/blog` },
+          { '@type': 'ListItem', position: 3, name: post.title, item: url },
+        ],
+      },
+    ],
+  };
+
   return (
     <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <script
+        type="application/ld+json"
+        // Tukar '<' supaya teks artikel tidak boleh menutup tag skrip.
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd).replace(/</g, '\\u003c') }}
+      />
       {/* Back Button */}
       <div className="max-w-4xl mx-auto mb-8 flex flex-wrap items-center justify-between gap-3">
         <Link href="/blog">
