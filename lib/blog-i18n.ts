@@ -85,10 +85,6 @@ export const BLOG_LABELS = {
     about: 'Tentang',
     authorBio:
       'Pendidik berpengalaman yang bersemangat tentang AI, EdTech, dan transformasi digital dalam pendidikan. Berkongsi insights dan pengalaman praktikal untuk membantu pendidik lain.',
-    newsletterTitle: 'Suka artikel ini?',
-    newsletterBody: 'Langgan newsletter untuk dapatkan artikel terkini terus ke inbox anda.',
-    emailPlaceholder: 'Email anda...',
-    subscribe: 'Langgan',
     related: 'Artikel berkaitan',
   },
   en: {
@@ -100,10 +96,6 @@ export const BLOG_LABELS = {
     about: 'About',
     authorBio:
       'An educator and professional technologist who trains teachers to use AI and digital tools in their daily work.',
-    newsletterTitle: 'Found this useful?',
-    newsletterBody: 'Subscribe to get new articles in your inbox.',
-    emailPlaceholder: 'Your email...',
-    subscribe: 'Subscribe',
     related: 'Related articles',
   },
 } as const;

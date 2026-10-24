@@ -344,26 +344,6 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
           </div>
         </section>
       )}
-
-      {/* Newsletter CTA */}
-      <div className="mt-16 max-w-2xl mx-auto">
-        <Card className="bg-muted">
-          <CardContent className="pt-6 text-center">
-            <h3 className="text-2xl font-bold mb-2">{t.newsletterTitle}</h3>
-            <p className="text-muted-foreground mb-6">
-              {t.newsletterBody}
-            </p>
-            <div className="flex gap-2 max-w-md mx-auto">
-              <input
-                type="email"
-                placeholder={t.emailPlaceholder}
-                className="flex-1 px-4 py-2 border rounded-md bg-background"
-              />
-              <Button>{t.subscribe}</Button>
-            </div>
-          </CardContent>
-        </Card>
-      </div>
     </div>
   );
 }

@@ -189,27 +189,6 @@ export default async function BlogPage() {
           </div>
         </section>
       )}
-
-      {/* Newsletter CTA */}
-      <div className="mt-16 max-w-2xl mx-auto">
-        <GlassCard>
-          <CardContent className="pt-6 text-center">
-            <h3 className="text-2xl font-bold mb-2">Langgan Newsletter</h3>
-            <p className="text-muted-foreground mb-6">
-              Dapatkan artikel terkini terus ke inbox anda. Tips, tutorial, dan insights
-              tentang AI & EdTech setiap minggu.
-            </p>
-            <div className="flex gap-2 max-w-md mx-auto">
-              <input
-                type="email"
-                placeholder="Email anda..."
-                className="flex-1 rounded-full border border-border/70 bg-background/70 px-4 py-2 focus:outline-none focus:ring-2 focus:ring-ring/50"
-              />
-              <Button className="rounded-full">Langgan</Button>
-            </div>
-          </CardContent>
-        </GlassCard>
-      </div>
       </div>
     </div>
   );
