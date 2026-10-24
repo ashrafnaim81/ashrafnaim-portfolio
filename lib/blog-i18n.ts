@@ -84,7 +84,7 @@ export const BLOG_LABELS = {
       'Artikel ini disediakan dengan bantuan alat AI, kemudian disemak dan disunting oleh Ts. Ashraf bin Naim sebelum diterbitkan. Contoh dan saranan di dalamnya berdasarkan pengalaman sebenar dalam pentadbiran dan latihan pendidikan di Malaysia.',
     about: 'Tentang',
     authorBio:
-      'Pendidik berpengalaman yang bersemangat tentang AI, EdTech, dan transformasi digital dalam pendidikan. Berkongsi insights dan pengalaman praktikal untuk membantu pendidik lain.',
+      'Pendidik dan teknologis profesional yang melatih guru menggunakan AI dan alat digital dalam kerja harian mereka.',
     related: 'Artikel berkaitan',
   },
   en: {
