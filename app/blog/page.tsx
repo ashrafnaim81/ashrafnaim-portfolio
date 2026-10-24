@@ -39,8 +39,12 @@ async function getBlogPosts() {
     },
   });
 
-  // Satu kad bagi setiap artikel: versi EN berpasangan tidak disenaraikan.
-  return posts.filter((post) => !isTranslation(post.slug));
+  // Grid utama: satu kad bagi setiap artikel BM. Versi EN disenaraikan berasingan
+  // di bahagian "Articles in English" supaya pembaca berbahasa Inggeris boleh menemuinya.
+  return {
+    posts: posts.filter((post) => !isTranslation(post.slug)),
+    englishPosts: posts.filter((post) => isTranslation(post.slug)),
+  };
 }
 
 async function getFeaturedPost() {
@@ -65,7 +69,7 @@ async function getFeaturedPost() {
 }
 
 export default async function BlogPage() {
-  const [posts, featuredPost] = await Promise.all([
+  const [{ posts, englishPosts }, featuredPost] = await Promise.all([
     getBlogPosts(),
     getFeaturedPost(),
   ]);
@@ -235,6 +239,37 @@ export default async function BlogPage() {
           </Button>
         </div>
       </div>
+
+      {/* Articles in English: versi EN bagi artikel berpasangan (lib/blog-i18n.ts) */}
+      {englishPosts.length > 0 && (
+        <section className="max-w-6xl mx-auto mt-16" lang="en">
+          <h2 className="text-2xl font-bold mb-2">Articles in English</h2>
+          <p className="text-muted-foreground mb-6">English versions of selected guides for teachers.</p>
+          <div className="grid sm:grid-cols-2 gap-4">
+            {englishPosts.map((post) => (
+              <Link key={post.id} href={`/blog/${post.slug}`} className="group">
+                <GlassCard className="h-full overflow-hidden">
+                  <div className="flex items-center gap-4 p-3">
+                    {post.coverImage && (
+                      <div className="relative aspect-[16/9] w-28 shrink-0 overflow-hidden rounded-md">
+                        <Image src={post.coverImage} alt={post.title} fill sizes="112px" className="object-cover" />
+                      </div>
+                    )}
+                    <div className="min-w-0">
+                      <h3 className="font-semibold leading-snug group-hover:text-primary transition-colors">
+                        {post.title}
+                      </h3>
+                      <p className="mt-1 text-xs text-muted-foreground">
+                        {format(new Date(post.publishedAt || post.createdAt), 'dd MMM yyyy')}
+                      </p>
+                    </div>
+                  </div>
+                </GlassCard>
+              </Link>
+            ))}
+          </div>
+        </section>
+      )}
 
       {/* Newsletter CTA */}
       <div className="mt-16 max-w-2xl mx-auto">
