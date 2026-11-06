@@ -9,11 +9,16 @@ import { Button } from '@/components/ui/button';
 import { useState } from 'react';
 import { AccentSwitcher } from '@/components/accent-switcher';
 
-const navItems = [
+// `statik: true` = fail HTML dalam public/ (bukan laluan Next.js), jadi dipaut dengan <a> biasa
+// supaya pelayar terus memuatkan halaman penuh tanpa cubaan navigasi klien.
+type NavItem = { name: string; href: string; statik?: boolean };
+
+const navItems: NavItem[] = [
   { name: 'Home', href: '/' },
   { name: 'About', href: '/about' },
   { name: 'Portfolio', href: '/portfolio' },
   { name: 'Blog', href: '/blog' },
+  { name: 'Sains 3D', href: '/sains-3d/litar-bersiri-selari.html', statik: true },
   { name: 'Talks', href: '/talks' },
   { name: 'Video', href: '/videos' },
   { name: 'Contact', href: '/contact' },
@@ -52,8 +57,19 @@ export default function Navigation() {
           </Link>
 
           {/* Desktop Navigation */}
-          <nav className="hidden items-center gap-1 md:flex">
+          <nav className="hidden items-center gap-1 lg:flex">
             {navItems.map((item) => {
+              if (item.statik) {
+                return (
+                  <a
+                    key={item.href}
+                    href={item.href}
+                    className="relative rounded-full px-3 py-1.5 text-sm font-medium text-muted-foreground transition-colors hover:text-primary"
+                  >
+                    {item.name}
+                  </a>
+                );
+              }
               const active = pathname === item.href;
               return (
                 <Link
@@ -79,7 +95,7 @@ export default function Navigation() {
           </nav>
 
           {/* Mobile Navigation */}
-          <div className="flex items-center gap-1 md:hidden">
+          <div className="flex items-center gap-1 lg:hidden">
             <AccentSwitcher />
             {themeToggle}
             <Button
@@ -96,8 +112,16 @@ export default function Navigation() {
 
         {/* Mobile Menu */}
         {mobileMenuOpen && (
-          <div className="mt-2 space-y-1 rounded-2xl border border-border/70 bg-background/85 p-3 shadow-lg backdrop-blur-xl md:hidden">
-            {navItems.map((item) => (
+          <div className="mt-2 space-y-1 rounded-2xl border border-border/70 bg-background/85 p-3 shadow-lg backdrop-blur-xl lg:hidden">
+            {navItems.map((item) => item.statik ? (
+              <a
+                key={item.href}
+                href={item.href}
+                className="block rounded-lg px-3 py-2 text-sm font-medium text-muted-foreground transition-colors hover:bg-primary/10 hover:text-primary"
+              >
+                {item.name}
+              </a>
+            ) : (
               <Link
                 key={item.href}
                 href={item.href}
