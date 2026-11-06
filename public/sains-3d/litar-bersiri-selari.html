@@ -1,0 +1,770 @@
+<!doctype html>
+<html lang="ms">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Siri Interaktif 3D Sains · Litar Bersiri &amp; Litar Selari (Tahun 5)</title>
+<meta name="description" content="Bab interaktif 3D Sains Tahun 5: litar bersiri dan litar selari. Ramal, uji dan buktikan dalam 4 pelajaran (SP 5.2.1–5.2.6).">
+<link rel="canonical" href="https://ashrafnaim.my/sains-3d/litar-bersiri-selari.html">
+<meta property="og:type" content="website"><meta property="og:url" content="https://ashrafnaim.my/sains-3d/litar-bersiri-selari.html">
+<meta property="og:title" content="Litar Bersiri &amp; Litar Selari · Siri Interaktif 3D Sains (Tahun 5)">
+<meta property="og:description" content="Ramal, uji dan buktikan sendiri: 4 pelajaran 3D, rajah simbol, sijil murid dan nota guru. Percuma.">
+<meta property="og:image" content="https://ashrafnaim.my/sains-3d/litar-bersiri-selari-og.jpg"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+  :root{--ink:#2a2340;--ungu:#6c4bf4;--kuning:#f5c84c;--oren:#ff6b4a;--latar:#f3ece3}
+  html,body{margin:0;height:100%;overflow:hidden;font-family:Poppins,system-ui,sans-serif;color:var(--ink);background:var(--latar);-webkit-tap-highlight-color:transparent}
+  #stage{position:fixed;inset:0}
+  button{font:inherit;cursor:pointer;border:0;border-radius:12px;padding:9px 12px;margin:4px 6px 0 0;font-size:14px;font-weight:600;background:#efeaff;color:var(--ink)}
+  button:focus-visible{outline:3px solid var(--ungu);outline-offset:2px}
+  .topbar{position:fixed;left:0;right:0;top:0;padding:12px 16px 6px;z-index:5;pointer-events:none}
+  .baris1{display:flex;align-items:center;gap:8px}
+  .chip{display:inline-block;font-size:11px;padding:4px 10px;border-radius:999px;font-weight:600;background:var(--ink);color:#fff}
+  .alat{margin-left:auto;display:flex;gap:6px;pointer-events:auto}
+  .alat button{margin:0;padding:6px 10px;font-size:12px;background:#fff;box-shadow:0 3px 10px rgba(60,40,90,.12)}
+  @media (max-aspect-ratio: 9/10){ .alat .teks{display:none} }
+  h1{margin:6px 0 6px;font-size:21px;line-height:1.15;font-weight:800}
+  .baris2{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+  .steps span{display:inline-block;font-size:11px;margin-right:4px;padding:3px 9px;border-radius:999px;font-weight:600;background:#fff;opacity:.6}
+  .steps span.on{background:var(--ungu);color:#fff;opacity:1}
+  .slot{display:flex;gap:5px}
+  .slot i{width:20px;height:20px;border-radius:50%;border:2px dashed #b9b0d4;display:grid;place-items:center;font-style:normal;font-size:11px;font-weight:800;color:#fff}
+  .slot i.ada{border:2px solid var(--oren);background:var(--oren)}
+  #card{position:fixed;z-index:6;left:12px;right:12px;bottom:26px;padding:12px 15px 10px;border-radius:18px;background:#fff;box-shadow:0 12px 34px rgba(60,40,90,.18);box-sizing:border-box;max-height:62vh;overflow:auto}
+  @media (min-aspect-ratio: 9/10){ #card{left:22px;right:auto;width:360px;bottom:auto;top:112px;max-height:calc(100vh - 150px)} }
+  .lbl{font-size:11.5px;letter-spacing:.14em;margin:0 0 4px;font-weight:800;color:var(--ungu)}
+  .q{margin:0 0 6px;font-size:15px;line-height:1.4}
+  .tip{margin:2px 0 6px;font-size:12.5px;opacity:.85;line-height:1.4}
+  .obs{margin:5px 0;font-size:14px;line-height:1.4}
+  .opsyen button{display:block;width:100%;text-align:left;margin:6px 0 0}
+  button.utama{background:var(--ungu);color:#fff}
+  .seg{display:flex;align-items:center;gap:6px;margin:6px 0}
+  .seg span{font-size:13px;min-width:118px}
+  .seg button{margin:0;padding:6px 13px;background:#f1edff}
+  .seg button.on{background:var(--ungu);color:#fff}
+  .flap{border-radius:12px;margin:6px 0 8px;cursor:pointer;overflow:hidden;background:#fff7d9;border:2px solid var(--kuning)}
+  .flap .depan{padding:10px 13px;font-weight:700;font-size:14px;background:var(--kuning)}
+  .flap .belakang{max-height:0;overflow:hidden;transition:max-height .6s ease,padding .3s;padding:0 13px;font-size:13.5px;line-height:1.45}
+  .flap.buka .depan{display:none}
+  .flap.buka .belakang{max-height:320px;padding:9px 13px}
+  .flap p{margin:4px 0}
+  .navi{display:flex;align-items:center;justify-content:space-between;margin-top:8px;padding-top:8px;border-top:1px solid #eee8f7}
+  .navi button{margin:0;padding:6px 11px;font-size:13px}
+  .navi small{font-size:11.5px;opacity:.7;text-align:center}
+  .legenda{display:flex;gap:12px;flex-wrap:wrap;font-size:12px;margin:4px 0 6px}
+  .legenda svg{vertical-align:middle;margin-right:3px}
+  #cop{position:fixed;z-index:9;left:50%;top:38%;width:150px;height:150px;margin:-75px 0 0 -75px;border-radius:50%;display:grid;place-items:center;text-align:center;font-weight:800;font-size:14px;line-height:1.2;border:5px solid var(--oren);color:var(--oren);background:rgba(255,255,255,.94);transform:scale(2.6) rotate(-30deg);opacity:0;transition:transform .55s cubic-bezier(.2,1.7,.4,1),opacity .3s;pointer-events:none}
+  #cop.on{opacity:1;transform:scale(1) rotate(-12deg)}
+  .ref{position:fixed;bottom:6px;left:0;right:0;text-align:center;font-size:10px;opacity:.75;z-index:5;pointer-events:none}
+  .lab{font-weight:800;font-size:14px;padding:1px 8px;border-radius:8px;background:var(--ink);color:#fff;pointer-events:none}
+  .lab.kecil{font-size:11px;font-weight:600;opacity:.85}
+  .lab.suis{background:#38b2a3}
+  .tajuk3d{font-size:12px;font-weight:700;padding:3px 10px;border-radius:999px;white-space:nowrap;pointer-events:none;background:#fff;box-shadow:0 4px 12px rgba(60,40,90,.15)}
+  .lapis{position:fixed;inset:0;z-index:20;background:rgba(42,35,64,.45);display:none;align-items:center;justify-content:center;padding:16px}
+  .lapis.on{display:flex}
+  .kotak{background:#fff;border-radius:18px;max-width:560px;width:100%;max-height:88vh;overflow:auto;padding:18px 20px;box-sizing:border-box;box-shadow:0 20px 50px rgba(0,0,0,.25)}
+  .kotak h2{margin:0 0 8px;font-size:19px}
+  .kotak h3{margin:14px 0 4px;font-size:14px;color:var(--ungu)}
+  .kotak p,.kotak li{font-size:13.5px;line-height:1.5}
+  .kotak ol,.kotak ul{padding-left:20px;margin:4px 0}
+  .sijil{text-align:center;border:6px double var(--ungu);border-radius:14px;padding:18px 14px}
+  .sijil input{font:inherit;font-size:20px;font-weight:800;text-align:center;border:0;border-bottom:2px solid var(--ink);width:80%;margin:6px 0 10px;background:transparent;color:var(--ink)}
+  .cops{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin:10px 0}
+  .cops div{width:86px;height:86px;border-radius:50%;border:3px solid #d8d2e8;display:grid;place-items:center;font-size:10.5px;font-weight:700;line-height:1.2;color:#b9b0d4;padding:6px;box-sizing:border-box}
+  .cops div.ada{border-color:var(--oren);color:var(--oren);transform:rotate(-8deg)}
+  #toast{position:fixed;z-index:30;left:50%;top:14px;transform:translateX(-50%);background:var(--ink);color:#fff;font-size:12.5px;padding:8px 14px;border-radius:999px;opacity:0;transition:opacity .4s;pointer-events:none}
+  #toast.on{opacity:1}
+  body.poster .lab{font-size:12px} body.poster .lab.kecil{font-size:10px} body.poster .tajuk3d{font-size:11px;padding:2px 8px}
+  body.poster .topbar, body.poster #card, body.poster .ref, body.poster #cop, body.poster #toast{display:none!important}
+  body.rakam .topbar h1, body.rakam .baris2, body.rakam .alat, body.rakam .ref{display:none!important}
+  body.rakam #card{bottom:150px;right:70px;left:14px;max-height:40vh;padding:10px 13px 8px}
+  body.rakam #card .navi{display:none} body.rakam .q{font-size:14px;margin-bottom:4px} body.rakam .tip{font-size:11.5px;margin:1px 0 4px} body.rakam .obs{font-size:13px;margin:3px 0}
+  body.rakam #card button{font-size:13px;padding:7px 10px;margin-top:3px} body.rakam .opsyen button{margin-top:4px} body.rakam .flap .belakang{font-size:12.5px} body.rakam .flap .depan{padding:8px 12px;font-size:13px}
+  #beat{position:fixed;z-index:8;left:14px;right:14px;top:108px;text-align:center;font:800 27px/1.22 Poppins,sans-serif;color:var(--ink);pointer-events:none;opacity:0}
+  #beat span{display:inline-block;background:#fff;padding:8px 16px;border-radius:16px;box-shadow:0 8px 22px rgba(60,40,90,.18)}
+  #beat b{color:var(--ungu)}
+  #jari{position:fixed;z-index:12;width:0;height:0;pointer-events:none;opacity:0}
+  #jari .titik,#jari .riak{position:absolute;left:-22px;top:-22px;width:44px;height:44px;border-radius:50%}
+  #jari .titik{background:rgba(255,255,255,.85);border:3px solid var(--ungu);box-shadow:0 6px 16px rgba(60,40,90,.3)}
+  #jari .riak{border:4px solid var(--ungu)}
+  #akhir{position:fixed;inset:0;z-index:15;display:none;align-items:center;justify-content:center;background:rgba(243,236,227,.95);text-align:center}
+  #akhir .isi{padding:0 26px}
+  #akhir .k1{display:inline-block;background:var(--ink);color:#fff;font:600 13px Poppins;padding:5px 12px;border-radius:999px}
+  #akhir h2{font:800 40px/1.08 Poppins;margin:12px 0 8px}
+  #akhir h2 b{color:var(--ungu)}
+  #akhir p{font:600 16px/1.45 Poppins;margin:6px 0}
+  #akhir .hadiah{display:inline-block;margin-top:12px;background:var(--kuning);font:800 19px Poppins;padding:10px 18px;border-radius:14px}
+  #akhir .tera{margin-top:22px;font:600 13px Poppins;opacity:.65}
+  @media print{
+    body{overflow:visible;background:#fff}
+    body > *:not(#lapisSijil){display:none!important}
+    #lapisSijil{display:flex!important;position:static;background:#fff}
+    #lapisSijil .kotak{box-shadow:none;max-height:none}
+    .tiada-cetak{display:none!important}
+  }
+</style>
+<script type="importmap">
+{"imports":{
+  "three":"https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js",
+  "three/addons/":"https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/"
+}}
+</script>
+</head>
+<body>
+<div id="stage"></div>
+<header class="topbar">
+  <div class="baris1"><span class="chip">Siri Interaktif 3D Sains · T5 · Elektrik</span>
+    <div class="alat"><button id="btnNota" aria-label="Nota Guru">📘<span class="teks"> Nota Guru</span></button><button id="btnSijil" aria-label="Sijil">🏅<span class="teks"> Sijil</span></button></div></div>
+  <h1 id="tajuk"></h1>
+  <div class="baris2"><div class="steps"><span data-s="ramal">1 Ramal</span><span data-s="uji">2 Uji</span><span data-s="bukti">3 Buktikan</span></div>
+    <div class="slot" id="slot"></div></div>
+</header>
+<section id="card" aria-live="polite"></section>
+<div id="cop"></div>
+<div id="toast"></div>
+<div id="gagal" style="display:none;position:fixed;inset:0;z-index:40;background:#f3ece3;align-items:center;justify-content:center;padding:24px;text-align:center;font:600 16px/1.5 Poppins,system-ui,sans-serif;color:#2a2340">
+  <div><div style="font-size:40px">🔌</div><p><b>Halaman 3D ini belum dapat dimuatkan.</b></p>
+  <p>Ia perlukan sambungan internet dan pelayar moden (Chrome, Edge atau Safari). Jika rangkaian sekolah menyekat <i>cdn.jsdelivr.net</i>, cuba guna data telefon.</p></div></div>
+<script>setTimeout(function(){ if(!window.__siap){ var g=document.getElementById('gagal'); g.style.display='flex'; } }, 15000);</script>
+<div id="beat"></div>
+<div id="jari"><div class="riak"></div><div class="titik"></div></div>
+<div id="akhir"><div class="isi"><span class="k1">Siri Interaktif 3D Sains · Tahun 5</span>
+  <h2>Bab 1: Litar<br><b>Bersiri &amp; Selari</b></h2>
+  <p>4 pelajaran · rajah simbol · sijil · nota guru</p>
+  <p>Ramal, uji dan buktikan, terus di telefon atau skrin kelas.</p>
+  <div class="hadiah">Percuma untuk murid &amp; guru 🎁</div>
+  <div class="tera">Ts.AshrafNaim</div></div></div>
+<footer class="ref" id="ref"></footer>
+
+<div class="lapis" id="lapisNota"><div class="kotak">
+  <h2>📘 Nota Guru · Litar Bersiri &amp; Litar Selari</h2>
+  <p><b>Tahap:</b> Sains Tahun 5, Tema Penerokaan Fizik, Unit Elektrik. <b>Masa cadangan:</b> 30–40 minit (4 pelajaran, ±8 minit setiap satu).</p>
+  <h3>Standard Pembelajaran</h3>
+  <ul>
+    <li>5.2.1 Membanding dan membezakan susunan mentol dalam litar bersiri dan litar selari (Pelajaran 1).</li>
+    <li>5.2.2 Melukis rajah litar menggunakan simbol (Pelajaran 1, butang rajah simbol).</li>
+    <li>5.2.3 Kecerahan mentol dalam litar bersiri dan litar selari (Pelajaran 2).</li>
+    <li>5.2.4–5.2.5 Faktor kecerahan mentol: bilangan sel kering dan bilangan mentol (Pelajaran 3).</li>
+    <li>5.2.6 Keadaan mentol apabila suis dibuka atau ditutup (Pelajaran 4).</li>
+  </ul>
+  <h3>Cadangan langkah PdP</h3>
+  <ol>
+    <li>Set induksi: tayang Pelajaran 1 di skrin. Murid mengundi ramalan dengan tangan sebelum guru menekan pilihan.</li>
+    <li>Amali sebenar dahulu: aktiviti buku teks m.s. 124 (kecerahan mentol) dan m.s. 131 (suis).</li>
+    <li>Selepas amali, guna Pelajaran 2–4 untuk membanding pemerhatian kumpulan dengan simulasi.</li>
+    <li>Penutup: murid mendapatkan cop keempat-empat pelajaran dan mencetak sijil (pilihan).</li>
+  </ol>
+  <h3>Soalan untuk perbincangan</h3>
+  <ul>
+    <li>Kenapa lampu di rumah disambung secara selari, bukan bersiri?</li>
+    <li>Jika satu mentol lampu hiasan rosak dan semua mentol lain padam, apakah jenis litarnya?</li>
+    <li>Ramal: 3 sel kering dan 3 mentol bersiri. Adakah kecerahannya sama dengan 1 sel dan 1 mentol? Uji dalam Pelajaran 3.</li>
+  </ul>
+  <h3>Perhatian</h3>
+  <ul>
+    <li>Simulasi ini <b>tidak menggantikan</b> amali. Mentol dan sel kering sebenar mungkin berbeza (sel lemah, mentol berlainan jenis).</li>
+    <li>Dalam buku teks, <b>"tutup suis"</b> bermaksud litar lengkap (mentol menyala). Ini berbeza dengan maksud harian ("tutup lampu" = padam), jadi sebut dengan jelas kepada murid.</li>
+    <li>Kecerahan dalam simulasi ialah anggaran visual untuk perbandingan, bukan ukuran sebenar.</li>
+  </ul>
+  <h3>Sumber</h3>
+  <p>Buku Teks Sains Tahun 5 (KSSR Semakan), Unit 5 Elektrik, m.s. 118–131. Isi ditulis semula untuk simulasi ini.</p>
+  <p>Lebih banyak bahan AI dan EdTech untuk guru: <a href="https://ashrafnaim.my/blog" target="_blank" rel="noopener">ashrafnaim.my/blog</a></p>
+  <p class="tiada-cetak"><label><input type="checkbox" id="cbRingan"> Mod ringan (untuk Chromebook atau telefon lama: tanpa bayang dan cahaya kembang)</label></p>
+  <button class="utama tiada-cetak" data-tutup>Tutup</button>
+</div></div>
+
+<div class="lapis" id="lapisSijil"><div class="kotak">
+  <div class="sijil">
+    <div style="font-size:12px;letter-spacing:.2em;font-weight:800;color:var(--ungu)">SIRI INTERAKTIF 3D SAINS · TAHUN 5</div>
+    <h2 style="font-size:24px;margin:6px 0 2px">Sijil Saintis Litar</h2>
+    <p style="margin:2px 0">Dengan ini disahkan bahawa</p>
+    <input id="nama" placeholder="Tulis nama kamu" maxlength="40" aria-label="Nama murid">
+    <p style="margin:2px 0">telah meramal, menguji dan membuktikan konsep litar bersiri dan litar selari.</p>
+    <div class="cops" id="sijilCops"></div>
+    <p style="font-size:12px;opacity:.7;margin:4px 0" id="tarikh"></p>
+  </div>
+  <div class="tiada-cetak" style="margin-top:10px"><button class="utama" id="btnCetak">🖨️ Cetak sijil</button><button data-tutup>Tutup</button></div>
+</div></div>
+
+<script type="module">
+import * as THREE from 'three';
+import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js';
+import { RenderPass } from 'three/addons/postprocessing/RenderPass.js';
+import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js';
+import { OutputPass } from 'three/addons/postprocessing/OutputPass.js';
+import { CSS2DRenderer, CSS2DObject } from 'three/addons/renderers/CSS2DRenderer.js';
+import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
+import { RoundedBoxGeometry } from 'three/addons/geometries/RoundedBoxGeometry.js';
+import { Line2 } from 'three/addons/lines/Line2.js';
+import { LineMaterial } from 'three/addons/lines/LineMaterial.js';
+import { LineGeometry } from 'three/addons/lines/LineGeometry.js';
+
+const QS = new URLSearchParams(location.search);
+const PENUH = QS.get('penuh') === '1';
+const POSTER = QS.get('poster') === '1', RAKAM = QS.get('rakam') === '1';
+const SUSUN = QS.get('susun'), ATAS = Number(QS.get('atas') || 0), BAWAH = Number(QS.get('bawah') || 0), JARAK = Number(QS.get('jarak') || 1);
+if (POSTER) document.body.classList.add('poster');
+if (RAKAM) document.body.classList.add('rakam');
+/* penjadual: masa nyata biasa, atau masa maya semasa rakaman */
+let vt = 0; const JADUAL = [];
+function jadual(fn, ms) { if (RAKAM) JADUAL.push({ at: vt + ms / 1000, fn }); else setTimeout(fn, ms); }
+
+/* =================== PELAJARAN =================== */
+const PELAJARAN = [
+  { id: 'laluan', tajuk: 'Satu Laluan, Dua Laluan', ref: 'SP 5.2.1–5.2.2 · Buku Teks Sains Tahun 5, m.s. 118–122',
+    litar: [{ jenis: 'siri', sel: 1, mentol: 2, suis: 'utama', huruf: 'AB' }, { jenis: 'selari', sel: 1, mentol: 2, suis: 'utama', huruf: 'CD' }],
+    suisAwal: false,
+    ramal: { s: 'Arus elektrik mengalir melalui wayar. Berapa <b>laluan arus</b> dalam setiap litar?',
+      p: [['a', 'Bersiri 1 laluan, Selari 2 laluan'], ['b', 'Bersiri 2 laluan, Selari 1 laluan'], ['c', 'Kedua-duanya 1 laluan']], betul: 'a' },
+    uji: 'suis', cop: 'Laluan Arus',
+    perhati: 'Perhati laluan yang menyala: litar bersiri <b>1 laluan</b>, litar selari <b>2 laluan</b>.',
+    bukti: ['<b>Bersiri:</b> mentol disusun seperti satu rantai, jadi hanya ada <b>satu laluan</b> arus.',
+      '<b>Selari:</b> mentol disusun dalam cabang yang selari, jadi ada <b>lebih daripada satu laluan</b> arus.'],
+    cabaran: 'simbol' },
+  { id: 'cerah', tajuk: 'Mana Lebih Cerah?', ref: 'SP 5.2.3 · Buku Teks Sains Tahun 5, m.s. 123–124',
+    litar: [{ jenis: 'siri', sel: 1, mentol: 2, suis: 'utama', huruf: 'AB' }, { jenis: 'selari', sel: 1, mentol: 2, suis: 'utama', huruf: 'CD' }],
+    suisAwal: false,
+    ramal: { s: 'Dua litar, sel kering yang sama. Mentol litar mana menyala <b>lebih cerah</b>?',
+      p: [['a', 'Litar bersiri (A, B)'], ['b', 'Litar selari (C, D)'], ['c', 'Sama cerah']], betul: 'b' },
+    uji: 'suis', cop: 'Kecerahan Mentol',
+    perhati: 'Perhati: <b>C dan D</b> lebih cerah daripada A dan B.',
+    bukti: ['<b>Bersiri:</b> satu laluan sahaja. A dan B berkongsi arus, jadi kedua-duanya malap.',
+      '<b>Selari:</b> setiap cabang mendapat tenaga yang sama, jadi C dan D lebih cerah.'],
+    cabaran: 'tanggal' },
+  { id: 'tambah', tajuk: 'Tambah Sel, Tambah Mentol', ref: 'SP 5.2.4–5.2.5 · Buku Teks Sains Tahun 5, m.s. 125–128',
+    litar: [{ jenis: 'siri', sel: 1, mentol: 1, suis: 'utama', huruf: 'ABC' }, { jenis: 'selari', sel: 1, mentol: 1, suis: 'utama', huruf: 'DEF' }],
+    suisAwal: true,
+    ramal: { s: 'Kedua-dua litar kini sama terang. Jika <b>bilangan mentol ditambah</b>, apa jadi pada kecerahan mentol?',
+      p: [['a', 'Bersiri makin malap, selari tidak berubah'], ['b', 'Kedua-duanya makin malap'], ['c', 'Kedua-duanya makin cerah']], betul: 'a' },
+    uji: 'gelangsar', cop: 'Faktor Kecerahan',
+    bukti: ['<b>Bilangan mentol:</b> dalam litar bersiri, lebih banyak mentol berkongsi arus yang sama, jadi makin malap. Dalam litar selari, setiap cabang mendapat tenaga yang sama, jadi kecerahan tidak berubah.',
+      '<b>Bilangan sel kering:</b> lebih banyak sel memberi lebih tenaga elektrik, jadi mentol dalam kedua-dua litar makin cerah.'],
+    cabaran: null },
+  { id: 'suis', tajuk: 'Buka Satu Suis', ref: 'SP 5.2.6 · Buku Teks Sains Tahun 5, m.s. 129–131',
+    litar: [{ jenis: 'siri', sel: 1, mentol: 2, suis: 'dua', huruf: 'AB', sLabel: ['S1', 'S2'] }, { jenis: 'selari', sel: 1, mentol: 2, suis: 'cabang', huruf: 'CD', sLabel: ['S3', 'S4'] }],
+    suisAwal: true,
+    ramal: { s: 'Semua suis ditutup dan semua mentol menyala. Jika suis <b>S1</b> dan <b>S3</b> dibuka, mentol mana masih menyala?',
+      p: [['a', 'B dan D'], ['b', 'D sahaja'], ['c', 'Tiada mentol menyala']], betul: 'b' },
+    uji: 'ketik', cop: 'Suis Litar',
+    bukti: ['<b>Bersiri:</b> buka S1 atau S2, litar menjadi tidak lengkap. Arus tidak boleh mengalir, jadi A dan B padam.',
+      '<b>Selari:</b> buka S3, hanya cabang C terputus. Arus masih mengalir dalam cabang D, jadi D masih menyala.'],
+    cabaran: null },
+];
+
+/* =================== ASAS ADEGAN =================== */
+const renderer = new THREE.WebGLRenderer({ antialias: true });
+let ringan = false;
+renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+renderer.toneMapping = THREE.ACESFilmicToneMapping; renderer.toneMappingExposure = 0.92;
+renderer.shadowMap.enabled = true; renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+document.getElementById('stage').appendChild(renderer.domElement);
+const scene = new THREE.Scene();
+const BG = new THREE.Color('#f3ece3');
+scene.background = BG; scene.fog = new THREE.Fog(BG, 24, 48);
+const pm = new THREE.PMREMGenerator(renderer);
+scene.environment = pm.fromScene(new RoomEnvironment(), 0.04).texture; scene.environmentIntensity = 0.55;
+scene.add(new THREE.HemisphereLight(0xffffff, 0xd9cbb8, 0.8));
+const sun = new THREE.DirectionalLight(0xffffff, 1.7);
+sun.position.set(3.5, 9, 6); sun.castShadow = true; sun.shadow.mapSize.set(2048, 2048); sun.shadow.radius = 6; sun.shadow.bias = -0.0004;
+Object.assign(sun.shadow.camera, { left: -8, right: 8, top: 8, bottom: -8, near: 1, far: 26 });
+scene.add(sun);
+const meja = new THREE.Mesh(new THREE.PlaneGeometry(70, 70), new THREE.MeshStandardMaterial({ color: '#eee4d6', roughness: .95 }));
+meja.rotation.x = -Math.PI / 2; meja.receiveShadow = true; scene.add(meja);
+
+const camera = new THREE.PerspectiveCamera(40, 1, 0.1, 120);
+const labelR = new CSS2DRenderer();
+labelR.domElement.style.cssText = 'position:fixed;inset:0;pointer-events:none;z-index:4';
+document.body.appendChild(labelR.domElement);
+const controls = new OrbitControls(camera, renderer.domElement);
+Object.assign(controls, { enablePan: false, enableZoom: false, enableDamping: true, dampingFactor: .08,
+  minAzimuthAngle: -.55, maxAzimuthAngle: .55, minPolarAngle: .35, maxPolarAngle: 1.12 });
+const composer = new EffectComposer(renderer);
+composer.addPass(new RenderPass(scene, camera));
+const bloom = new UnrealBloomPass(new THREE.Vector2(256, 256), .38, .3, 2.2);
+composer.addPass(bloom); composer.addPass(new OutputPass());
+
+const LM = [];
+const mat = (color, o = {}) => new THREE.MeshStandardMaterial({ color, roughness: .45, metalness: 0, ...o });
+const METAL = () => mat('#c9ced9', { metalness: .85, roughness: .25 });
+function bayang(o) { o.traverse(m => { if (m.isMesh) { m.castShadow = true; m.receiveShadow = true; } }); return o; }
+function label(teks, cls, x, y, z, parent) {
+  const d = document.createElement('div'); d.className = 'lab ' + (cls || ''); d.textContent = teks;
+  const o = new CSS2DObject(d); o.position.set(x, y, z); parent.add(o); return o;
+}
+
+/* =================== GEOMETRI LITAR =================== */
+const H = 0.14, X0 = -1.8, X1 = 1.8, ZT = -1.0, ZB = 1.0;
+const V = (x, z) => new THREE.Vector3(x, H, z);
+function lengkung(pts, closed, r = .14) {
+  const path = new THREE.CurvePath(); const n = pts.length; const P = i => pts[((i % n) + n) % n];
+  const start = closed ? P(0).clone().lerp(P(1), Math.min(r / P(0).distanceTo(P(1)), .5)) : P(0).clone();
+  let cur = start; const end = closed ? n + 1 : n;
+  for (let i = 1; i < end; i++) {
+    const a = P(i - 1), b = P(i);
+    if (!closed && i === n - 1) { path.add(new THREE.LineCurve3(cur, b.clone())); break; }
+    const c = P(i + 1);
+    const t1 = b.clone().lerp(a, Math.min(r / a.distanceTo(b), .5)), t2 = b.clone().lerp(c, Math.min(r / b.distanceTo(c), .5));
+    path.add(new THREE.LineCurve3(cur, t1)); path.add(new THREE.QuadraticBezierCurve3(t1, b.clone(), t2)); cur = t2;
+  }
+  return path;
+}
+function laluan(pts) {
+  const L = [0]; for (let i = 1; i < pts.length; i++) L.push(L[i - 1] + pts[i].distanceTo(pts[i - 1]));
+  const total = L[L.length - 1];
+  return { pts, total, at(u, out) { const d = ((u % 1) + 1) % 1 * total; let i = 1; while (L[i] < d) i++;
+    return out.copy(pts[i - 1]).lerp(pts[i], (d - L[i - 1]) / (L[i] - L[i - 1])); } };
+}
+const selX = n => Array.from({ length: n }, (_, i) => -0.5 - (n - 1) * .36 + i * .72);
+const siriX = n => [[0], [-.65, .65], [-1.1, 0, 1.1]][n - 1];
+const cabangZ = n => [[-1.0], [-1.0, -0.1], [-1.0, -0.4, 0.2]][n - 1];
+
+function garisSimbol(pts, parent) {
+  const g = new LineGeometry(); g.setPositions(pts.flatMap(p => [p.x, p.y, p.z]));
+  const m = new LineMaterial({ color: '#2a2340', linewidth: 3.4, transparent: true, opacity: 0, depthWrite: false });
+  m.resolution.set(innerWidth, innerHeight); LM.push(m); const l = new Line2(g, m); l.renderOrder = 3; parent.add(l); return m;
+}
+
+function bina(cfg, warnaDulang, suisTutup) {
+  const root = new THREE.Group(); root.scale.setScalar(0.001);
+  const L = { cfg, root, komponen: [], mentol: [], suis: [], aliran: [], sorot: [], simbolMat: [], topeng: [] };
+  const dulang = bayang(new THREE.Mesh(new RoundedBoxGeometry(4.3, .1, 2.75, 4, .06), mat(warnaDulang, { roughness: .7 })));
+  dulang.position.y = .05; root.add(dulang);
+  const topengMat = new THREE.MeshBasicMaterial({ color: warnaDulang, transparent: true, opacity: 0, depthWrite: false });
+  const topeng = (w, d, x, z, rot = 0) => { const m = new THREE.Mesh(new THREE.PlaneGeometry(w, d), topengMat); m.rotation.set(-Math.PI / 2, 0, rot); m.position.set(x, .205, z); m.renderOrder = 2; root.add(m); };
+  L.topengMat = topengMat;
+  const wayar = (pts, closed) => { const m = new THREE.Mesh(new THREE.TubeGeometry(lengkung(pts, closed), 300, .045, 10, false), mat('#3b3355', { roughness: .5 })); m.castShadow = true; root.add(m); };
+  const bintik = (x, z) => { const m = new THREE.Mesh(new THREE.SphereGeometry(.07, 16, 12), METAL()); m.position.set(x, H, z); m.castShadow = true; root.add(m); };
+  const sim = (pts) => L.simbolMat.push(garisSimbol(pts.map(([x, z]) => new THREE.Vector3(x, .21, z)), root));
+
+  // wayar
+  wayar([V(X0, ZB), V(X0, ZT), V(X1, ZT), V(X1, ZB)], true);
+  const zc = cfg.jenis === 'selari' ? cabangZ(cfg.mentol) : [ZT];
+  if (cfg.jenis === 'selari') zc.slice(1).forEach(z => { wayar([V(X0, z), V(X1, z)], false); bintik(X0, z); bintik(X1, z); });
+
+  // sel kering
+  const sx = selX(cfg.sel);
+  sx.forEach((x, i) => {
+    const g = new THREE.Group(); g.position.set(x, H, ZB);
+    const body = new THREE.CylinderGeometry(.17, .17, .5, 32); body.rotateZ(Math.PI / 2); body.translate(-.1, 0, 0);
+    const band = new THREE.CylinderGeometry(.172, .172, .2, 32); band.rotateZ(Math.PI / 2); band.translate(.25, 0, 0);
+    const nub = new THREE.CylinderGeometry(.06, .06, .06, 24); nub.rotateZ(Math.PI / 2); nub.translate(.38, 0, 0);
+    g.add(new THREE.Mesh(body, mat('#26232f', { roughness: .35 })), new THREE.Mesh(band, mat('#f5a524', { roughness: .3 })), new THREE.Mesh(nub, METAL()));
+    bayang(g); root.add(g); L.komponen.push(g);
+    topeng(.16, .12, x, ZB);
+    sim([[x + .05, ZB - .24], [x + .05, ZB + .24]]); sim([[x - .05, ZB - .12], [x - .05, ZB + .12]]);
+  });
+  label(cfg.sel > 1 ? cfg.sel + ' sel kering' : 'sel kering', 'kecil', (sx[0] + sx[sx.length - 1]) / 2, -.06, ZB + .3, root);
+  const selKiri = sx[0] - .35, selKanan = sx[sx.length - 1] + .35;
+
+  // suis
+  const buatSuis = (x, z, rot, nama) => {
+    const g = new THREE.Group(); g.position.set(x, H, z); g.rotation.y = rot;
+    g.add(new THREE.Mesh(new RoundedBoxGeometry(.56, .07, .3, 3, .025), mat('#38b2a3', { roughness: .5 })));
+    [-.22, .22].forEach(px => { const p = new THREE.Mesh(new THREE.CylinderGeometry(.035, .035, .08, 16), METAL()); p.position.set(px, .06, 0); g.add(p); });
+    const tuil = new THREE.Group(); tuil.position.set(-.24, .07, 0);
+    const lev = new THREE.BoxGeometry(.5, .025, .07); lev.translate(.25, 0, 0);
+    tuil.add(new THREE.Mesh(lev, mat('#9aa3b5', { metalness: .8, roughness: .3 })));
+    const kn = new THREE.Mesh(new THREE.SphereGeometry(.045, 16, 12), mat('#ff6b4a')); kn.position.set(.5, .02, 0); tuil.add(kn);
+    g.add(tuil);
+    const hit = new THREE.Mesh(new THREE.BoxGeometry(.75, .4, .5), new THREE.MeshBasicMaterial({ transparent: true, opacity: 0, depthWrite: false })); hit.position.y = .1; g.add(hit);
+    bayang(g); root.add(g); L.komponen.push(g);
+    const s = { nama, g, tuil, hit, tutup: suisTutup, sudut: suisTutup ? 0 : .62 };
+    hit.userData.suis = s;
+    if (nama) label(nama, 'suis', 0, .42, 0, g);
+    // simbol suis
+    const dir = new THREE.Vector3(Math.cos(rot), 0, -Math.sin(rot)), nor = new THREE.Vector3(Math.sin(rot), 0, Math.cos(rot));
+    const p = (a, b) => [x + dir.x * a + nor.x * b, z + dir.z * a + nor.z * b];
+    topeng(.44, .16, x, z, rot);
+    [-.2, .2].forEach(c0 => { const cc = []; for (let i = 0; i <= 16; i++) { const a = i / 16 * Math.PI * 2; cc.push(p(c0 + Math.cos(a) * .035, Math.sin(a) * .035)); } sim(cc); });
+    const tutupM = garisSimbol([p(-.165, 0), p(.165, 0)].map(([a, b]) => new THREE.Vector3(a, .21, b)), root);
+    const bukaM = garisSimbol([p(-.17, -.02), p(.16, -.22)].map(([a, b]) => new THREE.Vector3(a, .21, b)), root);
+    s.simTutup = tutupM; s.simBuka = bukaM;
+    L.suis.push(s); return s;
+  };
+  if (cfg.suis === 'utama' || cfg.suis === 'dua') buatSuis(1.15, ZB, 0, cfg.suis === 'dua' ? cfg.sLabel[0] : null);
+  if (cfg.suis === 'dua') buatSuis(X1, 0, Math.PI / 2, cfg.sLabel[1]);
+
+  // mentol
+  const buatMentol = (x, z, huruf, cabang) => {
+    const g = new THREE.Group(); g.position.set(x, H, z); root.add(g);
+    const angkat = new THREE.Group(); g.add(angkat);
+    const holder = new THREE.Mesh(new THREE.CylinderGeometry(.15, .17, .14, 32), mat('#4a4f63', { roughness: .4 })); holder.position.y = .03; g.add(holder);
+    const screw = new THREE.Mesh(new THREE.CylinderGeometry(.09, .08, .14, 24), METAL()); screw.position.y = .16; angkat.add(screw);
+    const kacaMat = new THREE.MeshStandardMaterial({ color: '#bcd3ff', transparent: true, opacity: .5, roughness: .05, metalness: .1, depthWrite: false, envMapIntensity: 1.6 });
+    const kaca = new THREE.Mesh(new THREE.SphereGeometry(.21, 40, 28), kacaMat); kaca.position.y = .42; angkat.add(kaca);
+    const fil = new THREE.Mesh(new THREE.TorusGeometry(.045, .009, 8, 24, Math.PI), mat('#6b4b2a', { emissive: '#ffb347', emissiveIntensity: 0 })); fil.position.y = .4; angkat.add(fil);
+    const glowMat = new THREE.MeshBasicMaterial({ color: new THREE.Color(4.2, 2.5, .7), transparent: true, opacity: 0, depthWrite: false });
+    const glow = new THREE.Mesh(new THREE.SphereGeometry(.12, 24, 16), glowMat); glow.position.y = .42; angkat.add(glow);
+    const cahaya = new THREE.PointLight('#ffcf7a', 0, 3.2, 2); cahaya.position.y = .45; angkat.add(cahaya);
+    bayang(holder); bayang(screw); L.komponen.push(holder);
+    label(huruf, '', .36, .62, 0, g);
+    topeng(.3, .3, x, z);
+    const c = []; for (let i = 0; i <= 32; i++) { const a = i / 32 * Math.PI * 2; c.push([x + Math.cos(a) * .16, z + Math.sin(a) * .16]); }
+    sim(c); sim([[x - .11, z - .11], [x + .11, z + .11]]); sim([[x - .11, z + .11], [x + .11, z - .11]]);
+    const m = { huruf, g, angkat, kaca, kacaMat, fil, glow, glowMat, cahaya, cabang, tanggal: false, lift: 0, cerah: 0, sasar: 0 };
+    kaca.userData.mentol = m; L.mentol.push(m); L.komponen.push(angkat); return m;
+  };
+  if (cfg.jenis === 'siri') siriX(cfg.mentol).forEach((x, i) => buatMentol(x, ZT, cfg.huruf[i], 0));
+  else zc.forEach((z, k) => {
+    if (cfg.suis === 'cabang') { buatMentol(-.5, z, cfg.huruf[k], k); buatSuis(.75, z, 0, cfg.sLabel[k]).cabang = k; }
+    else buatMentol(0, z, cfg.huruf[k], k);
+  });
+
+  // laluan arus (zarah) + sorotan laluan
+  const zMat = new THREE.MeshBasicMaterial({ color: new THREE.Color(.15, .9, 3.2) });
+  const tambahAliran = (pts, cabang) => {
+    const lal = laluan(pts.concat([pts[0]]));
+    const n = Math.round(lal.total / .42);
+    const im = new THREE.InstancedMesh(new THREE.SphereGeometry(.052, 12, 10), zMat, n); im.frustumCulled = false; root.add(im);
+    const sMat = new THREE.MeshBasicMaterial({ color: new THREE.Color(3.2, 2.2, .5), transparent: true, opacity: 0, depthWrite: false });
+    const s = new THREE.Mesh(new THREE.TubeGeometry(lengkung(pts, true, .14), 300, .085, 10, true), sMat); s.renderOrder = 1; root.add(s);
+    L.aliran.push({ lal, im, n, u: Math.random(), amt: 0, sasar: 0, laju: 0, cabang });
+    L.sorot.push(sMat);
+  };
+  const tTerm = [V(selKanan, ZB)], tAkhir = [V(X0, ZB), V(selKiri, ZB)];
+  if (cfg.jenis === 'siri') tambahAliran([...tTerm, V(X1, ZB), V(X1, ZT), V(X0, ZT), ...tAkhir], 0);
+  else zc.forEach((z, k) => tambahAliran([...tTerm, V(X1, ZB), V(X1, z), V(X0, z), ...tAkhir], k));
+  L.selKiri = selKiri; L.selKanan = selKanan;
+
+  const t = document.createElement('div'); t.className = 'tajuk3d'; t.textContent = cfg.jenis === 'siri' ? 'Litar Bersiri' : 'Litar Selari';
+  const to = new CSS2DObject(t); to.position.set(-.9, .1, cfg.jenis === 'siri' ? -.15 : (cfg.mentol > 1 ? -.55 : -.15)); root.add(to);
+  return L;
+}
+
+/* =================== FIZIK RINGKAS =================== */
+// V = bilangan sel; setiap mentol R = 1. Kuasa mentol P = I^2.
+function kiraElektrik(L) {
+  const V = L.cfg.sel, ms = L.mentol;
+  const visual = P => Math.min(1.6, Math.pow(P, .75));
+  if (L.cfg.jenis === 'siri') {
+    const lengkap = L.suis.every(s => s.tutup) && ms.every(m => !m.tanggal);
+    const I = lengkap ? V / ms.length : 0;
+    ms.forEach(m => m.sasar = visual(I * I));
+    L.aliran[0].sasar = lengkap ? 1 : 0; L.aliran[0].laju = .95 * I;
+  } else {
+    const utama = L.suis.filter(s => s.cabang === undefined).every(s => s.tutup);
+    ms.forEach(m => {
+      const sC = L.suis.find(s => s.cabang === m.cabang);
+      const ok = utama && (!sC || sC.tutup) && !m.tanggal;
+      m.sasar = ok ? visual(V * V) : 0;
+      const a = L.aliran[m.cabang]; a.sasar = ok ? 1 : 0; a.laju = .95 * Math.min(V, 2.3);
+    });
+  }
+}
+
+/* =================== KEADAAN =================== */
+const pentas = new THREE.Group(); scene.add(pentas);
+let LITAR = [], KELUAR = [];
+const S = { p: 0, tahap: 'ramal', pilihan: null, sudahUji: false, flap: false, simbol: false, cubaMentol: false, cubaSel: false, dibuka: new Set(), cop: new Set() };
+try { JSON.parse(localStorage.getItem('bth-bab01-cop') || '[]').forEach(c => S.cop.add(c)); } catch (e) {}
+const simpanCop = () => { try { localStorage.setItem('bth-bab01-cop', JSON.stringify([...S.cop])); } catch (e) {} };
+const P = () => PELAJARAN[S.p];
+const WARNA = ['#ffc4a8', '#b4d8ff'];
+
+function binaLitar(cfgs, suisTutup) {
+  LITAR.forEach(L => { L.keluar = 0; L.root.traverse(o => { if (o.isCSS2DObject) o.visible = false; }); KELUAR.push(L); });
+  LITAR = cfgs.map((c, i) => { const L = bina(c, WARNA[i], suisTutup); pentas.add(L.root); L.masuk = 0; return L; });
+  susunKedudukan();
+}
+function susunKedudukan() {
+  const [a, b] = LITAR; if (!a) return;
+  if (potret) { a.root.position.set(0, 0, -1.6); b.root.position.set(0, 0, 1.6); }
+  else { a.root.position.set(-2.35, 0, 0); b.root.position.set(2.35, 0, 0); }
+}
+function bukaPelajaran(i) {
+  S.p = (i + PELAJARAN.length) % PELAJARAN.length;
+  const tadiSimbol = S.simbol;
+  Object.assign(S, { tahap: 'ramal', pilihan: null, sudahUji: false, flap: false, simbol: false, simbolDilihat: false, cubaMentol: false, cubaSel: false });
+  if (tadiSimbol) tweenKamera(false);
+  document.getElementById('cop').classList.remove('on');
+  S.dibuka = new Set();
+  binaLitar(P().litar.map(c => ({ ...c })), P().suisAwal);
+  render();
+}
+function setSuisSemua(tutup) { LITAR.forEach(L => L.suis.forEach(s => s.tutup = tutup)); }
+function ketikSuis(s) {
+  if (!(P().uji === 'ketik' && S.tahap !== 'ramal')) return;
+  s.tutup = !s.tutup; if (!s.tutup) S.dibuka.add(s.nama);
+  if (S.dibuka.has('S1') || S.dibuka.has('S2')) { if (S.dibuka.has('S3') || S.dibuka.has('S4')) S.sudahUji = true; }
+  render();
+}
+function tanggal(m) { if (!(P().cabaran === 'tanggal' && S.tahap === 'bukti')) return; m.tanggal = !m.tanggal; render(); }
+function tukarBilangan(jenis, n) {
+  const cfgs = LITAR.map(L => ({ ...L.cfg, [jenis]: n }));
+  if (jenis === 'mentol' && n > 1) S.cubaMentol = true;
+  if (jenis === 'sel' && n > 1) S.cubaSel = true;
+  if (S.cubaMentol) S.sudahUji = true;
+  binaLitar(cfgs, true); render();
+}
+function semakCop() {
+  const p = P(); let layak = S.flap;
+  if (p.cabaran === 'simbol') layak = layak && S.simbolDilihat;
+  if (p.cabaran === 'tanggal') layak = layak && LITAR[0].mentol.some(m => m.tanggal) && LITAR[1].mentol.some(m => m.tanggal);
+  if (layak && !S.cop.has(p.id)) {
+    S.cop.add(p.id); simpanCop();
+    const c = document.getElementById('cop'); c.innerHTML = `COP<br>${p.cop.toUpperCase()}<br>✓`;
+    c.classList.add('on'); jadual(() => c.classList.remove('on'), 2200);
+  }
+}
+
+/* =================== KAD =================== */
+const card = document.getElementById('card');
+const IKON = {
+  mentol: '<svg width="18" height="18" viewBox="0 0 18 18"><circle cx="9" cy="9" r="7" fill="none" stroke="#2a2340" stroke-width="2"/><path d="M4 4l10 10M14 4L4 14" stroke="#2a2340" stroke-width="2"/></svg>',
+  sel: '<svg width="22" height="18" viewBox="0 0 22 18"><path d="M0 9h8M14 9h8" stroke="#2a2340" stroke-width="2"/><path d="M9 2v14" stroke="#2a2340" stroke-width="2"/><path d="M13 5v8" stroke="#2a2340" stroke-width="4"/></svg>',
+  suis: '<svg width="26" height="18" viewBox="0 0 26 18"><path d="M0 13h5M21 13h5" stroke="#2a2340" stroke-width="2"/><circle cx="6" cy="13" r="1.8" fill="#2a2340"/><circle cx="20" cy="13" r="1.8" fill="#2a2340"/><path d="M6 13L19 4" stroke="#2a2340" stroke-width="2"/></svg>'
+};
+function render() {
+  const p = P();
+  LITAR.forEach(kiraElektrik);
+  document.getElementById('tajuk').textContent = `${S.p + 1} · ${p.tajuk}`;
+  document.getElementById('ref').textContent = `Rujuk ${p.ref} · Ts.AshrafNaim`;
+  document.querySelectorAll('.steps span').forEach(s => s.classList.toggle('on', s.dataset.s === S.tahap));
+  document.getElementById('slot').innerHTML = PELAJARAN.map((q, i) => `<i class="${S.cop.has(q.id) ? 'ada' : ''}" title="${q.cop}">${S.cop.has(q.id) ? '✓' : i + 1}</i>`).join('');
+  const nota = S.pilihan ? (S.pilihan === p.ramal.betul ? '<p class="tip">Ramalan kamu tepat! ✓</p>' : '<p class="tip">Ramalan belum tepat. Tak apa, saintis pun menguji dahulu.</p>') : '';
+  let h = '';
+  if (S.tahap === 'ramal') {
+    h = `<p class="lbl">1 · RAMAL</p><p class="q">${p.ramal.s}</p><div class="opsyen">${p.ramal.p.map(([k, t]) => `<button data-p="${k}">${t}</button>`).join('')}</div>`;
+  } else if (S.tahap === 'uji') {
+    const pil = p.ramal.p.find(x => x[0] === S.pilihan)[1];
+    h = `<p class="lbl">2 · UJI</p><p class="q">Ramalan kamu: <b>${pil}</b>.</p>`;
+    if (p.uji === 'suis') {
+      h += `<p class="tip">Dalam buku teks, <b>tutup suis</b> bermaksud litar lengkap, jadi arus boleh mengalir.</p>`;
+      h += S.sudahUji ? `<p class="obs">${p.perhati}</p>${nota}<button class="utama" id="btnBukti">3 · Buktikan →</button>`
+        : `<button class="utama" id="btnSuis">Tutup suis kedua-dua litar ⚡</button>`;
+    } else if (p.uji === 'gelangsar') {
+      const c = LITAR[0].cfg;
+      h += `<div class="seg"><span>Bilangan mentol</span>${[1, 2, 3].map(n => `<button data-mentol="${n}" class="${c.mentol === n ? 'on' : ''}">${n}</button>`).join('')}</div>
+        <div class="seg"><span>Bilangan sel kering</span>${[1, 2, 3].map(n => `<button data-sel="${n}" class="${c.sel === n ? 'on' : ''}">${n}</button>`).join('')}</div>`;
+      if (S.cubaMentol) h += `<p class="obs">Tambah mentol: bersiri <b>makin malap</b>, selari <b>tidak berubah</b>.</p>`;
+      if (S.cubaSel) h += `<p class="obs">Tambah sel kering: kedua-dua litar <b>makin cerah</b>.</p>`;
+      if (!S.cubaMentol) h += `<p class="tip">Tukar bilangan mentol dahulu, kemudian cuba bilangan sel kering.</p>`;
+      if (S.sudahUji) h += `${nota}<button class="utama" id="btnBukti">3 · Buktikan →</button>`;
+    } else if (p.uji === 'ketik') {
+      const menyala = LITAR.flatMap(L => L.mentol.filter(m => m.sasar > .05).map(m => m.huruf));
+      h += `<p class="tip">Ketik suis pada litar untuk membuka atau menutupnya.</p>
+        <div>${LITAR.flatMap(L => L.suis).map(s => `<button data-suis="${s.nama}" class="${s.tutup ? '' : 'utama'}">${s.nama}: ${s.tutup ? 'ditutup' : 'dibuka'}</button>`).join('')}</div>
+        <p class="obs">Mentol menyala: <b>${menyala.length ? menyala.join(', ') : 'tiada'}</b></p>`;
+      if (S.sudahUji) h += `<p class="obs">Perhati: buka satu suis bersiri, <b>semua padam</b>. Buka satu suis selari, <b>cabang lain masih menyala</b>.</p>${nota}<button class="utama" id="btnBukti">3 · Buktikan →</button>`;
+    }
+  } else {
+    h = `<p class="lbl">3 · BUKTIKAN</p>
+      <div class="flap ${S.flap ? 'buka' : ''}" id="flap"><div class="depan">Ketik untuk buka flap jawapan ▾</div><div class="belakang">${p.bukti.map(b => `<p>${b}</p>`).join('')}</div></div>`;
+    if (p.cabaran === 'simbol') {
+      h += `<p class="q">Cabaran: lukisan litar boleh ditukar kepada <b>rajah simbol</b>.</p>
+        <button id="btnSimbol" class="${S.simbol ? '' : 'utama'}">${S.simbol ? '↩ Kembali ke 3D' : 'Lihat rajah simbol'}</button>`;
+      if (S.simbol) h += `<div class="legenda"><span>${IKON.mentol}mentol</span><span>${IKON.sel}sel kering</span><span>${IKON.suis}suis</span></div>`;
+    }
+    if (p.cabaran === 'tanggal') {
+      const sOff = LITAR[0].mentol.some(m => m.tanggal), pOff = LITAR[1].mentol.some(m => m.tanggal);
+      h += `<p class="q">Cabaran: ketik satu mentol dalam setiap litar untuk menanggalkannya.</p>
+        ${sOff ? '<p class="obs">✓ Bersiri: satu mentol ditanggal, <b>semua padam</b>.</p>' : ''}
+        ${pOff ? '<p class="obs">✓ Selari: mentol di cabang lain <b>masih menyala</b>.</p>' : ''}`;
+    }
+    semakCop();
+    if (S.cop.has(p.id)) h += S.p < PELAJARAN.length - 1 ? `<button class="utama" id="btnNext">Pelajaran ${S.p + 2}: ${PELAJARAN[S.p + 1].tajuk} →</button>`
+      : `<button class="utama" id="btnSijil2">🏅 Lihat sijil</button>`;
+  }
+  h += `<div class="navi"><button data-nav="-1" aria-label="Pelajaran sebelum">‹</button><small>Pelajaran ${S.p + 1} / ${PELAJARAN.length}</small><button data-nav="1" aria-label="Pelajaran seterusnya">›</button></div>`;
+  card.innerHTML = h;
+  LITAR.forEach(kiraElektrik);
+  aturOffset();
+}
+card.addEventListener('click', e => {
+  const b = e.target.closest('button, #flap'); if (!b) return;
+  const p = P();
+  if (b.dataset.p) { S.pilihan = b.dataset.p; S.tahap = 'uji'; }
+  else if (b.dataset.nav) { bukaPelajaran(S.p + Number(b.dataset.nav)); return; }
+  else if (b.id === 'btnSuis') { setSuisSemua(true); jadual(() => { S.sudahUji = true; render(); }, 1600); }
+  else if (b.id === 'btnBukti') { S.tahap = 'bukti'; }
+  else if (b.id === 'flap') { S.flap = true; }
+  else if (b.id === 'btnSimbol') { S.simbol = !S.simbol; if (S.simbol) S.simbolDilihat = true; tweenKamera(S.simbol); }
+  else if (b.id === 'btnNext') { bukaPelajaran(S.p + 1); return; }
+  else if (b.id === 'btnSijil2') { bukaSijil(); }
+  else if (b.dataset.mentol) { tukarBilangan('mentol', Number(b.dataset.mentol)); return; }
+  else if (b.dataset.sel) { tukarBilangan('sel', Number(b.dataset.sel)); return; }
+  else if (b.dataset.suis) { const s = LITAR.flatMap(L => L.suis).find(x => x.nama === b.dataset.suis); if (s) ketikSuis(s); return; }
+  render();
+});
+
+/* =================== LAPISAN: NOTA & SIJIL =================== */
+const lapisNota = document.getElementById('lapisNota'), lapisSijil = document.getElementById('lapisSijil');
+document.getElementById('btnNota').onclick = () => lapisNota.classList.add('on');
+document.getElementById('btnSijil').onclick = () => bukaSijil();
+document.querySelectorAll('[data-tutup]').forEach(b => b.onclick = () => { lapisNota.classList.remove('on'); lapisSijil.classList.remove('on'); });
+document.getElementById('btnCetak').onclick = () => print();
+function bukaSijil() {
+  document.getElementById('sijilCops').innerHTML = PELAJARAN.map(q => `<div class="${S.cop.has(q.id) ? 'ada' : ''}">${S.cop.has(q.id) ? 'COP ✓<br>' : ''}${q.cop}</div>`).join('');
+  document.getElementById('tarikh').textContent = new Date().toLocaleDateString('ms-MY', { day: 'numeric', month: 'long', year: 'numeric' }) + ' · Siri Interaktif 3D Sains · Ts.AshrafNaim';
+  try { document.getElementById('nama').value = localStorage.getItem('bth-nama') || ''; } catch (e) {}
+  lapisSijil.classList.add('on');
+}
+document.getElementById('nama').addEventListener('input', e => { try { localStorage.setItem('bth-nama', e.target.value); } catch (er) {} });
+function setRingan(v) {
+  ringan = v; bloom.enabled = !v; renderer.shadowMap.enabled = !v;
+  renderer.setPixelRatio(v ? 1 : Math.min(devicePixelRatio, 2));
+  scene.traverse(o => { if (o.material) o.material.needsUpdate = true; });
+  document.getElementById('cbRingan').checked = v; layout();
+}
+document.getElementById('cbRingan').onchange = e => setRingan(e.target.checked);
+function toast(t) { const el = document.getElementById('toast'); el.textContent = t; el.classList.add('on'); jadual(() => el.classList.remove('on'), 3500); }
+
+/* =================== INPUT 3D =================== */
+const ray = new THREE.Raycaster(), ptr = new THREE.Vector2();
+renderer.domElement.addEventListener('pointerdown', e => {
+  ptr.set(e.clientX / innerWidth * 2 - 1, -(e.clientY / innerHeight) * 2 + 1); ray.setFromCamera(ptr, camera);
+  const sasaran = LITAR.flatMap(L => [...L.mentol.map(m => m.kaca), ...L.suis.map(s => s.hit)]);
+  const hit = ray.intersectObjects(sasaran, false)[0]; if (!hit) return;
+  if (hit.object.userData.mentol) tanggal(hit.object.userData.mentol);
+  else if (hit.object.userData.suis) ketikSuis(hit.object.userData.suis);
+});
+window.__uji = { tanggal: h => { const m = LITAR.flatMap(L => L.mentol).find(x => x.huruf === h); m && tanggal(m); },
+  suis: n => { const s = LITAR.flatMap(L => L.suis).find(x => x.nama === n); s && ketikSuis(s); }, buka: i => bukaPelajaran(i),
+  adegan(o) {
+    bukaPelajaran(o.p ?? S.p);
+    if (o.mentol || o.sel) binaLitar(LITAR.map(L => ({ ...L.cfg, mentol: o.mentol || L.cfg.mentol, sel: o.sel || L.cfg.sel })), o.suis ?? P().suisAwal);
+    if (o.suis !== undefined) setSuisSemua(o.suis);
+    (o.buka || []).forEach(n => { const s = LITAR.flatMap(L => L.suis).find(x => x.nama === n); if (s) s.tutup = false; });
+    Object.assign(S, { tahap: o.tahap || 'ramal', pilihan: o.pilihan || (o.tahap && o.tahap !== 'ramal' ? P().ramal.betul : null), sudahUji: !!o.sudahUji, flap: !!o.flap, cubaMentol: o.mentol > 1, cubaSel: o.sel > 1 });
+    (o.tanggal || []).forEach(h => { const m = LITAR.flatMap(L => L.mentol).find(x => x.huruf === h); if (m) m.tanggal = true; });
+    if (o.simbol) { S.simbol = true; S.simbolDilihat = true; tweenKamera(true); }
+    render();
+  },
+  keadaan: () => Object.fromEntries(LITAR.flatMap(L => L.mentol.map(m => [m.huruf, +m.sasar.toFixed(2)]))), cop: () => [...S.cop] };
+
+/* =================== SUSUN ATUR & KAMERA =================== */
+let potret = true, offX = 0, offY = 0, sasarX = 0, sasarY = 0, jarak = 1, sasarJarak = 1, panjangAsas = 10, polarAsas = .8;
+let tween = null; const sph = new THREE.Spherical();
+function aturOffset() {
+  const w = innerWidth, h = innerHeight, top = RAKAM ? 205 : document.querySelector('.topbar').getBoundingClientRect().bottom, r = card.getBoundingClientRect();
+  if (POSTER) { sasarX = 0; sasarY = h / 2 - (ATAS + (h - BAWAH)) / 2; sasarJarak = JARAK; return; }
+  if (potret) { sasarY = h / 2 - (top + r.top) / 2; sasarX = 0; const f = (r.top - top) / h; sasarJarak = RAKAM ? Math.min(1.4, Math.max(.9, .47 / f)) : Math.min(1.9, Math.max(1, .6 / f)); }
+  else { sasarX = -(r.right + 10) / 2; sasarY = h / 2 - (top + h) / 2; sasarJarak = 1; }
+}
+function layout() {
+  const w = innerWidth, h = innerHeight; potret = SUSUN ? SUSUN === 'atas' : w / h < .9;
+  renderer.setSize(w, h); composer.setSize(w, h); labelR.setSize(w, h); bloom.resolution.set(w, h);
+  LM.forEach(m => m.resolution.set(w, h));
+  camera.aspect = w / h;
+  if (potret) { camera.fov = 40; controls.target.set(0, 0, .25); camera.position.set(0, 10.4, 9.6); }
+  else { camera.fov = 36; controls.target.set(0, 0, .3); camera.position.set(0, 9.8, 10.1); }
+  camera.updateProjectionMatrix();
+  panjangAsas = camera.position.distanceTo(controls.target);
+  polarAsas = sph.setFromVector3(camera.position.clone().sub(controls.target)).phi;
+  susunKedudukan(); controls.update(); aturOffset(); offX = sasarX; offY = sasarY; jarak = sasarJarak;
+}
+function tweenKamera(atas) {
+  const s0 = new THREE.Spherical().setFromVector3(camera.position.clone().sub(controls.target));
+  tween = { t: 0, phi0: s0.phi, th0: s0.theta, phi1: atas ? .06 : polarAsas, th1: 0 };
+  controls.enabled = false; controls.minPolarAngle = 0;
+}
+addEventListener('resize', layout);
+
+/* =================== GELUNG =================== */
+const clock = new THREE.Clock(); let bingkai = 0, fpsMula = 0;
+const tmpV = new THREE.Vector3(), tmpM = new THREE.Matrix4(), tmpQ = new THREE.Quaternion(), tmpS = new THREE.Vector3();
+const lemas = x => 1 + 2.7 * Math.pow(x - 1, 3) + 1.7 * Math.pow(x - 1, 2); // easeOutBack
+function tick() { langkah(Math.min(clock.getDelta(), .05), clock.elapsedTime); requestAnimationFrame(tick); }
+function langkah(dt, t) {
+  // masuk / keluar litar
+  LITAR.forEach(L => { L.masuk = Math.min(1, L.masuk + dt / .5); L.root.scale.setScalar(Math.max(.001, lemas(L.masuk))); });
+  KELUAR = KELUAR.filter(L => {
+    L.keluar += dt / .22; L.root.scale.setScalar(Math.max(.001, 1 - L.keluar));
+    if (L.keluar >= 1) { L.root.traverse(o => { if (o.isCSS2DObject) o.element.remove(); if (o.geometry) o.geometry.dispose(); if (o.material) { o.material.dispose?.(); const i = LM.indexOf(o.material); if (i >= 0) LM.splice(i, 1); } }); pentas.remove(L.root); return false; }
+    return true;
+  });
+  const simbolAmt = S.simbol ? 1 : 0;
+  for (const L of LITAR) {
+    kiraElektrik(L);
+    L.simA = (L.simA || 0) + (simbolAmt - (L.simA || 0)) * Math.min(1, dt * 4);
+    const sA = L.simA;
+    L.simbolMat.forEach(m => m.opacity = sA);
+    L.topengMat.opacity = sA;
+    L.komponen.forEach(k => k.scale.setScalar(Math.max(.001, 1 - sA)));
+    L.suis.forEach(s => {
+      s.sudut += ((s.tutup ? 0 : .62) - s.sudut) * Math.min(1, dt * 7); s.tuil.rotation.z = s.sudut;
+      s.simTutup.opacity = s.tutup ? sA : 0; s.simBuka.opacity = s.tutup ? 0 : sA;
+    });
+    for (const m of L.mentol) {
+      m.lift += ((m.tanggal ? 1 : 0) - m.lift) * Math.min(1, dt * 6);
+      m.cerah += (m.sasar - m.cerah) * Math.min(1, dt * 5);
+      const fl = 1 + Math.sin(t * 23 + m.huruf.charCodeAt(0)) * .02, b = Math.pow(m.cerah, 1.4); // lengkung persepsi: malap kelihatan lebih malap
+      m.angkat.position.set(m.lift * .18, m.lift * .6, 0); m.angkat.rotation.z = m.lift * .55;
+      m.glowMat.opacity = Math.min(1, b * 1.05) * fl * (1 - sA); m.glow.scale.setScalar(1 + Math.max(0, b - 1) * .6);
+      m.cahaya.intensity = b * 1.4 * fl * (1 - sA);
+      m.kacaMat.opacity = .5 * (1 - m.lift * .3); m.kacaMat.emissive.setRGB(1, .8, .35).multiplyScalar(Math.min(b, 1.2) * 1.2);
+      m.fil.material.emissiveIntensity = b * 3;
+    }
+    L.aliran.forEach((a, k) => {
+      a.amt += (a.sasar - a.amt) * Math.min(1, dt * 4);
+      a.u += dt * a.laju * a.amt / a.lal.total;
+      for (let i = 0; i < a.n; i++) {
+        a.lal.at(a.u + i / a.n, tmpV);
+        const dalamSel = Math.abs(tmpV.z - ZB) < .01 && tmpV.x > L.selKiri - .01 && tmpV.x < L.selKanan + .01;
+        tmpM.compose(tmpV, tmpQ, tmpS.setScalar(dalamSel ? 0 : a.amt * (1 - sA * .4))); a.im.setMatrixAt(i, tmpM);
+      }
+      a.im.instanceMatrix.needsUpdate = true;
+    });
+  }
+  // sorotan laluan (Pelajaran 1): satu laluan demi satu
+  const sorot = P().id === 'laluan' && S.sudahUji;
+  const semua = LITAR.flatMap(L => L.sorot); const aktif = Math.floor(t / 1.6) % Math.max(1, semua.length);
+  semua.forEach((m, i) => { const sas = sorot && (POSTER || i === aktif) ? .55 + Math.sin(t * 6) * .12 : 0; m.opacity += (sas - m.opacity) * Math.min(1, dt * 6); });
+
+  if (!tween) pentas.rotation.y = Math.sin(t * .32) * .045 * (1 - simbolAmt);
+  else pentas.rotation.y *= .9;
+  offY += (sasarY - offY) * Math.min(1, dt * 4); offX += (sasarX - offX) * Math.min(1, dt * 4);
+  camera.setViewOffset(innerWidth, innerHeight, offX, offY, innerWidth, innerHeight);
+  jarak += (sasarJarak - jarak) * Math.min(1, dt * 3);
+  if (tween) {
+    tween.t = Math.min(1, tween.t + dt / .9); const e = tween.t < .5 ? 2 * tween.t * tween.t : 1 - Math.pow(-2 * tween.t + 2, 2) / 2;
+    sph.set(panjangAsas * jarak, tween.phi0 + (tween.phi1 - tween.phi0) * e, tween.th0 + (tween.th1 - tween.th0) * e);
+    camera.position.setFromSpherical(sph).add(controls.target); camera.lookAt(controls.target);
+    if (tween.t >= 1) { tween = null; controls.enabled = !S.simbol; controls.minPolarAngle = S.simbol ? 0 : .35; }
+  } else {
+    camera.position.sub(controls.target).setLength(panjangAsas * jarak).add(controls.target);
+    controls.update();
+  }
+  if (!window.__tanpaRender) { composer.render(); labelR.render(scene, camera); }
+  bingkai++;
+  if (bingkai === 30) fpsMula = performance.now();
+  if (bingkai === 150 && !PENUH && !ringan) { const fps = 120 / ((performance.now() - fpsMula) / 1000); if (fps < 22) { setRingan(true); toast('Mod ringan dihidupkan untuk peranti ini.'); } }
+  if (bingkai === 40) window.__siap = true;
+}
+/* ===== mod rakam: masa maya, animasi CSS dikawal, lapisan ketukan & teks ===== */
+const vmap = new Map(); const RL = { beatT: 9, jariT: 9, akhirT: -1, jx: 0, jy: 0 };
+function majuAnimasi(dt) { for (const a of document.getAnimations()) { let c = vmap.get(a) ?? 0; a.pause(); c += dt * 1000; a.currentTime = c; vmap.set(a, c); } }
+function lapisRakam(dt) {
+  RL.beatT += dt; RL.jariT += dt; if (RL.akhirT >= 0) RL.akhirT += dt;
+  const b = document.getElementById('beat'), e = Math.min(1, RL.beatT / .35);
+  b.style.opacity = b.innerHTML ? Math.min(1, RL.beatT / .2) : 0; b.style.transform = `translateY(${(1 - lemas(e)) * 18}px) scale(${.85 + .15 * lemas(e)})`;
+  const j = document.getElementById('jari'), jt = RL.jariT;
+  j.style.left = RL.jx + 'px'; j.style.top = RL.jy + 'px';
+  j.style.opacity = jt < .75 ? Math.min(1, jt / .08) * (jt < .5 ? 1 : 1 - (jt - .5) / .25) : 0;
+  j.querySelector('.titik').style.transform = `scale(${jt < .18 ? 1.25 - jt : .95})`;
+  j.querySelector('.riak').style.transform = `scale(${.4 + Math.min(1, jt / .5) * 1.6})`; j.querySelector('.riak').style.opacity = Math.max(0, .9 - jt * 1.6);
+  const a = document.getElementById('akhir'); a.style.display = RL.akhirT >= 0 ? 'flex' : 'none';
+  if (RL.akhirT >= 0) { const k = Math.min(1, RL.akhirT / .5); a.style.opacity = k; a.querySelector('.isi').style.transform = `translateY(${(1 - lemas(k)) * 40}px)`; }
+}
+window.__langkah = (n = 1) => {
+  for (let i = 0; i < n; i++) {
+    const dt = 1 / 30; vt += dt;
+    for (let k = JADUAL.length - 1; k >= 0; k--) if (JADUAL[k].at <= vt) { const f = JADUAL[k].fn; JADUAL.splice(k, 1); f(); }
+    majuAnimasi(dt); lapisRakam(dt); langkah(dt, vt);
+  }
+  return vt;
+};
+window.__rakam = {
+  beat(h) { document.getElementById('beat').innerHTML = h; RL.beatT = 0; },
+  ketukXY(x, y) { RL.jx = x; RL.jy = y; RL.jariT = 0; },
+  ketuk(sel) { const el = document.querySelector(sel); if (!el) return false; const r = el.getBoundingClientRect(); this.ketukXY(r.left + r.width / 2, r.top + r.height / 2); return true; },
+  ketukMentol(h) { const m = LITAR.flatMap(L => L.mentol).find(x => x.huruf === h); if (!m) return; const v = new THREE.Vector3(); m.kaca.getWorldPosition(v); v.project(camera); this.ketukXY((v.x + 1) / 2 * innerWidth, (1 - v.y) / 2 * innerHeight); },
+  akhir() { RL.akhirT = 0; }
+};
+document.fonts.ready.then(() => { layout(); bukaPelajaran(Number(QS.get('p') || 1) - 1); if (RAKAM) { window.__langkah(45); window.__siap = true; } else tick(); });
+</script>
+</body>
+</html>
